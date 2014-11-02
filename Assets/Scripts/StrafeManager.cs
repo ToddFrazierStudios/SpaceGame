@@ -8,8 +8,8 @@ public class StrafeManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		float inputX = Input.GetAxis("RSx");
-		float inputY = -Input.GetAxis("RSy");
+		float inputX = ParsedInput.controller[0].RightStickX;
+		float inputY = -ParsedInput.controller[0].RightStickY;
 
 		Vector3 forceVector = new Vector3(inputX,inputY,0)*force;
 
