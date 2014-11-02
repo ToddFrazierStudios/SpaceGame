@@ -1622,18 +1622,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebe874ad104d1542977fd239d852403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPoints: 31
-  lineColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
-  lineWidth: 1
-  drawLines: 0
-  end: 0
-  nearClip: 0
-  linePoints: []
-  cam: {fileID: 0}
 --- !u!1 &22596399
 GameObject:
   m_ObjectHideFlags: 0

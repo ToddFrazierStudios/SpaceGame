@@ -12,6 +12,8 @@ public class ParsedInput{
 	};
 
 	public sealed class Controller{
+		public bool invertY = false;
+
 		private int playerNum = 0;
 
 		public int PlayerNumber{
@@ -53,6 +55,7 @@ public class ParsedInput{
 			get{
 				float val = Input.GetAxisRaw(getAxisPrefix()+ "X");
 				if(Mathf.Abs(val)<DEAD_ZONE)return 0;
+				if(invertY)val = -val;
 				return val;
 			}
 		}
