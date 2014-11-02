@@ -10,7 +10,7 @@ public class RotationManager : MonoBehaviour {
 	void FixedUpdate () {
 		float inputX = Input.GetAxis("LSx") * force.x;
 		float inputY = Input.GetAxis("LSy") * force.y;
-		float inputZ = Input.GetAxis("Bumpers") * force.z;
+		float inputZ = -Input.GetAxis("Bumpers") * force.z;
 
 		Vector3 forceVector = new Vector3(inputY,inputX,inputZ);
 		
