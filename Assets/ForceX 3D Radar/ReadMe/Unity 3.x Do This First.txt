@@ -1,0 +1,100 @@
+This document will assist in creating and setting up the required materials and prefabs required for
+the 3D Radar to work.
+
+
+**************************************************************************
+******************  Part 1 : Setting Up The "Radar_Texture" Material  *****************
+**************************************************************************
+1. Navigate to you "ForceX 3D Radar\Assets\Textures" folder
+2. Select the "360 Radar Texture" Texture.
+3. Set its Texture Type to Texture
+4. Disable Alpha from Grayscale & Alpha Is Transparency
+5. Change Filter Mode to Trilinear
+6. Change Aniso Level to 4
+
+7. Navigate to the "ForceX 3D Radar\Assets\Materials" folder
+8. Create 1 new Material and name it "Radar_Texture"
+	
+9. Select your Material "Radar_Texture"
+10. Assign ths shader "Particles/Additive"
+11. Assign the Texture "360 Radar Texture"
+
+
+**************************************************************************
+**************************  Part 2 : Building The Radar  *************************
+**************************************************************************
+
+1. Navigate to the "ForceX 3D Radar\Assets\Meshes" folder and  make sure that the two FBX files "Radar2013"
+Import Settings : Scale Factors are set to 1.
+
+2. Drag the "Radar2013" radar into your project Hierarchy and change its name to "_Radar2013".
+3. Reset the "_Radar2013" positon to World 0,0,0
+4. Create a new camera with a name of "_RadarCamera"
+5. Make the "_RadarCamera" a child of the "_Radar2013" GameObject.
+6. Set the "_RadarCamera" Position & Rotation values to the following.
+
+	Position
+	X = 0
+	Y = 0.85
+	Z = -0.93
+	
+	Rotation
+	X = 42.5
+	Y = 0
+	Z = 0
+
+7. Assign the Material "Radar_Texture" to the _Radar2013
+8. Drag the "_Radar2013" GameObject into the "ForceX 3D Radar\Assets\Prefabs" folder to create a prefab.
+
+
+
+**************************************************************************
+******************  Part 3 : Creating The Resources Load Materials  ******************
+**************************************************************************
+
+1. Navigate to the "ForceX 3D Radar\Assets\Resources\Materials" folder.
+2. Create 3 new materials
+	Material 1 : "Radar_Atlas_Mat"
+	Material 2 : "Radar_Render_T" (Only required if you are going to use Render To Texture)
+	Material 3 : "Status_Bar_Lte"
+
+
+**************************************************************************
+												Setting Up The "Radar_Atlas_Mat" Material
+**************************************************************************
+1. Navigate to you "ForceX 3D Radar\Assets\Textures" folder
+2. Select the "Radar_Atlas_Mat" Texture.
+3. Change its Texture Type to Advanced
+4. Change Generate Cubemap to None
+5. Disable Generate Mip Maps
+6. Change Wrap Mode to Repeat
+7. Change Filter Mode to Point
+
+8. Select your Material "Radar_Atlas_Mat" you created in Part 2
+9. Assign ths shader "ForceX/Vertex Lit (Texture, Alpha)"
+10. Assign the Texture to be the "Radar_Icons_Atlas_64_32"
+
+
+
+**************************************************************************
+												Setting Up "The Radar_Render_T" Material
+**************************************************************************
+1. Select your Material "Radar_Render_T" you created in Part 2
+2. Assign ths shader "Unlit/Texture"
+3. Leave the Texture field blank
+
+
+
+**************************************************************************
+												Setting Up "Radar_Icons_Atlas_64_32" Material
+**************************************************************************
+1. Select your Material "Status_Bar_Lte" you created in Part 2
+2. Assign ths shader "ForceX/Progress Bar Lte"
+
+
+**************************************************************************
+*********************  Part 3 : Putting It All Togeather  ***************************
+**************************************************************************
+
+You have now finished building the required elements for the 3D Radar to work in Unity 3.x and 
+can now follow the setup instructions layoud out in the FX 3D Radar EX Manual.

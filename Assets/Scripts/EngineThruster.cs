@@ -14,11 +14,14 @@ public class EngineThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		float input = Input.GetAxis(axis);
-		Vector3 force = maxThrust*transform.up*input;
-		if(negatetAxis) force = -force;
-		rgb.AddForceAtPosition(force,transform.position);
-		Debug.DrawRay(transform.position,force,Color.red,0.0f,false);
-		DebugHUD.setValue("Thrust ("+axis+")",input+":"+force);
+		if (Input.GetKey(KeyCode.LeftShift) || ParsedInput.controller[0].LeftTrigger > 0) {
+			rgb.AddRelativeForce(Vector3.forward * maxThrust);
+		}
+//		float input = Input.GetAxis(axis);
+//		Vector3 force = maxThrust*transform.up*input;
+//		if(negatetAxis) force = -force;
+//		rgb.AddForceAtPosition(force,transform.position);
+//		Debug.DrawRay(transform.position,force,Color.red,0.0f,false);
+//		DebugHUD.setValue("Thrust ("+axis+")",input+":"+force);
 	}
 }
