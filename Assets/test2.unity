@@ -8110,19 +8110,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.x
-      value: .460000008
+      value: .286619663
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
-      value: .170000002
+      value: .152828783
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.height
-      value: .170000002
+      value: .137415737
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.y
-      value: .189999998
+      value: .198223174
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
+      propertyPath: m_ClearFlags
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: .147058845
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: .147058845
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: .147058845
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
@@ -13378,13 +13394,13 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 3
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: .147058845, g: .147058845, b: .147058845, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .460000008
-    y: .189999998
-    width: .170000002
-    height: .170000002
+    x: .286619663
+    y: .198223174
+    width: .152828783
+    height: .137415737
   near clip plane: .300000012
   far clip plane: 2
   field of view: 48
@@ -24905,7 +24921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a172ee59cd4ae545a1488b5d43d7e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RSI: 0
+  RSI: 1
   FoldOut: 
   FoldOut1: 
   StatusBarType: 
@@ -24956,7 +24972,7 @@ MonoBehaviour:
   GameScale: 1
   LocalTime: 0
   Per2D_Y: 1.25
-  SetStatus: 01000000010000000000000100000000000001000000000000
+  SetStatus: 01000001010000000000000100000000000001000000000000
   HUDElements: 00000000000000
   HUDEnabled: 00000000
   RadarAnchorPos: {fileID: 0}
