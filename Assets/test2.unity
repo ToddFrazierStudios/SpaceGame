@@ -10299,6 +10299,7 @@ GameObject:
   - 64: {fileID: 674528143}
   - 54: {fileID: 674528144}
   - 114: {fileID: 674528142}
+  - 114: {fileID: 674528145}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -10402,6 +10403,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &674528145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674528140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2fba85c25dee34bbd79f90631aeadd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbit: 1
+  ThisTransform: {fileID: 674528141}
+  point: {x: 0, y: 0, z: 0}
+  speed: 20
+  previous: {x: 0, y: 0, z: 0}
+  Helper: {fileID: 0}
 --- !u!1 &675724572
 GameObject:
   m_ObjectHideFlags: 0
@@ -14042,7 +14060,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 200
+      scalar: 1500
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -16679,7 +16697,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: 200
+      scalar: 1500
       maxCurve:
         serializedVersion: 2
         m_Curve:
