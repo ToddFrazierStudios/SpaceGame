@@ -14,9 +14,9 @@ public class RotationManager : MonoBehaviour {
 		float inputZ = 0;
 		float inputRightX = 0;
 		float inputRightY = 0;
-		if (Input.GetKey(KeyCode.A)) {
+		if (Input.GetKey(KeyCode.D)) {
 			inputX = force.x;
-		} else if (Input.GetKey (KeyCode.D)) {
+		} else if (Input.GetKey (KeyCode.A)) {
 			inputX = -force.x;
 		} else {
 			inputX = ParsedInput.controller[0].LeftStickX * force.x;
@@ -31,17 +31,19 @@ public class RotationManager : MonoBehaviour {
 		inputRightX = ParsedInput.controller[0].RightStickX * barrelForce.x;
 		inputRightY = ParsedInput.controller[0].RightStickY * barrelForce.y;
 		inputZ = 0f;
-		if(ParsedInput.controller[0].LeftBumper){
-			if (ParsedInput.controller[0].LeftBumperDown) {
-				if (inputRightX > 0 || inputRightY > 0) {
-					Vector3 strafeVector = new Vector3(inputRightX,inputRightY,0);
-					rgb.AddRelativeForce(strafeVector);
-				}
-			}
+		if(ParsedInput.controller[0].LeftBumper || Input.GetKey(KeyCode.Q)) {
+//			if (ParsedInput.controller[0].LeftBumperDown) {
+//				if (inputRightX > 0 || inputRightY > 0) {
+//					Vector3 strafeVector = new Vector3(inputRightX,inputRightY,0);
+//					rgb.AddRelativeForce(strafeVector);
+//				}
+//			}
 
 			inputZ += force.z;
 		}
-		if(ParsedInput.controller[0].RightBumper)inputZ-=force.z;
+		if(ParsedInput.controller[0].RightBumper || Input.GetKey(KeyCode.E)) {
+			inputZ-=force.z;
+		}
 
 		Vector3 forceVector = new Vector3(inputY,inputX,inputZ);
 		

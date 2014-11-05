@@ -3290,11 +3290,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.x
-      value: .539494336
+      value: .552001059
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
-      value: .100010693
+      value: .131681025
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.height
@@ -4509,7 +4509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &743307044
 Transform:
   m_ObjectHideFlags: 0
@@ -4529,7 +4529,7 @@ Renderer:
     type: 3}
   m_PrefabInternal: {fileID: 1101089396}
   m_GameObject: {fileID: 743307043}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -5275,9 +5275,9 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .539494336
+    x: .552001059
     y: .119052768
-    width: .100010693
+    width: .131681025
     height: .19501248
   near clip plane: .300000012
   far clip plane: 2
@@ -9605,6 +9605,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 23342418e0da948ba98baa657248371d, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 23342418e0da948ba98baa657248371d, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
