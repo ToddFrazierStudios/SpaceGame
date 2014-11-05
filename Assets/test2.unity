@@ -6209,19 +6209,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.x
-      value: .430000007
+      value: .336977363
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
-      value: .25
+      value: .10673365
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.height
-      value: .25
+      value: .161154211
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.y
-      value: .0949999988
+      value: .119052768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
@@ -10062,10 +10062,10 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .430000007
-    y: .0949999988
-    width: .25
-    height: .25
+    x: .336977363
+    y: .119052768
+    width: .10673365
+    height: .161154211
   near clip plane: .300000012
   far clip plane: 2
   field of view: 48
