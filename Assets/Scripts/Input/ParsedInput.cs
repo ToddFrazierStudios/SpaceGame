@@ -35,21 +35,36 @@ public class ParsedInput{
 		public float LeftTrigger{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return (Input.GetAxisRaw(getAxisPrefix()+ "5") + 1)/2f;
+				if (Input.GetAxisRaw(getAxisPrefix()+ "5") != 0) {
+					return (Input.GetAxisRaw(getAxisPrefix()+ "5") + 1)/2f;
+				} else {
+					return 0;
+				}
 				#else
 				return Input.GetAxisRaw(getAxisPrefix()+ "9");
 				#endif
 			}
+//
+//			set{
+//				leftTrigger = value;
+//			}
 		}
 
 		public float RightTrigger{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return (Input.GetAxis(getAxisPrefix()+ "6") + 1)/2f;
+				if (Input.GetAxisRaw(getAxisPrefix()+ "6") != 0) {
+					return (Input.GetAxisRaw(getAxisPrefix()+ "6") + 1)/2f;
+				} else {
+					return 0;
+				}
 				#else
 				return Input.GetAxisRaw(getAxisPrefix()+ "10");
 				#endif
 			}
+//			set{
+//				rightTrigger = value;
+//			}
 		}
 		public float LeftStickX{
 			get{

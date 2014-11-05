@@ -9,11 +9,28 @@ public class RotationManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		float inputX = ParsedInput.controller[0].LeftStickX * force.x;
-		float inputY = ParsedInput.controller[0].LeftStickY * force.y;
-		float inputRightX = ParsedInput.controller[0].RightStickX * barrelForce.x;
-		float inputRightY = ParsedInput.controller[0].RightStickY * barrelForce.y;
-		float inputZ = 0f;
+		float inputX = 0;
+		float inputY = 0;
+		float inputZ = 0;
+		float inputRightX = 0;
+		float inputRightY = 0;
+		if (Input.GetKey(KeyCode.A)) {
+			inputX = force.x;
+		} else if (Input.GetKey (KeyCode.D)) {
+			inputX = -force.x;
+		} else {
+			inputX = ParsedInput.controller[0].LeftStickX * force.x;
+		}
+		if (Input.GetKey(KeyCode.W)) {
+			inputY = force.y;
+		} else if (Input.GetKey (KeyCode.S)) {
+			inputY = -force.y;
+		} else {
+			inputY = ParsedInput.controller[0].LeftStickY * force.y;
+		}
+		inputRightX = ParsedInput.controller[0].RightStickX * barrelForce.x;
+		inputRightY = ParsedInput.controller[0].RightStickY * barrelForce.y;
+		inputZ = 0f;
 		if(ParsedInput.controller[0].LeftBumper){
 			if (ParsedInput.controller[0].LeftBumperDown) {
 				if (inputRightX > 0 || inputRightY > 0) {
