@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class RadarMount : MonoBehaviour {
 	public Transform topRight,bottomLeft;
 	public Camera cameraToPosition,mainCamera;
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
