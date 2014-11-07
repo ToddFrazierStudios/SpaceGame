@@ -5,6 +5,7 @@ using System.Collections;
 public class MultiplayerMgr : MonoBehaviour {
 
 	public GameObject playerPrefab;
+	private GameObject go;
 	public Transform spawnPoint;
 	private string ip = "129.22.50.124";
 	private bool connected = false;
@@ -21,8 +22,22 @@ public class MultiplayerMgr : MonoBehaviour {
 	private int lastLevelPrefix = 0;
 
 	public void CreatePlayer() {
-		GameObject go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position, Quaternion.identity, 0);
+		go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position, Quaternion.identity, 0);
+//		go.GetComponent<RotationManager>().playerSetup (Network.player);
+		networkView.RPC ("playerSetup", RPCMode.AllBuffered, Network.player);
 
+	}
+
+	[RPC]
+	public void playerSetup(NetworkPlayer player) {
+//		go.GetComponent<RotationManager>().owner = player;
+//		if (go.GetComponent<RotationManager>().owner == Network.player) {
+//			go.GetComponent<RotationManager>().mine = false;
+//			go.GetComponent<RotationManager>().playerCamera.camera.enabled = false;
+//			go.GetComponent<RotationManager>().playerCamera.GetComponent<AudioListener>().enabled = false;
+//		} else {
+//			go.GetComponent<RotationManager>().mine = true;
+//		}
 	}
 
 	void OnDisconnectedFromServer() {
@@ -30,7 +45,7 @@ public class MultiplayerMgr : MonoBehaviour {
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
-//		Network.DestroyPlayerObjects (player);
+		Network.DestroyPlayerObjects (player);
 	}
 
 	void OnConnectedToServer() {

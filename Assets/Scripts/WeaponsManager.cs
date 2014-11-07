@@ -12,9 +12,18 @@ public class WeaponsManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.Space) || ParsedInput.controller[0].RightTrigger > 0) {
-			leftGun.Emit(1);
-			rightGun.Emit(1);
+		if (networkView.isMine) {
+			if (Input.GetKey (KeyCode.Space) || ParsedInput.controller[0].RightTrigger > 0) {
+				networkView.RPC ("shootMachineGuns", RPCMode.All);
+			}
+		} else {
+			enabled = false;
 		}
+	}
+
+	[RPC]
+	public void shootMachineGuns() {
+		leftGun.Emit(1);
+		rightGun.Emit(1);
 	}
 }

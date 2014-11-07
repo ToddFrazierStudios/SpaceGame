@@ -6,6 +6,12 @@ public class RotationManager : MonoBehaviour {
 	
 	public Vector3 force;
 	public Vector3 barrelForce;
+
+	void Awake() {
+		
+//		networkView.RPC("playerSetup", RPCMode.AllBuffered, Network.player);
+
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
