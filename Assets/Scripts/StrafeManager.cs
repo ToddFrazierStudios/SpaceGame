@@ -8,20 +8,24 @@ public class StrafeManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		float inputX = ParsedInput.controller[0].RightStickX;
-		float inputY = -ParsedInput.controller[0].RightStickY;
-		if (Input.GetKey(KeyCode.RightArrow)) {
-			inputX = 1;
-		} else if (Input.GetKey (KeyCode.LeftArrow)) {
-			inputX = -1;
-		} else if (Input.GetKey (KeyCode.DownArrow)) {
-			inputY = -1;
-		} else if (Input.GetKey (KeyCode.UpArrow)) {
-			inputY = 1;
+		if (networkView.isMine) {
+			float inputX = ParsedInput.controller[0].RightStickX;
+			float inputY = -ParsedInput.controller[0].RightStickY;
+			if (Input.GetKey(KeyCode.RightArrow)) {
+				inputX = 1;
+			} else if (Input.GetKey (KeyCode.LeftArrow)) {
+				inputX = -1;
+			} else if (Input.GetKey (KeyCode.DownArrow)) {
+				inputY = -1;
+			} else if (Input.GetKey (KeyCode.UpArrow)) {
+				inputY = 1;
+			}
+
+			Vector3 forceVector = new Vector3(inputX,inputY,0)*force;
+
+			rgb.AddRelativeForce(forceVector);
+		} else {
+			enabled =false;
 		}
-
-		Vector3 forceVector = new Vector3(inputX,inputY,0)*force;
-
-		rgb.AddRelativeForce(forceVector);
 	}
 }
