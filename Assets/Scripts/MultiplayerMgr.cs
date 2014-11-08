@@ -30,17 +30,18 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	[RPC]
 	public void playerSetup(NetworkPlayer player) {
-//		go.GetComponent<RotationManager>().owner = player;
-//		if (go.GetComponent<RotationManager>().owner == Network.player) {
-//			go.GetComponent<RotationManager>().mine = false;
-//			go.GetComponent<RotationManager>().playerCamera.camera.enabled = false;
-//			go.GetComponent<RotationManager>().playerCamera.GetComponent<AudioListener>().enabled = false;
-//		} else {
-//			go.GetComponent<RotationManager>().mine = true;
-//		}
+//		go.GetComponent<PlayerSpawning>().spawn(player);
 	}
 
-	void OnDisconnectedFromServer() {
+	void OnDisconnectedFromServer(NetworkDisconnection info) {
+		Network.DestroyPlayerObjects (Network.player);
+		if (Network.isServer) {
+
+		} else if (info == NetworkDisconnection.LostConnection) {
+
+		} else {
+
+		}
 //		connected = false;
 	}
 
