@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerSpawning : MonoBehaviour {
 	
 	public GameObject playerCamera;
+	public GameObject radarCamera;
 
 	void Awake () {
 		playerCamera.camera.enabled = false;
@@ -22,6 +23,10 @@ public class PlayerSpawning : MonoBehaviour {
 //			playerCamera.GetComponent<AudioListener>().enabled = false;
 		} else {
 			gameObject.layer = 13;
+			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Transforms[0] = gameObject.transform;
+			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Cameras[4] = playerCamera.camera;
+			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Cameras[0] = radarCamera.camera;
+			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Transforms[2] = playerCamera.transform;
 			playerCamera.camera.enabled = true;
 		}
 	}

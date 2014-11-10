@@ -34,13 +34,12 @@ public class MultiplayerMgr : MonoBehaviour {
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
-		Network.DestroyPlayerObjects (Network.player);
 		if (Network.isServer) {
 
 		} else if (info == NetworkDisconnection.LostConnection) {
-
+			Network.DestroyPlayerObjects (Network.player);
 		} else {
-
+			Network.DestroyPlayerObjects (Network.player);
 		}
 //		connected = false;
 	}
