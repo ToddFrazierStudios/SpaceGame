@@ -7,50 +7,22 @@ public class PlayerSpawning : MonoBehaviour {
 	public GameObject radarCamera;
 
 	void Awake () {
-		playerCamera.camera.enabled = false;
+		playerCamera.camera.enabled = false; // Have the camera disabled by default.
 	}
 
 	void OnNetworkInstantiate(NetworkMessageInfo info) {
-//		networkView.RPC ("spawn", RPCMode.AllBuffered, Network.player);
 		if (networkView.owner != Network.player) {
-			gameObject.layer = 15;
-//			foreach (Camera camera in Camera.allCameras) {
-//				if (camera != playerCamera) {
-//					camera.enabled = false;
-//				}
-//			}
-//			playerCamera.camera.enabled = false;
-//			playerCamera.GetComponent<AudioListener>().enabled = false;
+			gameObject.layer = 15; // If the ship spawned is not the player, put it on the enemy layer.
 		} else {
-			gameObject.layer = 13;
+			gameObject.layer = 13; // If the ship is the player, put it on the player level.
+
+			// Assigning the player transform, player camera, radar camera, and the player camera transform in the radar script.
 			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Transforms[0] = gameObject.transform;
 			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Cameras[4] = playerCamera.camera;
 			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Cameras[0] = radarCamera.camera;
 			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Transforms[2] = playerCamera.transform;
-			playerCamera.camera.enabled = true;
-		}
-	}
-	[RPC]
-	public void spawn(NetworkPlayer player) {
-		Debug.Log ("trying to fix it");
-//		if (networkView.isMine) {
-			playerCamera.camera.enabled = true;
-//		}
-		if (player != Network.player) {
-			gameObject.layer = 15;
-			//			foreach (Camera camera in Camera.allCameras) {
-			//				if (camera != playerCamera) {
-			//					camera.enabled = false;
-			//				}
-			//			}
-						playerCamera.camera.enabled = false;
-						playerCamera.GetComponent<AudioListener>().enabled = false;
-		} else {
-			playerCamera.camera.enabled = true;
-			
-			playerCamera.GetComponent<AudioListener>().enabled = true;
-			gameObject.layer = 13;
-//			playerCamera.camera.enabled = true;
+
+			playerCamera.camera.enabled = true; // Turn on the player camera. This fixes a lot of problems.
 		}
 	}
 }

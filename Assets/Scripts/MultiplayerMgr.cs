@@ -4,33 +4,42 @@ using System.Collections;
 [RequireComponent(typeof (NetworkView))]
 public class MultiplayerMgr : MonoBehaviour {
 
+	// The player prefab
 	public GameObject playerPrefab;
-	private GameObject go;
+
+	// Where the player spawns
 	public Transform spawnPoint;
-	private string ip = "129.22.50.124";
-	private bool connected = false;
+
+	// Connection button placement and dimensions
 	public float buttonX;
 	public float buttonY;
 	public float buttonWidth;
 	public float buttonHeight;
+	
+	// Use this to refer to the player after it is spawned
+	private GameObject go;
+
+	// IP address
+	private string ip = "129.22.50.124";
+
+	// This lets you wait for the refresh to finish so you don't get an empty list
 	private bool refreshing;
+
+	// The host list
 	private HostData[] hostData = null;
+
+	// This is apparently needed
 	private string gameName = "ToddFrazierSpace";
 
-	public string[] supportedNetworkLevels = {"testMultiplayer"};
-	public string disconnectedLevel = "loader";
-	private int lastLevelPrefix = 0;
+	// Don't pay attention to this yet
+//	public string[] supportedNetworkLevels = {"testMultiplayer"};
+//	public string disconnectedLevel = "loader";
+//	private int lastLevelPrefix = 0;
 
 	public void CreatePlayer() {
-		go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position, Quaternion.identity, 0);
-//		go.GetComponent<RotationManager>().playerSetup (Network.player);
-		networkView.RPC ("playerSetup", RPCMode.AllBuffered, Network.player);
+		// Instantiate the ship, with an offset based on how many are connected.
+		go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position + new Vector3(Network.connections.Length * 20, 0, 0), Quaternion.identity, 0);
 
-	}
-
-	[RPC]
-	public void playerSetup(NetworkPlayer player) {
-//		go.GetComponent<PlayerSpawning>().spawn(player);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -41,7 +50,6 @@ public class MultiplayerMgr : MonoBehaviour {
 		} else {
 			Network.DestroyPlayerObjects (Network.player);
 		}
-//		connected = false;
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
@@ -65,6 +73,7 @@ public class MultiplayerMgr : MonoBehaviour {
 	}
 
 	void Awake () {
+		// Set the button positions and dimensions
 		buttonX = Screen.width * 0.05f;
 		buttonY = Screen.width * 0.05f;
 		buttonWidth = Screen.width * 0.1f;
@@ -76,7 +85,6 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	public void startServer () {
 		Network.InitializeServer (32, 25001, !Network.HavePublicAddress());
-
 	}
 
 	public void refreshHostList () {
@@ -85,17 +93,17 @@ public class MultiplayerMgr : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		if (!Network.isClient && !Network.isServer) {
-			if(GUI.Button (new Rect(buttonX, buttonY, buttonWidth, buttonHeight), "Start Server")) {
+		if (!Network.isClient && !Network.isServer) { // If not already connected
+			if(GUI.Button (new Rect(buttonX, buttonY, buttonWidth, buttonHeight), "Start Server")) { // Make Server button
 				Debug.Log ("Starting Server");
 				startServer();
 			}
-			if(GUI.Button (new Rect(buttonX, buttonY * 1.2f + buttonHeight, buttonWidth, buttonHeight), "Refresh Hosts")) {
+			if(GUI.Button (new Rect(buttonX, buttonY * 1.2f + buttonHeight, buttonWidth, buttonHeight), "Refresh Hosts")) { // Choose host button
 				Debug.Log ("Refreshing");
 				refreshHostList();
 			}
 			if (hostData != null) {
-				for (int i = 0; i < hostData.Length; i++) {
+				for (int i = 0; i < hostData.Length; i++) { // Host choices
 					if (GUI.Button (new Rect(buttonX * 2 + buttonWidth, buttonY * 1.2f + buttonHeight * i, buttonWidth * 3, buttonHeight * 0.5f), hostData[i].gameName)) {
 						Network.Connect (hostData[i]);
 					}
@@ -137,6 +145,7 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		// Give the host list a chance to fill up
 		if (refreshing) {
 			if (MasterServer.PollHostList().Length > 0) {
 				refreshing = false;
