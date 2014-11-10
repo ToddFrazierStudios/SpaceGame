@@ -16,7 +16,6 @@ public class EngineThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (networkView.isMine) {
 			DebugHUD.setValue("RT", ParsedInput.controller[0].RightTrigger);
 			if (Input.GetKey(KeyCode.LeftShift)) {
 				rgb.AddRelativeForce(Vector3.forward * maxThrust);
@@ -36,8 +35,5 @@ public class EngineThruster : MonoBehaviour {
 //		rgb.AddForceAtPosition(force,transform.position);
 //		Debug.DrawRay(transform.position,force,Color.red,0.0f,false);
 //		DebugHUD.setValue("Thrust ("+axis+")",input+":"+force);
-		} else {
-			enabled = false;
-		}
 	}
 }

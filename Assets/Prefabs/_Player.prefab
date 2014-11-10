@@ -3367,10 +3367,8 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
-  - 148: {fileID: 14800000}
   - 23: {fileID: 2300258}
   - 33: {fileID: 3300258}
-  - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: _Player
   m_TagString: Untagged
@@ -11170,19 +11168,6 @@ MonoBehaviour:
   rgb: {fileID: 5400000}
   force: {x: 150000, y: 150000, z: 150000}
   barrelForce: {x: 100000, y: 100000, z: 100000}
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796aa7bb4e617472bad53fbf22c21b91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 100322}
-  radarCamera: {fileID: 100202}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -11190,18 +11175,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100322}
   m_Enabled: 1
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100418}
-  m_Enabled: 1
-  m_StateSynchronization: 2
-  m_Observed: {fileID: 400418}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
