@@ -11122,8 +11122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ffbef083a31594ab1be021aab32ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxThrust: 200000
-  boostThrust: 400000
+  maxThrust: 400000
+  boostThrust: 600000
   reverseThrust: 150000
   axis: LT
   negatetAxis: 0
@@ -11155,7 +11155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rgb: {fileID: 5400000}
-  force: 150000
+  force: 200000
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
