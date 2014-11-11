@@ -322,6 +322,61 @@ public class ParsedInput{
 				#endif
 			}
 		}
+
+		public bool LS{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "11");
+				#else
+				return Input.GetKey(getButtonPrefix()+ "8");
+				#endif
+			}
+		}
+		public bool LSDown{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "11");
+				#else
+				return Input.GetKeyDown(getButtonPrefix()+ "8");
+				#endif
+			}
+		}
+		public bool LSUp{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "11");
+				#else
+				return Input.GetKeyUp(getButtonPrefix()+ "8");
+				#endif
+			}
+		}
+		public bool RS{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "12");
+				#else
+				return Input.GetKey(getButtonPrefix()+ "9");
+				#endif
+			}
+		}
+		public bool RSDown{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "12");
+				#else
+				return Input.GetKeyDown(getButtonPrefix()+ "9");
+				#endif
+			}
+		}
+		public bool RSUp{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "12");
+				#else
+				return Input.GetKeyUp(getButtonPrefix()+ "9");
+				#endif
+			}
+		}
 	}
 
 }

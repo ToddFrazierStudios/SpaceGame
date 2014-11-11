@@ -30,6 +30,14 @@ Material:
     m_Floats:
       data:
         first:
+          name: _ProgressH
+        second: 0
+      data:
+        first:
+          name: _ProgressV
+        second: 0
+      data:
+        first:
           name: _Progress
         second: .791044772
       data:

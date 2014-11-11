@@ -24,14 +24,14 @@ Material:
         first:
           name: _BorderTexture
         second:
-          m_Texture: {fileID: 2800000, guid: 98d5c8fbdcd0b394e9ad46abc089e8b1, type: 3}
+          m_Texture: {fileID: 2800000, guid: 76088bb50ee5d564790827aa99c561dc, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BarTexture
         second:
-          m_Texture: {fileID: 2800000, guid: f0f9d49d0488142409221b820a7df5b0, type: 3}
+          m_Texture: {fileID: 2800000, guid: d3d6b4766ae611b4b9e68f5825624fcc, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -42,6 +42,14 @@ Material:
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
+      data:
+        first:
+          name: _ProgressH
+        second: 0
+      data:
+        first:
+          name: _ProgressV
+        second: 0
       data:
         first:
           name: _Progress
