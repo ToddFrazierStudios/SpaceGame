@@ -103,6 +103,33 @@ public class ParsedInput{
 				return val;
 			}
 		}
+		public bool A{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "16");
+				#else
+				return Input.GetKey(getButtonPrefix()+ "0");
+				#endif
+			}
+		}
+		public bool Adown{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "16");
+				#else
+				return Input.GetKeyDown(getButtonPrefix()+ "0");
+				#endif
+			}
+		}
+		public bool Aup{
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "16");
+				#else
+				return Input.GetKeyUp(getButtonPrefix()+ "0");
+				#endif
+			}
+		}
 		public bool B{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
