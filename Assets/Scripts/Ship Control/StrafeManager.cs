@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(EngineThruster))]
 public class StrafeManager : MonoBehaviour {
 	public Rigidbody rgb;
 
 	public float force;
+
+	private EngineThruster thruster;
+
+	void Start(){
+		thruster = GetComponent<EngineThruster>();
+	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -32,6 +39,6 @@ public class StrafeManager : MonoBehaviour {
 
 		Vector3 forceVector = new Vector3(inputX,inputY,0)*force;
 
-		rgb.AddRelativeForce(forceVector);
+		rgb.AddRelativeForce(forceVector*thruster.ThrustMultiplier);
 	}
 }
