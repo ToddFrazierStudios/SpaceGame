@@ -3,7 +3,13 @@ using System.Collections;
 
 public class WeaponsManager : MonoBehaviour {
 
-	public ParticleSystem leftGun, rightGun;
+	public Transform leftGun, rightGun;
+	public float muzzleVelocity;
+	public GameObject bulletPrefab;
+	public float delay;
+	public float range;
+	private float timeUntilFire;
+	private bool alternate = true;
 
 	// Use this for initialization
 	void Start () {
@@ -12,14 +18,41 @@ public class WeaponsManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.Space) || ParsedInput.controller[0].RightTrigger > 0) {
+		if (timeUntilFire > 0) {
+			timeUntilFire -= Time.deltaTime;
+		} else {
+			timeUntilFire = 0;
+		}
+		if ((Input.GetKey (KeyCode.Space) || ParsedInput.controller[0].RightTrigger > 0) && timeUntilFire == 0) {
 			shootMachineGuns();
+			timeUntilFire = delay;
 		}
 	}
 
 	[RPC]
 	public void shootMachineGuns() {
-		leftGun.Emit(1);
-		rightGun.Emit(1);
+		RaycastHit hit;
+		if (alternate) {
+			if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+				leftGun.LookAt (hit.point); 
+			} else {
+				leftGun.localRotation = Quaternion.identity;
+			}
+			GameObject created = Instantiate(bulletPrefab,leftGun.position,leftGun.rotation) as GameObject;
+			Bullet b = created.GetComponent<Bullet>();
+			b.setVelocity(leftGun.forward*muzzleVelocity);
+		} else {
+			if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+				rightGun.LookAt (hit.point); 
+			} else {
+				rightGun.localRotation = Quaternion.identity;
+			}
+			GameObject created = Instantiate(bulletPrefab,rightGun.position,rightGun.rotation) as GameObject;
+			Bullet b = created.GetComponent<Bullet>();
+			b.setVelocity(rightGun.forward*muzzleVelocity);
+		}
+		alternate = !alternate;
+//		leftGun.Emit(1);
+//		rightGun.Emit(1);
 	}
 }
