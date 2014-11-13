@@ -895,6 +895,7 @@ GameObject:
   - 33: {fileID: 107728274}
   - 65: {fileID: 107728273}
   - 23: {fileID: 107728272}
+  - 114: {fileID: 107728276}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -953,6 +954,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &107728276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 107728271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 2
+  rechargeDelay: 2
 --- !u!1 &109644921
 GameObject:
   m_ObjectHideFlags: 0
@@ -5462,6 +5480,7 @@ GameObject:
   - 64: {fileID: 449418955}
   - 54: {fileID: 449418954}
   - 114: {fileID: 449418957}
+  - 114: {fileID: 449418958}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -5558,6 +5577,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &449418958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 449418953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &452010520
 GameObject:
   m_ObjectHideFlags: 0
@@ -6094,11 +6130,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.x
-      value: .584667206
+      value: .58436662
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
-      value: .204312086
+      value: .203586757
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.height
@@ -7243,6 +7279,7 @@ GameObject:
   - 54: {fileID: 674528144}
   - 114: {fileID: 674528142}
   - 114: {fileID: 674528145}
+  - 114: {fileID: 674528146}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -7356,6 +7393,23 @@ MonoBehaviour:
   speed: 50
   previous: {x: 0, y: 0, z: 0}
   Helper: {fileID: 0}
+--- !u!114 &674528146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 674528140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &686238540
 GameObject:
   m_ObjectHideFlags: 0
@@ -8665,9 +8719,9 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .584667206
+    x: .58436662
     y: .0516928434
-    width: .204312086
+    width: .203586757
     height: .278008461
   near clip plane: .300000012
   far clip plane: 2
@@ -8826,6 +8880,7 @@ GameObject:
   - 64: {fileID: 887834380}
   - 54: {fileID: 887834379}
   - 114: {fileID: 887834381}
+  - 114: {fileID: 887834382}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -8922,6 +8977,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &887834382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 887834377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &891315608
 GameObject:
   m_ObjectHideFlags: 0
@@ -8961,6 +9033,7 @@ GameObject:
   - 64: {fileID: 903475702}
   - 54: {fileID: 903475701}
   - 114: {fileID: 903475703}
+  - 114: {fileID: 903475704}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -9057,6 +9130,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &903475704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 903475699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &909383306
 GameObject:
   m_ObjectHideFlags: 0
@@ -9068,6 +9158,7 @@ GameObject:
   - 64: {fileID: 909383309}
   - 54: {fileID: 909383308}
   - 114: {fileID: 909383310}
+  - 114: {fileID: 909383311}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -9164,6 +9255,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &909383311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 909383306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &921616298
 GameObject:
   m_ObjectHideFlags: 0
@@ -10244,6 +10352,7 @@ GameObject:
   - 64: {fileID: 984110442}
   - 54: {fileID: 984110441}
   - 114: {fileID: 984110443}
+  - 114: {fileID: 984110444}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -10340,6 +10449,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &984110444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 984110439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &987834781
 GameObject:
   m_ObjectHideFlags: 0
@@ -10493,6 +10619,8 @@ GameObject:
   - 64: {fileID: 1005310612}
   - 54: {fileID: 1005310611}
   - 114: {fileID: 1005310613}
+  - 114: {fileID: 1005310614}
+  - 114: {fileID: 1005310615}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -10589,6 +10717,40 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1005310614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1005310609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
+--- !u!114 &1005310615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1005310609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 0
+  maxHull: 0
+  shield: 0
+  maxShield: 0
+  shieldRegenRate: 0
+  rechargeDelay: 0
 --- !u!1 &1021749020
 GameObject:
   m_ObjectHideFlags: 0
@@ -10658,6 +10820,7 @@ GameObject:
   - 64: {fileID: 1027105244}
   - 54: {fileID: 1027105243}
   - 114: {fileID: 1027105245}
+  - 114: {fileID: 1027105246}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -10754,6 +10917,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1027105246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1027105241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1027526294
 GameObject:
   m_ObjectHideFlags: 0
@@ -13440,6 +13620,7 @@ GameObject:
   - 64: {fileID: 1366485996}
   - 54: {fileID: 1366485995}
   - 114: {fileID: 1366485997}
+  - 114: {fileID: 1366485998}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -13536,6 +13717,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1366485998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1366485993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1368982790
 GameObject:
   m_ObjectHideFlags: 0
@@ -15093,6 +15291,7 @@ GameObject:
   - 64: {fileID: 1541503851}
   - 54: {fileID: 1541503850}
   - 114: {fileID: 1541503852}
+  - 114: {fileID: 1541503853}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -15189,6 +15388,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1541503853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1541503848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1551979109
 GameObject:
   m_ObjectHideFlags: 0
@@ -15788,6 +16004,7 @@ GameObject:
   - 64: {fileID: 1646536033}
   - 54: {fileID: 1646536032}
   - 114: {fileID: 1646536034}
+  - 114: {fileID: 1646536035}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -15884,6 +16101,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1646536035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1646536030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1667008035
 GameObject:
   m_ObjectHideFlags: 0
@@ -17148,6 +17382,7 @@ GameObject:
   - 64: {fileID: 1811787008}
   - 54: {fileID: 1811787007}
   - 114: {fileID: 1811787009}
+  - 114: {fileID: 1811787010}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -17244,6 +17479,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1811787010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1811787005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1814519095
 GameObject:
   m_ObjectHideFlags: 0
@@ -17397,6 +17649,7 @@ GameObject:
   - 64: {fileID: 1838418445}
   - 54: {fileID: 1838418444}
   - 114: {fileID: 1838418446}
+  - 114: {fileID: 1838418447}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -17493,6 +17746,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &1838418447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838418442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &1852299055
 GameObject:
   m_ObjectHideFlags: 0
@@ -18397,6 +18667,7 @@ GameObject:
   - 64: {fileID: 2037575456}
   - 54: {fileID: 2037575455}
   - 114: {fileID: 2037575457}
+  - 114: {fileID: 2037575458}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -18493,6 +18764,23 @@ MonoBehaviour:
   HostileList: []
   RadarRange: 100
   UpdateHL: 10
+--- !u!114 &2037575458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2037575453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hull: 100
+  maxHull: 100
+  shield: 50
+  maxShield: 50
+  shieldRegenRate: 10
+  rechargeDelay: 2
 --- !u!1 &2066079380
 GameObject:
   m_ObjectHideFlags: 0

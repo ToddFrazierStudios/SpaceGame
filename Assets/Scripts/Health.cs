@@ -40,6 +40,7 @@ public class Health : MonoBehaviour {
 		}
 		if (hull <= 0) {
 			hullColor = "red";
+			Destroy (gameObject);
 		} else if (shield <= maxShield / 3f) {
 			hullColor = "yellow";
 		}
@@ -47,7 +48,11 @@ public class Health : MonoBehaviour {
 		DebugHUD.setValue ("Shields", "<color=" + shieldColor + ">" + shield + "</color>");
 	}
 
-	public void hurt(float damage, Vector3 direction) {
+	// For it to work with send message, the parameters must be stored as a quaternion,
+	// with the last value being the damage and the first three being the direction
+	public void hurt(Quaternion parameters) {
+		float damage = parameters.w;
+		Vector3 direction = new Vector3(parameters.x, parameters.y, parameters.z);
 		if (shield > 0) {
 			shield -= damage;
 		} else if (hull > 0) {
