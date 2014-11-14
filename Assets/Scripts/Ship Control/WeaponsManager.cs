@@ -3,9 +3,9 @@ using System.Collections;
 
 public class WeaponsManager : MonoBehaviour {
 
-	public Transform leftGun, rightGun;
+	public Transform leftGun, rightGun, missileBay;
 	public float muzzleVelocity;
-	public GameObject bulletPrefab;
+	public GameObject bulletPrefab, missilePrefab;
 	public float delay;
 	public float range;
 	private float timeUntilFire;
@@ -13,7 +13,7 @@ public class WeaponsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		missileBay.LookAt (Vector3.zero);
 	}
 	
 	// Update is called once per frame
@@ -27,8 +27,17 @@ public class WeaponsManager : MonoBehaviour {
 			shootMachineGuns();
 			timeUntilFire = delay;
 		}
+		if (Input.GetKeyDown (KeyCode.X) || ParsedInput.controller[0].Xdown) {
+			shootMissile();
+		}
+//		if (Input.GetKeyDown (KeyCode.C) || ParsedInput.controller[0].Adown) {
+//			RaycastHit hit;
+//			if (Physics.Raycast (transform.position, transform.forward, out hit)) {
+//				GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0] = hit.transform; 
+//			}
+//		}
 	}
-
+	
 	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
@@ -52,7 +61,14 @@ public class WeaponsManager : MonoBehaviour {
 			b.setVelocity(rightGun.forward*muzzleVelocity);
 		}
 		alternate = !alternate;
-//		leftGun.Emit(1);
-//		rightGun.Emit(1);
+		//		leftGun.Emit(1);
+		//		rightGun.Emit(1);
+	}
+
+	[RPC]
+	public void shootMissile() {
+		GameObject missile = Instantiate(missilePrefab,missileBay.position,missileBay.rotation) as GameObject;
+		missile.rigidbody.velocity = rigidbody.velocity;
+
 	}
 }

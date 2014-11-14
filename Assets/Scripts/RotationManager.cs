@@ -26,6 +26,11 @@ public class RotationManager : MonoBehaviour {
 			inputX = -force.x;
 		} else {
 			inputX = ParsedInput.controller[0].LeftStickX * force.x;
+			if (inputX > 0) {
+				inputX = (inputX + 1) * (inputX + 1);
+			} else if (inputX < 0) {
+				inputX = - (inputX - 1) * (inputX - 1);
+			}
 		}
 		if (Input.GetKey(KeyCode.W)) {
 			inputY = force.y;
@@ -33,6 +38,11 @@ public class RotationManager : MonoBehaviour {
 			inputY = -force.y;
 		} else {
 			inputY = ParsedInput.controller[0].LeftStickY * force.y;
+			if (inputY > 0) {
+				inputY = (inputY + 1) * (inputY + 1);
+			} else if (inputY < 0) {
+				inputY = - (inputY - 1) * (inputY - 1);
+			}
 		}
 		inputRightX = ParsedInput.controller[0].RightStickX * barrelForce.x;
 		inputRightY = ParsedInput.controller[0].RightStickY * barrelForce.y;

@@ -9,6 +9,7 @@ public class Health : MonoBehaviour {
 	public float maxShield;
 	public float shieldRegenRate;
 	public float rechargeDelay;
+	public GameObject explosionPrefab;
 	private float timeUntilRecharge;
 
 	// Use this for initialization
@@ -31,6 +32,7 @@ public class Health : MonoBehaviour {
 				shield += shieldRegenRate * Time.deltaTime;
 			}
 			if (shield <= 0) {
+				shield = 0;
 				shieldColor = "red";
 			} else if (shield <= maxShield / 3f) {
 				shieldColor = "yellow";
@@ -40,6 +42,8 @@ public class Health : MonoBehaviour {
 		}
 		if (hull <= 0) {
 			hullColor = "red";
+			GameObject explosion = Instantiate (explosionPrefab, transform.position, transform.rotation) as GameObject;
+			Destroy (explosion, 2.0f);
 			Destroy (gameObject);
 		} else if (shield <= maxShield / 3f) {
 			hullColor = "yellow";
