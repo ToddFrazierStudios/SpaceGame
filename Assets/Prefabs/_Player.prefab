@@ -3366,6 +3366,7 @@ GameObject:
   - 23: {fileID: 2300258}
   - 33: {fileID: 3300258}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400012}
   m_Layer: 13
   m_Name: _Player
   m_TagString: Untagged
@@ -11250,6 +11251,21 @@ MonoBehaviour:
   consumeRate: .100000001
   meter: {fileID: 2100000, guid: 4d9d9bf27bc908347847f285b8a352b9, type: 2}
   brakeThrust: 500000
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1856d0dc85ae24db25399865741663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAi: 0
+  controllerNumber: 0
+  useKeyboard: 1
+  useController: 1
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

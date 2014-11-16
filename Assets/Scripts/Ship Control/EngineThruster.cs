@@ -15,6 +15,10 @@ public class EngineThruster : MonoBehaviour {
 	private float speedMultiplier;
 	private Rigidbody rgb;
 
+	//*** INPUT VARIABLES; see ShipController.cs ***//
+	[System.NonSerialized]
+	public float throttle = 0f; //0f-1f
+
 	void Start(){
 		rgb = rigidbody;
 	}
@@ -26,11 +30,6 @@ public class EngineThruster : MonoBehaviour {
 	    speedMultiplier = maxSpeed>0 ? thrustSpeedCurve.Evaluate(speed/maxSpeed) : 1f;
 		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
 
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			rgb.AddRelativeForce(Vector3.forward * maxThrust * speedMultiplier);
-		} else {
-			float force = ParsedInput.controller[0].LeftTrigger * maxThrust * speedMultiplier;
-			rgb.AddRelativeForce(Vector3.forward * force);
-		}
+		rgb.AddRelativeForce(Vector3.forward * throttle * maxThrust * speedMultiplier);
 	}
 }

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Weapons manager.
+/// This class is responsible for actually firing weapons and "reloading them" (enforcing firing rate delays)
+/// </summary>
 public class WeaponsManager : MonoBehaviour {
 
 	public Transform leftGun, rightGun, missileBay;
@@ -9,11 +13,30 @@ public class WeaponsManager : MonoBehaviour {
 	public float delay;
 	public float range;
 	private float timeUntilFire;
-	private bool alternate = true;
+	private Transform nextGunToFire;
+
+	//I plan on using this later
+	public float TimeUntilNextPrimaryShot{
+		get{
+			return timeUntilFire;
+		}
+	}
+
+	//*** INPUT VARIABLES; see ShipController.cs ***//
+	[System.NonSerialized]
+	public bool primaryFire = false;//right trigger
+	[System.NonSerialized]
+	public bool secondaryFire = false;//x button
+
+	//Note for later:
+	//maybe it would be better to do it Halo: Reach style, with Y to switch selected weapons and the same fire button for each?
+	//for now, I think I'll just use bools for fire primary weapon and one for secondary and let ShipController do the thinking on which the player asked to fire.
+	//This class will be responsible for firing weapons (and determining which weapons can be fired right now)
 
 	// Use this for initialization
 	void Start () {
 		missileBay.LookAt (Vector3.zero);
+		nextGunToFire = leftGun;
 	}
 	
 	// Update is called once per frame
@@ -23,11 +46,10 @@ public class WeaponsManager : MonoBehaviour {
 		} else {
 			timeUntilFire = 0;
 		}
-		if ((Input.GetKey (KeyCode.Space) || ParsedInput.controller[0].RightTrigger > 0) && timeUntilFire == 0) {
+		if (primaryFire && timeUntilFire == 0) {
 			shootMachineGuns();
-			timeUntilFire = delay;
 		}
-		if (Input.GetKeyDown (KeyCode.X) || ParsedInput.controller[0].Xdown) {
+		if (secondaryFire) {
 			shootMissile();
 		}
 //		if (Input.GetKeyDown (KeyCode.C) || ParsedInput.controller[0].Adown) {
@@ -38,34 +60,29 @@ public class WeaponsManager : MonoBehaviour {
 //		}
 	}
 	
-	[RPC]
+//	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
-		if (alternate) {
-			if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
-				leftGun.LookAt (hit.point); 
-			} else {
-				leftGun.localRotation = Quaternion.identity;
-			}
-			GameObject created = Instantiate(bulletPrefab,leftGun.position,leftGun.rotation) as GameObject;
-			Bullet b = created.GetComponent<Bullet>();
-			b.setVelocity(leftGun.forward*muzzleVelocity);
+		if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+			nextGunToFire.LookAt (hit.point); 
 		} else {
-			if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
-				rightGun.LookAt (hit.point); 
-			} else {
-				rightGun.localRotation = Quaternion.identity;
-			}
-			GameObject created = Instantiate(bulletPrefab,rightGun.position,rightGun.rotation) as GameObject;
-			Bullet b = created.GetComponent<Bullet>();
-			b.setVelocity(rightGun.forward*muzzleVelocity);
+			nextGunToFire.localRotation = Quaternion.identity;
 		}
-		alternate = !alternate;
+		GameObject created = Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation) as GameObject;
+		Bullet b = created.GetComponent<Bullet>();
+		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
+
+		if(nextGunToFire == leftGun){
+			nextGunToFire = rightGun;
+		}else{
+			nextGunToFire = leftGun;
+		}
+		timeUntilFire = delay;
 		//		leftGun.Emit(1);
 		//		rightGun.Emit(1);
 	}
 
-	[RPC]
+//	[RPC]
 	public void shootMissile() {
 		GameObject missile = Instantiate(missilePrefab,missileBay.position,missileBay.rotation) as GameObject;
 		missile.rigidbody.velocity = rigidbody.velocity;
