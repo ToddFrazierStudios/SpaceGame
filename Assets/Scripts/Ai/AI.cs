@@ -24,9 +24,11 @@ public class AI : MonoBehaviour {
 	private GameObject target;
 
 	private List<GameObject> objectsInRadius;
+	private List<GameObject> visibleObjects;
 
 	void Awake(){
 		objectsInRadius = new List<GameObject>();
+		visibleObjects = new List<GameObject>();
 	}
 
 	// Update is called once per frame
@@ -45,16 +47,15 @@ public class AI : MonoBehaviour {
 				break;
 			}
 			//CONE OF DOOM
-			List<GameObject> spotted = new List<GameObject>();
 			foreach (GameObject obj in objectsInRadius){
 				float angle = Vector3.Angle(transform.forward,obj.transform.position-transform.position);
 				if(angle<=coneAngle){
-					spotted.Add (obj);
+					if(!visibleObjects.Contains(obj)){
+						visibleObjects.Add (obj);
+					}
 				}
 			}
-			foreach (GameObject obj in spotted){
 
-			}
 
 			break;
 		case State.TRACKING:
@@ -77,6 +78,7 @@ public class AI : MonoBehaviour {
 			target = null;
 			state = State.IDLE;
 		}
-		objectsInRadius.Add(other.gameObject);
+		objectsInRadius.Remove(other.gameObject);
+		visibleObjects.Remove(other.gameObject);
 	}
 }
