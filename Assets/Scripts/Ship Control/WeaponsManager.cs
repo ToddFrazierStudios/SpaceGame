@@ -85,6 +85,7 @@ public class WeaponsManager : MonoBehaviour {
 //	[RPC]
 	public void shootMissile() {
 		GameObject missile = Instantiate(missilePrefab,missileBay.position,missileBay.rotation) as GameObject;
+		missile.GetComponent<Missile>().colliderToIgnore = this.GetComponentInChildren<Collider>();
 		missile.rigidbody.velocity = rigidbody.velocity;
 
 	}

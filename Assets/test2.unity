@@ -5515,10 +5515,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 449418953}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -6151,11 +6151,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.x
-      value: .556937158
+      value: .574384689
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.width
-      value: .140980661
+      value: .184182227
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: d0e2b23a17c585c4c8ccc75e2f057594, type: 2}
       propertyPath: m_NormalizedViewPortRect.height
@@ -7389,10 +7389,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 674528140}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -8779,9 +8779,9 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .556937158
+    x: .574384689
     y: .124736249
-    width: .140980661
+    width: .184182227
     height: .230082631
   near clip plane: .300000012
   far clip plane: 2
@@ -8968,10 +8968,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 887834377}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -9122,10 +9122,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 903475699}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -9248,10 +9248,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 909383306}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -10443,10 +10443,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 984110439}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -10714,10 +10714,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1005310609}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -10916,10 +10916,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1027105241}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -13736,10 +13736,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366485993}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -15429,10 +15429,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1541503848}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -16143,10 +16143,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1646536030}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -17597,10 +17597,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1811787005}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -17865,10 +17865,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1838418442}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -18884,10 +18884,10 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2037575453}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_Mass: 20000
+  m_Drag: .0500000007
+  m_AngularDrag: 1.5
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
