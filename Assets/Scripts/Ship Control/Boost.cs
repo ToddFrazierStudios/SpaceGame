@@ -22,7 +22,7 @@ public class Boost : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		DebugHUD.setValue("Boost",boostRemaining);
+//		DebugHUD.setValue("Boost",boostRemaining);
 		meter.SetFloat("_ProgressH",boostRemaining);
 		if(boostRemaining > 0f && activate){
 			float curveMultiplier = thrustCurve.Evaluate(boostRemaining);
@@ -36,9 +36,9 @@ public class Boost : MonoBehaviour {
 			brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
 			brakeVector = Vector3.Cross (brakeVector, transform.forward);
 			rigidbody.AddForce (brakeVector * brakeThrust * curveMultiplier);
-			Debug.DrawRay(transform.position, brakeVector, Color.red);
-			Debug.DrawRay (transform.position, transform.forward);
-			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
+//			Debug.DrawRay(transform.position, brakeVector, Color.red);
+//			Debug.DrawRay (transform.position, transform.forward);
+//			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
 
 			boostRemaining-=consumeRate*angleMultiplier;
 		}else{

@@ -6,13 +6,18 @@ public class EngineThruster : MonoBehaviour {
 	public float maxThrust;
 	public float maxSpeed;
 	public AnimationCurve thrustSpeedCurve;
+
+	private float speedMultiplier;
 	public float ThrustMultiplier{
 		get{
 			return speedMultiplier;
 		}
 	}
+	private float speed;
+	public float Speed{
+		get{return speed;}
+	}
 
-	private float speedMultiplier;
 	private Rigidbody rgb;
 
 	//*** INPUT VARIABLES; see ShipController.cs ***//
@@ -25,10 +30,10 @@ public class EngineThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		float speed = rgb.velocity.magnitude;
-		DebugHUD.setValue("Speed",speed);
+		speed = rgb.velocity.magnitude;
+//		DebugHUD.setValue("Speed",speed);
 	    speedMultiplier = maxSpeed>0 ? thrustSpeedCurve.Evaluate(speed/maxSpeed) : 1f;
-		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
+//		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
 
 		rgb.AddRelativeForce(Vector3.forward * throttle * maxThrust * speedMultiplier);
 	}
