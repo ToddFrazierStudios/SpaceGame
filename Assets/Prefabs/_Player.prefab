@@ -11184,7 +11184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rgb: {fileID: 5400000}
-  force: 400000
+  force: 250000
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11197,7 +11197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rgb: {fileID: 5400000}
-  force: {x: 400, y: 400, z: 250000}
+  force: {x: 400, y: 400, z: 200000}
   barrelForce: {x: 100000, y: 100000, z: 100000}
 --- !u!114 &11400010
 MonoBehaviour:
