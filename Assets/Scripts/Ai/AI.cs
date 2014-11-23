@@ -115,7 +115,7 @@ public class AI : MonoBehaviour {
 		boost.activate = false;
 		thruster.throttle = 0f;
 		if(dDeltaVRz<0f){
-//			boost.activate = true;
+			boost.activate = true;
 		}else if(dDeltaVRz>0f){
 			float thrustForce = thruster.maxThrust*thruster.ThrustMultiplier;
 			float thrusterDeltaV = thrustForce/mass;

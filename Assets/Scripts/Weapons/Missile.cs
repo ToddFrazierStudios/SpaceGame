@@ -108,7 +108,7 @@ public class Missile : MonoBehaviour {
 	public void Explode(){
 		Collider[] collidersHit = Physics.OverlapSphere(transform.position,explosionRadius);
 		foreach (Collider col in collidersHit){
-			if(col!=this.collider){
+			if(col!=this.collider && col!=colliderToIgnore){
 				//might wanna check if they have a Health component first...
 				Vector3 closestPoint = col.ClosestPointOnBounds(transform.position);
 				Vector3 impactVector = col.transform.position-closestPoint;
