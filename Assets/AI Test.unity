@@ -3345,7 +3345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rgb: {fileID: 1804731747}
-  force: 400000
+  force: 250000
 --- !u!54 &1804731747
 Rigidbody:
   m_ObjectHideFlags: 0

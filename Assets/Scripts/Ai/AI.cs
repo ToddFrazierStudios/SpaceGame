@@ -143,8 +143,14 @@ public class AI : MonoBehaviour {
 		DebugHUD.setValue("dDeltaVR","("+dDeltaVRx+","+dDeltaVRy+","+dDeltaVRz+")");
 
 		//Rotation/Steering control
-		rotationManager.xInput = Mathf.Clamp01(XAngle(transform.forward,desiredVelocity)/60f);
-		rotationManager.yInput = Mathf.Clamp01(YAngle(transform.forward,desiredVelocity)/60f);
+		float xAngle = XAngle(transform.forward,desiredVelocity);
+		float yAngle = YAngle(transform.forward,desiredVelocity);
+
+		DebugHUD.setValue("XAngle",xAngle);
+		DebugHUD.setValue("YAngle",yAngle);
+
+		rotationManager.xInput = Mathf.Clamp(xAngle/60f,-1f,1f);
+		rotationManager.yInput = Mathf.Clamp(yAngle/60f,-1f,1f);
 
 //		float deltaAngleX = XAngle(transform.forward,desiredVelocity);
 //		float deltaAngleY = YAngle(transform.forward,desiredVelocity);
