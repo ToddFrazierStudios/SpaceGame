@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: BoostBar_Mat
-  m_Shader: {fileID: 4800000, guid: 2c8df64a0bcea1641a557ca2beb655a1, type: 3}
+  m_Name: VerticalMeter
+  m_Shader: {fileID: 4800000, guid: 9af9be02d017c944aa8e15bae599e169, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -24,25 +24,25 @@ Material:
         first:
           name: _BorderTexture
         second:
-          m_Texture: {fileID: 2800000, guid: 76088bb50ee5d564790827aa99c561dc, type: 3}
+          m_Texture: {fileID: 2800000, guid: f4d5aefebbdd6694084c70f56bbfbf99, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _BarTexture
         second:
-          m_Texture: {fileID: 2800000, guid: d3d6b4766ae611b4b9e68f5825624fcc, type: 3}
+          m_Texture: {fileID: 2800000, guid: 1dcc8b2d3085c144d8554fd8932c8449, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _ProgressH
-        second: 1
+        second: 0
       data:
         first:
           name: _ProgressV
-        second: 0
+        second: -.000545284129
     m_Colors:
       data:
         first:
@@ -51,12 +51,12 @@ Material:
       data:
         first:
           name: _BarBGColor
-        second: {r: 0, g: 0, b: 0, a: .835294127}
+        second: {r: 0, g: 0, b: 0, a: 0}
       data:
         first:
           name: _BarColor
-        second: {r: 1, g: 0, b: 0, a: 1}
+        second: {r: .662745118, g: .941176474, b: .313725501, a: 1}
       data:
         first:
           name: _BorderColor
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .666666687, g: .945098042, b: .313725501, a: 1}

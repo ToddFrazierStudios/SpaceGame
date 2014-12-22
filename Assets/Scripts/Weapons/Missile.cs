@@ -51,7 +51,8 @@ public class Missile : MonoBehaviour {
 			target = GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0].transform;
 			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
 		} else if (Physics.Raycast (transform.position, transform.forward, out hit)) {
-			target = hit.transform; 
+			if(hit.transform!=colliderToIgnore.transform)
+				target = hit.transform;
 		} else {
 			target = null;
 		}

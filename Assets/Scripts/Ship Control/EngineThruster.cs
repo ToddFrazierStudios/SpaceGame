@@ -30,11 +30,22 @@ public class EngineThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		Vector3 localVelocity = transform.InverseTransformVector(rgb.velocity);
+		DebugHUD.setValue("Local Velocity",localVelocity);
 		speed = rgb.velocity.magnitude;
-//		DebugHUD.setValue("Speed",speed);
 	    speedMultiplier = maxSpeed>0 ? thrustSpeedCurve.Evaluate(speed/maxSpeed) : 1f;
-//		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
+		float localMaxThrust = maxThrust;
 
-		rgb.AddRelativeForce(Vector3.forward * throttle * maxThrust * speedMultiplier);
+		if(localVelocity.z<0f){
+			localMaxThrust = -rgb.mass*localVelocity.z*5;
+			if(localMaxThrust<maxThrust){
+				localMaxThrust = maxThrust;
+			}
+		}
+
+		DebugHUD.setValue("LocalMaxThrust",localMaxThrust);
+		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
+
+		rgb.AddRelativeForce(Vector3.forward * throttle * localMaxThrust * speedMultiplier);
 	}
 }

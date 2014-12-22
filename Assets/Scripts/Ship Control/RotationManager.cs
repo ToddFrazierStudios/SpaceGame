@@ -16,7 +16,10 @@ public class RotationManager : MonoBehaviour {
 	public bool rotateLeft = false, rotateRight = false;
 
 	void Awake() {
-
+		Vector3 inert = rgb.inertiaTensor;
+		Debug.Log (inert);
+		inert = Vector3.one*((inert.x+inert.y+inert.z)/3);
+		rgb.inertiaTensor = inert;
 	}
 	
 	// Update is called once per frame
