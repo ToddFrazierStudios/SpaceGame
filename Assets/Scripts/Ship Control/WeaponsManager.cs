@@ -12,6 +12,8 @@ public class WeaponsManager : MonoBehaviour {
 	public GameObject bulletPrefab, missilePrefab;
 	public float delay;
 	public float range;
+	private OurRadar radar;
+	private Transform target;
 	private float timeUntilFire;
 	private Transform nextGunToFire;
 
@@ -35,12 +37,14 @@ public class WeaponsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		radar = GetComponent<OurRadar>();
 		missileBay.LookAt (Vector3.zero);
 		nextGunToFire = leftGun;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		target = radar.getTarget();
 		if (timeUntilFire > 0) {
 			timeUntilFire -= Time.deltaTime;
 		} else {
@@ -63,7 +67,9 @@ public class WeaponsManager : MonoBehaviour {
 //	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+		if (target != null) {
+			nextGunToFire.LookAt (target);
+		} else if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
 			nextGunToFire.LookAt (hit.point); 
 		} else {
 			nextGunToFire.localRotation = Quaternion.identity;

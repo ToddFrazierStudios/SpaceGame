@@ -5,6 +5,11 @@ TagManager:
   tags:
   - 
   - Sub_Component
+  - Radar
+  - Hostile
+  - Friendly
+  - Neutral
+  - Scenery
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -22,7 +27,7 @@ TagManager:
   User Layer 13: Player
   User Layer 14: Cockpit
   User Layer 15: Enemy
-  User Layer 16: 
+  User Layer 16: Radar
   User Layer 17: 
   User Layer 18: 
   User Layer 19: 

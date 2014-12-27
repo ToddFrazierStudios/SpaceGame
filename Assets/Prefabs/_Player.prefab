@@ -3367,6 +3367,8 @@ GameObject:
   - 33: {fileID: 3300258}
   - 114: {fileID: 11400010}
   - 114: {fileID: 11400012}
+  - 114: {fileID: 11400014}
+  - 135: {fileID: 13500000}
   m_Layer: 13
   m_Name: _Player
   m_TagString: Untagged
@@ -4442,7 +4444,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.109999999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400172}
@@ -7524,7 +7526,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294957311
+    m_Bits: 4294891775
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -10137,7 +10139,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: b114b221f9b6d453dab2a06ba69f233d, type: 2}
+  - {fileID: 2100000, guid: 51a030fba285d45df9b33e302fd261f7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -11074,7 +11076,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100418}
-  m_Mesh: {fileID: 4300000, guid: 23342418e0da948ba98baa657248371d, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d652fd08bc1f941869752f759be546f8, type: 3}
 --- !u!33 &3300260
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -11109,7 +11111,7 @@ MeshCollider:
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
   m_Convex: 1
-  m_Mesh: {fileID: 4300000, guid: 23342418e0da948ba98baa657248371d, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d652fd08bc1f941869752f759be546f8, type: 3}
 --- !u!81 &8100000
 AudioListener:
   m_ObjectHideFlags: 1
@@ -11330,6 +11332,31 @@ MonoBehaviour:
   controllerNumber: 0
   useKeyboard: 1
   useController: 1
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf2c88d25b2648d393b8e7cc2e1156d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 100
+  maxBlips: 30
+  targetObject: {fileID: 0}
+  cameraTransform: {fileID: 400322}
+  leftGun: {fileID: 0}
+  rightGun: {fileID: 0}
+  hostileBlip: {fileID: 2100000, guid: 69c5cdf1fe3ea4a148da8cf609454256, type: 2}
+  hostileBlipDot: {fileID: 2100000, guid: 7c2e5f71718dd43839650f642941d8eb, type: 2}
+  friendlyBlip: {fileID: 2100000, guid: 9bb6432c0ca0d41dd8603271cb5f9071, type: 2}
+  friendlyBlipDot: {fileID: 2100000, guid: 87763d15b2cb84c8ab592f8a8b1f5e54, type: 2}
+  neutralBlip: {fileID: 2100000, guid: 742acbe0da79b4e0c9a4977d5d50f1a3, type: 2}
+  neutralBlipDot: {fileID: 2100000, guid: 9bcaaa2f9f5354454854111cde135568, type: 2}
+  sceneryBlip: {fileID: 2100000, guid: 85f9ff109a5c4464ba677dc50f965e6e, type: 2}
+  sceneryBlipDot: {fileID: 2100000, guid: 28a135e9f36544ebeb8cebc2009f3d72, type: 2}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -11337,6 +11364,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100322}
   m_Enabled: 1
+--- !u!135 &13500000
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 500
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 7b8b01b2bd8c348f9b09c5a17b1d21de
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - realObject: {instanceID: 0}
+  - hostileBlip: {fileID: 2100000, guid: 69c5cdf1fe3ea4a148da8cf609454256, type: 2}
+  - hostileBlipDot: {fileID: 2100000, guid: 28a135e9f36544ebeb8cebc2009f3d72, type: 2}
+  - marker: {instanceID: 0}
+  - projection: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
