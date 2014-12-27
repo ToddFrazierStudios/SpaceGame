@@ -6,6 +6,7 @@ public class RadarBlip : IComparable<RadarBlip> {
 
 	public GameObject realObject;
 	public int factionNumber;
+	public float distance;
 	public GameObject marker;
 	public GameObject projection;
 
@@ -25,22 +26,18 @@ public class RadarBlip : IComparable<RadarBlip> {
 		projection.GetComponent<MeshRenderer>().material = blip;
 	}
 
-	public float getDistance() {
-		return Vector3.Magnitude(marker.transform.position);
-	}
-
 	public int CompareTo(RadarBlip obj) {
 		if (obj == null) {
 			return 1;
 		}
-//		if (factionNumber == obj.factionNumber) {
-			if (getDistance() == obj.getDistance()) {
+		if (factionNumber == obj.factionNumber) {
+			if (distance == obj.distance) {
 				return 0;
 			} else {
-				return (int)(obj.getDistance() - getDistance());
+				return (int)(obj.distance - distance);
 			}
-//		} else {
-//			return factionNumber - obj.factionNumber;
-//		}
+		} else {
+			return factionNumber - obj.factionNumber;
+		}
 	}
 }

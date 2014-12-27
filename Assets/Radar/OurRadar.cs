@@ -50,6 +50,7 @@ public class OurRadar : MonoBehaviour {
 					blip.marker.transform.position = Vector3.ProjectOnPlane (projectionPosition, new Vector3(0f, 0.766f, -0.643f));
 					markerPosition = new Vector3(blip.marker.transform.position.x, blip.marker.transform.position.y + markerPosition.y, blip.marker.transform.position.z);
 					blip.projection.transform.position = markerPosition;
+					blip.distance = Mathf.Abs(Vector3.Distance (transform.position, blip.realObject.transform.position));
 				}
 			} else {
 				toRemove = blip;
@@ -73,7 +74,7 @@ public class OurRadar : MonoBehaviour {
 			targetObject.transform.position = target.position;
 			targetObject.transform.LookAt (cameraTransform);
 			targetObject.transform.localRotation = transform.rotation;
-			targetObject.transform.localScale = Vector3.one * Vector3.Distance (targetObject.transform.position, transform.position) / 10f;
+			targetObject.transform.localScale = new Vector3(12f, 10f, 10f) * Vector3.Distance (targetObject.transform.position, transform.position) / 100f;
 			targetObject.renderer.enabled = true;
 		}
 	}
