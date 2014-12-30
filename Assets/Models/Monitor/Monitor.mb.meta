@@ -34,6 +34,24 @@ ModelImporter:
     100056: transform6
     100058: transform7
     100060: transform8
+    100062: Arm1
+    100064: group1
+    100066: group2
+    100068: group3
+    100070: joint1
+    100072: joint2
+    100074: joint3
+    100076: Monitor
+    100078: pasted__Arm1
+    100080: pasted__group2
+    100082: pasted__pasted__pCylinder3
+    100084: pasted__pCylinder3
+    100086: pasted__pCylinder3 1
+    100088: pasted__transform10
+    100090: pasted__transform9
+    100092: pCylinder3
+    100094: transform10
+    100096: transform9
     400000: //RootNode
     400002: pCube1
     400004: pCube2
@@ -65,6 +83,24 @@ ModelImporter:
     400056: transform6
     400058: transform7
     400060: transform8
+    400062: Arm1
+    400064: group1
+    400066: group2
+    400068: group3
+    400070: joint1
+    400072: joint2
+    400074: joint3
+    400076: Monitor
+    400078: pasted__Arm1
+    400080: pasted__group2
+    400082: pasted__pasted__pCylinder3
+    400084: pasted__pCylinder3
+    400086: pasted__pCylinder3 1
+    400088: pasted__transform10
+    400090: pasted__transform9
+    400092: pCylinder3
+    400094: transform10
+    400096: transform9
     2300000: pCube5
     2300002: pCylinder1
     2300004: pCube6
@@ -74,7 +110,13 @@ ModelImporter:
     4300000: pCube5
     4300002: pCylinder1
     4300004: pCube6
+    4300006: Monitor
+    4300008: Arm1
+    4300010: pasted__Arm1
     9500000: //RootNode
+    13700000: Arm1
+    13700002: Monitor
+    13700004: pasted__Arm1
   materials:
     importMaterials: 1
     materialName: 0
@@ -124,7 +166,7 @@ ModelImporter:
     armStretch: .0500000007
     legStretch: .0500000007
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: joint1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   additionalBone: 0
