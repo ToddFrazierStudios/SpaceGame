@@ -5,7 +5,9 @@ using System.Collections.Generic;
 // it's 3:30 am and im going to make some radar
 // how hard can it be
 public class OurRadar : MonoBehaviour {
-	
+
+	public const int HOSTILE=3, FRIENDLY=2, NEUTRAL = 1, SCENERY = 0;
+
 	public float range;
 	public int maxBlips;
 	public GameObject targetObject;
@@ -89,24 +91,24 @@ public class OurRadar : MonoBehaviour {
 			switch (other.tag) {
 			case "Hostile":
 				blip = new RadarBlip(other.gameObject, hostileBlip, hostileBlipDot);
-				blip.factionNumber = 3;
+				blip.factionNumber = HOSTILE;
 				hostiles.add (blip);
 				break;
 			case "Friendly":
 				blip = new RadarBlip(other.gameObject, friendlyBlip, friendlyBlipDot);
-				blip.factionNumber = 2;
+				blip.factionNumber = FRIENDLY;
 				break;
 			case "Neutral":
 				blip = new RadarBlip(other.gameObject, neutralBlip, neutralBlipDot);
-				blip.factionNumber = 1;
+				blip.factionNumber = NEUTRAL;
 				break;
 			case "Scenery":
 				blip = new RadarBlip(other.gameObject, sceneryBlip, sceneryBlipDot);
-				blip.factionNumber = 0;
+				blip.factionNumber = SCENERY;
 				break;
 			default:
 				blip = new RadarBlip(other.gameObject, neutralBlip, neutralBlipDot);
-				blip.factionNumber = 1;
+				blip.factionNumber = NEUTRAL;
 				break;
 			}
 			contacts.Add (blip);
