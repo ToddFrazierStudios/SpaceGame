@@ -8,6 +8,14 @@ public class RadarMount : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(animation){
+			if(animation.isPlaying){
+				cameraToPosition.enabled = false;
+				return;
+			}else{
+				cameraToPosition.enabled = true;
+			}
+		}
 		Vector3 topRightScreenPoint = mainCamera.WorldToViewportPoint(topRight.position);
 		Vector3 bottomLeftScreenPoint = mainCamera.WorldToViewportPoint(bottomLeft.position);
 		float x = bottomLeftScreenPoint.x;

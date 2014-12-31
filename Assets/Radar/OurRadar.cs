@@ -68,7 +68,7 @@ public class OurRadar : MonoBehaviour {
 			RadarBlip targetBlip = hostiles.pop();
 			if (targetBlip == null) {
 				target = null;
-				targetObject.renderer.enabled = false;
+				if(targetObject)targetObject.renderer.enabled = false;
 			} else {
 				target = targetBlip.realObject.transform;
 			}

@@ -113,7 +113,10 @@ ModelImporter:
     4300006: Monitor
     4300008: Arm1
     4300010: pasted__Arm1
+    7400000: Open
+    7400002: Close
     9500000: //RootNode
+    11100000: //RootNode
     13700000: Arm1
     13700002: Monitor
     13700004: pasted__Arm1
@@ -123,7 +126,7 @@ ModelImporter:
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
-    bakeSimulation: 0
+    bakeSimulation: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationCompression: 1
@@ -132,12 +135,256 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Open
+      takeName: Take 001
+      firstFrame: 20
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Arm1
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__pCube1
+        weight: 1
+      - path: group/pasted__pCube1/pasted__transform2
+        weight: 1
+      - path: group/pasted__pCube2
+        weight: 1
+      - path: group/pasted__pCube2/pasted__transform1
+        weight: 1
+      - path: group/pasted__pCube3
+        weight: 1
+      - path: group/pasted__pCube3/pasted__transform3
+        weight: 1
+      - path: group/pasted__pCube4
+        weight: 1
+      - path: group/pasted__pCube4/pasted__transform4
+        weight: 1
+      - path: group/pasted__pCube5
+        weight: 1
+      - path: group/pasted__pCube5/pasted__transform5
+        weight: 1
+      - path: group/pasted__pCylinder1
+        weight: 1
+      - path: group/pasted__pCylinder1/pasted__transform6
+        weight: 1
+      - path: group/pasted__pCylinder2
+        weight: 1
+      - path: group/pasted__pCylinder2/transform5
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pasted__pCylinder3
+        weight: 1
+      - path: group2/pasted__pCylinder3/transform9
+        weight: 1
+      - path: group3
+        weight: 1
+      - path: group3/pasted__Arm1
+        weight: 1
+      - path: group3/pasted__group2
+        weight: 1
+      - path: group3/pasted__group2/pasted__pasted__pCylinder3
+        weight: 1
+      - path: group3/pasted__group2/pasted__pasted__pCylinder3/pasted__transform9
+        weight: 1
+      - path: group3/pasted__pCylinder3 1
+        weight: 1
+      - path: group3/pasted__pCylinder3 1/pasted__transform10
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint2
+        weight: 1
+      - path: joint1/joint2/joint3
+        weight: 1
+      - path: Monitor
+        weight: 1
+      - path: pCube1
+        weight: 1
+      - path: pCube1/transform2
+        weight: 1
+      - path: pCube2
+        weight: 1
+      - path: pCube2/transform1
+        weight: 1
+      - path: pCube3
+        weight: 1
+      - path: pCube3/transform3
+        weight: 1
+      - path: pCube4
+        weight: 1
+      - path: pCube4/transform4
+        weight: 1
+      - path: pCube5
+        weight: 1
+      - path: pCube5/transform8
+        weight: 1
+      - path: pCylinder1
+        weight: 1
+      - path: pCylinder1/transform6
+        weight: 1
+      - path: pCylinder2
+        weight: 1
+      - path: pCylinder2/transform7
+        weight: 1
+      - path: pCylinder3
+        weight: 1
+      - path: pCylinder3/transform10
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Close
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Arm1
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__pCube1
+        weight: 1
+      - path: group/pasted__pCube1/pasted__transform2
+        weight: 1
+      - path: group/pasted__pCube2
+        weight: 1
+      - path: group/pasted__pCube2/pasted__transform1
+        weight: 1
+      - path: group/pasted__pCube3
+        weight: 1
+      - path: group/pasted__pCube3/pasted__transform3
+        weight: 1
+      - path: group/pasted__pCube4
+        weight: 1
+      - path: group/pasted__pCube4/pasted__transform4
+        weight: 1
+      - path: group/pasted__pCube5
+        weight: 1
+      - path: group/pasted__pCube5/pasted__transform5
+        weight: 1
+      - path: group/pasted__pCylinder1
+        weight: 1
+      - path: group/pasted__pCylinder1/pasted__transform6
+        weight: 1
+      - path: group/pasted__pCylinder2
+        weight: 1
+      - path: group/pasted__pCylinder2/transform5
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pasted__pCylinder3
+        weight: 1
+      - path: group2/pasted__pCylinder3/transform9
+        weight: 1
+      - path: group3
+        weight: 1
+      - path: group3/pasted__Arm1
+        weight: 1
+      - path: group3/pasted__group2
+        weight: 1
+      - path: group3/pasted__group2/pasted__pasted__pCylinder3
+        weight: 1
+      - path: group3/pasted__group2/pasted__pasted__pCylinder3/pasted__transform9
+        weight: 1
+      - path: group3/pasted__pCylinder3 1
+        weight: 1
+      - path: group3/pasted__pCylinder3 1/pasted__transform10
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint2
+        weight: 1
+      - path: joint1/joint2/joint3
+        weight: 1
+      - path: Monitor
+        weight: 1
+      - path: pCube1
+        weight: 1
+      - path: pCube1/transform2
+        weight: 1
+      - path: pCube2
+        weight: 1
+      - path: pCube2/transform1
+        weight: 1
+      - path: pCube3
+        weight: 1
+      - path: pCube3/transform3
+        weight: 1
+      - path: pCube4
+        weight: 1
+      - path: pCube4/transform4
+        weight: 1
+      - path: pCube5
+        weight: 1
+      - path: pCube5/transform8
+        weight: 1
+      - path: pCylinder1
+        weight: 1
+      - path: pCylinder1/transform6
+        weight: 1
+      - path: pCylinder2
+        weight: 1
+      - path: pCylinder2/transform7
+        weight: 1
+      - path: pCylinder3
+        weight: 1
+      - path: pCylinder3/transform10
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 1
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
@@ -168,6 +415,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: joint1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 1
   additionalBone: 0
   userData: 
