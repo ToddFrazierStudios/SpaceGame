@@ -19,7 +19,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 645d81c19d45aaa4e95ad6aa01b2ea2c, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1439,6 +1439,10 @@ Prefab:
       propertyPath: m_Name
       value: RadarMonitor
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
   m_RootGameObject: {fileID: 2006168018}
@@ -2099,6 +2103,10 @@ Prefab:
     - target: {fileID: 100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
       propertyPath: m_Name
       value: StabilizerMonitor
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
@@ -2915,7 +2923,7 @@ Renderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 953691136}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -4408,7 +4416,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
 --- !u!1 &1477268437
 GameObject:
   m_ObjectHideFlags: 0
@@ -5288,6 +5296,10 @@ Prefab:
       propertyPath: m_Name
       value: MetersMonitor
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0e938c9ab67f0949b9ef26667701368, type: 3}
   m_RootGameObject: {fileID: 1775293123}
@@ -5468,7 +5480,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
 --- !u!1 &1797377993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6059,7 +6071,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
 --- !u!114 &2006168021
 MonoBehaviour:
   m_ObjectHideFlags: 0
