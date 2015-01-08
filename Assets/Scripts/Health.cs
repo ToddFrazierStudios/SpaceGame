@@ -48,8 +48,10 @@ public class Health : MonoBehaviour {
 		} else if (shield <= maxShield / 3f) {
 			hullColor = "yellow";
 		}
-		DebugHUD.setValue ("Hull", "<color=" + hullColor + ">" + hull + "</color>");
-		DebugHUD.setValue ("Shields", "<color=" + shieldColor + ">" + shield + "</color>");
+		if (tag == "Player") {
+			DebugHUD.setValue ("Hull", "<color=" + hullColor + ">" + hull + "</color>");
+			DebugHUD.setValue ("Shields", "<color=" + shieldColor + ">" + shield + "</color>");
+		}
 	}
 
 	// For it to work with send message, the parameters must be stored as a quaternion,

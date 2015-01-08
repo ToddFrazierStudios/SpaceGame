@@ -37,6 +37,18 @@ public class PriorityQueue <T> where T:IComparable<T> {
 		siftUp (count - 1);
 	}
 
+	public void remove(T toRemove) {
+		if (count != 0 && toRemove != null) {
+			int i = 0;
+			while (i < count - 1 && toRemove.CompareTo (queue[i]) != 0) {
+				i++;
+			}
+			queue[i] = default(T);
+			queue[i] = queue[count - 1];
+			siftDown (i);
+		}
+	}
+
 	public void rebuild() {
 		PriorityQueue<T> newQueue = new PriorityQueue<T>(max);
 		int tempCount = count;

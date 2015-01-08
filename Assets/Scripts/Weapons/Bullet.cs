@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour {
 	private float lifeTime = 0.0f;
 	public float maxLife = 1.5f;
 	public float damage;
+	public Collider colliderToIgnore;
 	private Vector3 velocity;//251 m/s
 	
 //	public AudioClip[] hitEnemySounds,hitWallSounds;
@@ -35,15 +36,17 @@ public class Bullet : MonoBehaviour {
 		RaycastHit hit;
 		transform.position+=velocity*Time.deltaTime;
 		if(Physics.Linecast(oldPos,transform.position,out hit)){
-			Vector3 direction = transform.position - oldPos;
-			Quaternion parameters = new Quaternion(direction.x, direction.y, direction.z, damage);
-			hit.collider.gameObject.SendMessage("hurt", parameters, SendMessageOptions.DontRequireReceiver);
-			if(hit.collider.gameObject.tag == "Enemy"){
-//				playOneSound(hitEnemySounds);
-			}else{
-//				playOneSound(hitWallSounds);
+			if (hit.collider != colliderToIgnore) {
+				Vector3 direction = transform.position - oldPos;
+				Quaternion parameters = new Quaternion(direction.x, direction.y, direction.z, damage);
+				hit.collider.gameObject.SendMessage("hurt", parameters, SendMessageOptions.DontRequireReceiver);
+				if(hit.collider.gameObject.tag == "Enemy"){
+	//				playOneSound(hitEnemySounds);
+				}else{
+	//				playOneSound(hitWallSounds);
+				}
+				Destroy(gameObject);
 			}
-			Destroy(gameObject);
 		}
 		//next...
 		//		//adjust the trail

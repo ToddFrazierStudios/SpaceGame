@@ -16,7 +16,7 @@ public class WeaponsManager : MonoBehaviour {
 	private Transform target;
 	private float timeUntilFire;
 	private Transform nextGunToFire;
-
+	private int layerMask = 1 << 13;
 	//I plan on using this later
 	public float TimeUntilNextPrimaryShot{
 		get{
@@ -37,6 +37,7 @@ public class WeaponsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		layerMask = ~layerMask;
 		radar = GetComponent<OurRadar>();
 		missileBay.LookAt (Vector3.zero);
 		nextGunToFire = leftGun;
@@ -44,7 +45,9 @@ public class WeaponsManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		target = radar.getTarget();
+		if (radar) {
+			target = radar.getTarget();
+		}
 		if (timeUntilFire > 0) {
 			timeUntilFire -= Time.deltaTime;
 		} else {
@@ -67,15 +70,16 @@ public class WeaponsManager : MonoBehaviour {
 //	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
-		if (target != null) {
-			nextGunToFire.LookAt (target);
-		} else if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+		// Dynamically resize based on distance? Maybe later.
+		if (Physics.SphereCast (transform.position, 7f, transform.forward, out hit, range, layerMask)) {
+			Debug.Log (hit.collider);
 			nextGunToFire.LookAt (hit.point); 
 		} else {
 			nextGunToFire.localRotation = Quaternion.identity;
 		}
 		GameObject created = Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
+		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
 
 		if(nextGunToFire == leftGun){
@@ -91,8 +95,9 @@ public class WeaponsManager : MonoBehaviour {
 //	[RPC]
 	public void shootMissile() {
 		GameObject missile = Instantiate(missilePrefab,missileBay.position,missileBay.rotation) as GameObject;
-		missile.GetComponent<Missile>().colliderToIgnore = this.GetComponentInChildren<Collider>();
+		missile.GetComponent<Missile>().colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
+		missile.GetComponent<Missile>().radar = radar;
 		missile.rigidbody.velocity = rigidbody.velocity;
-
+		missile.tag = tag;
 	}
 }

@@ -12,6 +12,8 @@ public class ParsedInput{
 	};
 
 	public sealed class Controller{
+		private bool beginningLeft = true;
+		private bool beginningRight = true;
 		public bool invertY = false;
 
 		private int playerNum = 0;
@@ -20,6 +22,16 @@ public class ParsedInput{
 			get{
 				return playerNum;
 			}
+		}
+
+		public void ResetAllAxes() {
+			Input.ResetInputAxes();
+			beginningLeft = true;
+			beginningRight = true;
+		}
+
+		public bool AnyKey() {
+			return Input.anyKey;
 		}
 
 		private string getAxisPrefix(){
@@ -35,10 +47,11 @@ public class ParsedInput{
 		public float LeftTrigger{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				if (Input.GetAxisRaw(getAxisPrefix()+ "5") != 0) {
-					return (Input.GetAxisRaw(getAxisPrefix()+ "5") + 1)/2f;
-				} else {
+				if (beginningLeft && Input.GetAxisRaw(getAxisPrefix()+ "5") == 0) {
 					return 0;
+				} else {
+					beginningLeft = false;
+					return (Input.GetAxisRaw(getAxisPrefix()+ "5") + 1)/2f;
 				}
 				#else
 				return Input.GetAxisRaw(getAxisPrefix()+ "9");
@@ -53,10 +66,11 @@ public class ParsedInput{
 		public float RightTrigger{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				if (Input.GetAxisRaw(getAxisPrefix()+ "6") != 0) {
-					return (Input.GetAxisRaw(getAxisPrefix()+ "6") + 1)/2f;
-				} else {
+				if (beginningRight && Input.GetAxisRaw(getAxisPrefix()+ "6") == 0) {
 					return 0;
+				} else {
+					beginningRight = false;
+					return (Input.GetAxisRaw(getAxisPrefix()+ "6") + 1)/2f;
 				}
 				#else
 				return Input.GetAxisRaw(getAxisPrefix()+ "10");
@@ -106,7 +120,7 @@ public class ParsedInput{
 		public bool A{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "16");
+				return Input.GetKey(getButtonPrefix()+ "11"); // 360: 16
 				#else
 				return Input.GetKey(getButtonPrefix()+ "0");
 				#endif
@@ -115,7 +129,7 @@ public class ParsedInput{
 		public bool Adown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "16");
+				return Input.GetKeyDown(getButtonPrefix()+ "11"); // 360: 16
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "0");
 				#endif
@@ -124,7 +138,7 @@ public class ParsedInput{
 		public bool Aup{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "16");
+				return Input.GetKeyUp(getButtonPrefix()+ "11"); // 360: 16
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "0");
 				#endif
@@ -133,7 +147,7 @@ public class ParsedInput{
 		public bool B{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "17");
+				return Input.GetKey(getButtonPrefix()+ "12"); // 360: 17
 				#else
 				return Input.GetKey(getButtonPrefix()+ "1");
 				#endif
@@ -142,7 +156,7 @@ public class ParsedInput{
 		public bool Bdown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "17");
+				return Input.GetKeyDown(getButtonPrefix()+ "12"); // 360: 17
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "1");
 				#endif
@@ -151,7 +165,7 @@ public class ParsedInput{
 		public bool Bup{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "17");
+				return Input.GetKeyUp(getButtonPrefix()+ "12"); // 360: 17
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "1");
 				#endif
@@ -160,7 +174,7 @@ public class ParsedInput{
 		public bool X{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "18");
+				return Input.GetKey(getButtonPrefix()+ "13"); // 360: 18
 				#else
 				return Input.GetKey(getButtonPrefix()+ "2");
 				#endif
@@ -169,7 +183,7 @@ public class ParsedInput{
 		public bool Xdown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "18");
+				return Input.GetKeyDown(getButtonPrefix()+ "13"); // 360: 18
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "2");
 				#endif
@@ -178,7 +192,7 @@ public class ParsedInput{
 		public bool Xup{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "18");
+				return Input.GetKeyUp(getButtonPrefix()+ "13"); // 360: 18
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "2");
 				#endif
@@ -187,7 +201,7 @@ public class ParsedInput{
 		public bool Y{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "19");
+				return Input.GetKey(getButtonPrefix()+ "14"); // 360: 19
 				#else
 				return Input.GetKey(getButtonPrefix()+ "3");
 				#endif
@@ -196,7 +210,7 @@ public class ParsedInput{
 		public bool Ydown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "19");
+				return Input.GetKeyDown(getButtonPrefix()+ "14"); // 360: 19
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "3");
 				#endif
@@ -205,7 +219,7 @@ public class ParsedInput{
 		public bool Yup{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "18");
+				return Input.GetKeyUp(getButtonPrefix()+ "14"); // 360: 19
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "3");
 				#endif
@@ -215,7 +229,7 @@ public class ParsedInput{
 		public bool LeftBumper{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "13");
+				return Input.GetKey(getButtonPrefix()+ "8"); // 360: 13
 				#else
 				return Input.GetKey(getButtonPrefix()+ "4");
 				#endif
@@ -224,7 +238,7 @@ public class ParsedInput{
 		public bool LeftBumperDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "13");
+				return Input.GetKeyDown(getButtonPrefix()+ "8"); // 360: 13
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "4");
 				#endif
@@ -233,7 +247,7 @@ public class ParsedInput{
 		public bool LeftBumperUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "13");
+				return Input.GetKeyUp(getButtonPrefix()+ "8"); // 360: 13
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "4");
 				#endif
@@ -243,7 +257,7 @@ public class ParsedInput{
 		public bool RightBumper{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "14");
+				return Input.GetKey(getButtonPrefix()+ "9");  // 360: 14
 				#else
 				return Input.GetKey(getButtonPrefix()+ "5");
 				#endif
@@ -252,7 +266,7 @@ public class ParsedInput{
 		public bool RightBumperDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "14");
+				return Input.GetKeyDown(getButtonPrefix()+ "9"); // 360: 14
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "5");
 				#endif
@@ -261,7 +275,7 @@ public class ParsedInput{
 		public bool RightBumperUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "14");
+				return Input.GetKeyUp(getButtonPrefix()+ "9");  // 360: 14
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "5");
 				#endif
@@ -271,7 +285,7 @@ public class ParsedInput{
 		public bool Back{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "10");
+				return Input.GetKey(getButtonPrefix()+ "5"); // 360: 10
 				#else
 				return Input.GetKey(getButtonPrefix()+ "6");
 				#endif
@@ -280,7 +294,7 @@ public class ParsedInput{
 		public bool BackDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "10");
+				return Input.GetKeyDown(getButtonPrefix()+ "5"); // 360: 10
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "6");
 				#endif
@@ -289,7 +303,7 @@ public class ParsedInput{
 		public bool BackUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "10");
+				return Input.GetKeyUp(getButtonPrefix()+ "5"); // 360: 10
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "6");
 				#endif
@@ -298,7 +312,7 @@ public class ParsedInput{
 		public bool Start{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "9");
+				return Input.GetKey(getButtonPrefix()+ "4"); // 360: 9
 				#else
 				return Input.GetKey(getButtonPrefix()+ "7");
 				#endif
@@ -307,7 +321,7 @@ public class ParsedInput{
 		public bool StartDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "9");
+				return Input.GetKeyDown(getButtonPrefix()+ "4"); // 360: 9
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "7");
 				#endif
@@ -316,7 +330,7 @@ public class ParsedInput{
 		public bool StartUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "9");
+				return Input.GetKeyUp(getButtonPrefix()+ "4"); // 360: 9
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "7");
 				#endif
@@ -326,7 +340,7 @@ public class ParsedInput{
 		public bool LS{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "11");
+				return Input.GetKey(getButtonPrefix()+ "6"); // 360: 11
 				#else
 				return Input.GetKey(getButtonPrefix()+ "8");
 				#endif
@@ -335,7 +349,7 @@ public class ParsedInput{
 		public bool LSDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "11");
+				return Input.GetKeyDown(getButtonPrefix()+ "6"); // 360: 11
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "8");
 				#endif
@@ -344,7 +358,7 @@ public class ParsedInput{
 		public bool LSUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "11");
+				return Input.GetKeyUp(getButtonPrefix()+ "6"); // 360: 11
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "8");
 				#endif
@@ -353,7 +367,7 @@ public class ParsedInput{
 		public bool RS{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKey(getButtonPrefix()+ "12");
+				return Input.GetKey(getButtonPrefix()+ "7"); // 360: 12
 				#else
 				return Input.GetKey(getButtonPrefix()+ "9");
 				#endif
@@ -362,7 +376,7 @@ public class ParsedInput{
 		public bool RSDown{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyDown(getButtonPrefix()+ "12");
+				return Input.GetKeyDown(getButtonPrefix()+ "7"); // 360: 12
 				#else
 				return Input.GetKeyDown(getButtonPrefix()+ "9");
 				#endif
@@ -371,9 +385,117 @@ public class ParsedInput{
 		public bool RSUp{
 			get{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-				return Input.GetKeyUp(getButtonPrefix()+ "12");
+				return Input.GetKeyUp(getButtonPrefix()+ "7"); // 360: 12
 				#else
 				return Input.GetKeyUp(getButtonPrefix()+ "9");
+				#endif
+			}
+		}
+		public bool D_Down {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "1"); // 360: 6
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_DownDown {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "1"); // 360: 6
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_DownUp {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "1"); // 360: 6
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_Right {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "3"); // 360: 8
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_RightDown {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "3"); // 360: 8
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_RightUp {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "3"); // 360: 8
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_Left {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "2"); // 360: 7
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_LeftDown {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "2"); // 360: 7
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_LeftUp {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "2"); // 360: 7
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_Up {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKey(getButtonPrefix()+ "0"); // 360: 5
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_UpDown {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyDown(getButtonPrefix()+ "0"); // 360: 5
+				#else
+				return false;
+				#endif
+			}
+		}
+		public bool D_UpUp {
+			get{
+				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+				return Input.GetKeyUp(getButtonPrefix()+ "0"); // 360: 5
+				#else
+				return false;
 				#endif
 			}
 		}

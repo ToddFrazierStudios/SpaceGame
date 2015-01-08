@@ -22,6 +22,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Detail
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _BorderTexture
         second:
           m_Texture: {fileID: 2800000, guid: f4d5aefebbdd6694084c70f56bbfbf99, type: 3}
@@ -42,7 +49,7 @@ Material:
       data:
         first:
           name: _ProgressV
-        second: 0
+        second: .026176801
     m_Colors:
       data:
         first:
@@ -59,4 +66,4 @@ Material:
       data:
         first:
           name: _BorderColor
-        second: {r: .666666687, g: .945098042, b: .313725501, a: 1}
+        second: {r: 0, g: 0, b: 0, a: 0}

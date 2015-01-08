@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 5686e69e718e3434aad2320e8f598011
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - cameraTransform: {instanceID: 0}
+  - playerBlip: {fileID: 2100000, guid: 7258911fdf5784eaaa3af7c585380337, type: 2}
+  - playerBlipDot: {fileID: 2100000, guid: cd039b9f8a4ca4d1e8bf8889f2ad17ed, type: 2}
+  - hostileBlip: {fileID: 2100000, guid: 69c5cdf1fe3ea4a148da8cf609454256, type: 2}
+  - hostileBlipDot: {fileID: 2100000, guid: 7c2e5f71718dd43839650f642941d8eb, type: 2}
+  - friendlyBlip: {fileID: 2100000, guid: 9bb6432c0ca0d41dd8603271cb5f9071, type: 2}
+  - friendlyBlipDot: {fileID: 2100000, guid: 87763d15b2cb84c8ab592f8a8b1f5e54, type: 2}
+  - neutralBlip: {fileID: 2100000, guid: 742acbe0da79b4e0c9a4977d5d50f1a3, type: 2}
+  - neutralBlipDot: {fileID: 2100000, guid: 9bcaaa2f9f5354454854111cde135568, type: 2}
+  - sceneryBlip: {fileID: 2100000, guid: 85f9ff109a5c4464ba677dc50f965e6e, type: 2}
+  - sceneryBlipDot: {fileID: 2100000, guid: 28a135e9f36544ebeb8cebc2009f3d72, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
