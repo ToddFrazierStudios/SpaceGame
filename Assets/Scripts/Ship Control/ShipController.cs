@@ -28,9 +28,11 @@ public class ShipController : MonoBehaviour {
 	public Boost boost;
 	private bool resetNextFrame = false;
 	private EditorWindow gameView;
+	private bool isMaximized;
 	// Use this for initialization
 	void Start () {
 		gameView = EditorWindow.focusedWindow;
+		isMaximized = gameView.maximized;
 		strafeManager = GetComponent<StrafeManager>();
 		rotationManager = GetComponent<RotationManager>();
 		weaponsManager = GetComponent<WeaponsManager>();
@@ -38,17 +40,16 @@ public class ShipController : MonoBehaviour {
 		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
 	}
+
+	void OnApplicationFocus(bool focusStatus) {
+		if (focusStatus = true) {
+			ParsedInput.controller[0].ResetAllAxes();
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(isAi)return;
-		if (EditorApplication.isPaused || EditorWindow.focusedWindow != gameView) {
-			resetNextFrame = true;
-		}
-		if (resetNextFrame) {
-			resetNextFrame = false;
-			ParsedInput.controller[0].ResetAllAxes();
-		}
 
 		// Strafe Manager //
 		if(strafeManager){

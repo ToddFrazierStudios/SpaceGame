@@ -72,7 +72,6 @@ public class WeaponsManager : MonoBehaviour {
 		RaycastHit hit;
 		// Dynamically resize based on distance? Maybe later.
 		if (Physics.SphereCast (transform.position, 7f, transform.forward, out hit, range, layerMask)) {
-			Debug.Log (hit.collider);
 			nextGunToFire.LookAt (hit.point); 
 		} else {
 			nextGunToFire.localRotation = Quaternion.identity;
