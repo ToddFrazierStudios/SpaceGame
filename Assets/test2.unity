@@ -1694,7 +1694,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: e980881b585cc40c2ba90627e954f531, type: 2}
       propertyPath: brakeThrust
-      value: 25000
+      value: 35000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: e980881b585cc40c2ba90627e954f531, type: 2}
+      propertyPath: useStabilizers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: e980881b585cc40c2ba90627e954f531, type: 2}
+      propertyPath: reverseThrust
+      value: 75000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400016, guid: e980881b585cc40c2ba90627e954f531, type: 2}
@@ -2647,6 +2655,7 @@ GameObject:
   - 124: {fileID: 211358830}
   - 81: {fileID: 211358829}
   - 114: {fileID: 211358834}
+  - 54: {fileID: 211358833}
   m_Layer: 0
   m_Name: ThirdPersonCamera
   m_TagString: MainCamera
@@ -2723,6 +2732,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+--- !u!54 &211358833
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 211358827}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &211358834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19941,6 +19965,8 @@ GameObject:
   - 114: {fileID: 1498497407}
   - 64: {fileID: 1498497409}
   - 114: {fileID: 1498497408}
+  - 114: {fileID: 1498497410}
+  - 114: {fileID: 1498497411}
   m_Layer: 13
   m_Name: _Player
   m_TagString: Player
@@ -20028,6 +20054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxThrust: 400000
+  reverseThrust: 75000
   maxSpeed: 70
   thrustSpeedCurve:
     serializedVersion: 2
@@ -20045,7 +20072,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   useStabilizers: 1
-  brakeThrust: 25000
+  brakeThrust: 35000
 --- !u!114 &1498497399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20266,6 +20293,36 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 1
   m_Mesh: {fileID: 4300000, guid: d652fd08bc1f941869752f759be546f8, type: 3}
+--- !u!114 &1498497410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1498497393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1545ea15d5b5490d88d5947414ea8ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invertX: 0
+  invertY: 0
+  controllerType: 0
+  layout: 0
+--- !u!114 &1498497411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1498497393}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5731e01dae34514ad0192db07273af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 1498497394}
+  forceMultiplier: .0199999996
+  torqueMultiplier: 0
+  velocityThreshold: 20
 --- !u!1 &1511634954
 GameObject:
   m_ObjectHideFlags: 0
@@ -21500,7 +21557,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1605893826}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}

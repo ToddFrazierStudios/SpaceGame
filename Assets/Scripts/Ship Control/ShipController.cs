@@ -49,6 +49,10 @@ public class ShipController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (EditorApplication.isPaused) {
+			ParsedInput.controller[0].ResetAllAxes();
+		}
+
 		if(isAi)return;
 
 		// Strafe Manager //
@@ -175,6 +179,7 @@ public class ShipController : MonoBehaviour {
 		//controller
 		if (useController) {
 			engineThruster.throttle = ParsedInput.controller[controllerNumber].LeftTrigger;
+			engineThruster.reverse = ParsedInput.controller[0].B;
 		}
 		
 		//keyboard

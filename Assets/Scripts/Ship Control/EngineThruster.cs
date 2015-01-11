@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class EngineThruster : MonoBehaviour {
 	public float maxThrust;
+	public float reverseThrust = 250000;
 	public float maxSpeed;
 	public AnimationCurve thrustSpeedCurve;
 	public bool useStabilizers = true;
@@ -28,6 +29,8 @@ public class EngineThruster : MonoBehaviour {
 	//*** INPUT VARIABLES; see ShipController.cs ***//
 	[System.NonSerialized]
 	public float throttle = 0f; //0f-1f
+	[System.NonSerialized]
+	public bool reverse = false;
 	
 	void Awake() {
 		throttle = 0f;
@@ -64,5 +67,7 @@ public class EngineThruster : MonoBehaviour {
 		DebugHUD.setValue("Speed Multiplier",speedMultiplier);
 		
 		rgb.AddRelativeForce(Vector3.forward * throttle * localMaxThrust * speedMultiplier);
+		if (reverse)
+		rgb.AddRelativeForce(Vector3.forward * -reverseThrust * speedMultiplier);
 	}
 }

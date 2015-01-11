@@ -16,10 +16,15 @@ public class OurSmoothFollow : MonoBehaviour {
 			return;
 		}
 
-		Vector3 desiredRotation = target.eulerAngles;
-		Vector3 currentRotation = transform.eulerAngles;
+		Quaternion desiredRotation = target.rotation;
+		Quaternion currentRotation = transform.rotation;
 
-		currentRotation = new Vector3(Mathf.LerpAngle (currentRotation.x, desiredRotation.x, rotationDamping * Time.deltaTime), Mathf.LerpAngle (currentRotation.y, desiredRotation.y, rotationDamping * Time.deltaTime), Mathf.LerpAngle (currentRotation.z, desiredRotation.z, rotationDamping * Time.deltaTime));
+//		currentRotation = new Quaternion(Mathf.LerpAngle (currentRotation.x, desiredRotation.x, rotationDamping * Time.deltaTime), 
+//		                                 Mathf.LerpAngle (currentRotation.y, desiredRotation.y, rotationDamping * Time.deltaTime), 
+//		                                 Mathf.LerpAngle (currentRotation.z, desiredRotation.z, rotationDamping * Time.deltaTime),
+//		                                 1);
+
+		currentRotation = Quaternion.Slerp (currentRotation, desiredRotation, rotationDamping * Time.deltaTime);
 
 		float currentDistance = transform.position.z;
 		currentDistance = Mathf.Lerp (currentDistance, target.transform.localPosition.z - distance, heightDamping * Time.deltaTime);
@@ -38,7 +43,7 @@ public class OurSmoothFollow : MonoBehaviour {
 		currentPositionY = Mathf.Lerp(currentPositionY, desiredPosition.y, distanceDamping * Time.deltaTime);
 		currentPositionZ = Mathf.Lerp(currentPositionZ, desiredPosition.z, distanceDamping * Time.deltaTime);
 
-		transform.eulerAngles = currentRotation;
+		transform.rotation = currentRotation;
 		transform.position = desiredPosition;
 	}
 }

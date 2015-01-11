@@ -9,6 +9,7 @@ public class CameraManager : MonoBehaviour {
 	public GameObject thirdPersonCamera;
 
 	void Start () {
+		Screen.showCursor = false;
 		thirdPerson = false;
 		currentCamera = firstPersonCamera;
 		thirdPersonCamera.camera.enabled = false;
