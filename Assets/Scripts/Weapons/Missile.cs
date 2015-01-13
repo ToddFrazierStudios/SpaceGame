@@ -8,9 +8,12 @@ public class Missile : MonoBehaviour {
 	//the maximum amount of damage this missile can do to a target
 	public float maxDamage;
 	//the homing target, if any
-	private Transform target;
+	public Transform target;
 	//how long the missile takes to arm
 	public float clearTime;
+
+	public OurRadar radar;
+	public Targeting targeting;
 	private float timer;
 	Vector3 brakeVector;
 
@@ -23,6 +26,7 @@ public class Missile : MonoBehaviour {
 			return maxDeltaAnglePerFrame*Mathf.Rad2Deg;
 		}
 	}
+	private int layerMask;
 
 	//how big the explosion will be
 	public float explosionRadius;
@@ -44,18 +48,25 @@ public class Missile : MonoBehaviour {
 
 
 	void Start () {
+		layerMask = 1 << colliderToIgnore.gameObject.layer;
+//		layerMask = ~layerMask;
 //		Destroy (gameObject, 20.0f);
 		RaycastHit hit;
-		GameObject _GameMgr = GameObject.Find("_GameMgr");
-		if (_GameMgr && _GameMgr.GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0] != null) {
-			target = GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0].transform;
-			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
-		} else if (Physics.Raycast (transform.position, transform.forward, out hit)) {
-			if(hit.transform!=colliderToIgnore.transform)
+//		GameObject _GameMgr = GameObject.Find("_GameMgr");
+//		if (_GameMgr && _GameMgr.GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0] != null) {
+//			target = GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0].transform;
+//			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
+//		} else 
+		if (target == null) {
+			if (radar != null && radar.getTarget () != null) {
+				target = radar.getTarget();
+			} else if (Physics.Raycast (transform.position, transform.forward, out hit, layerMask)) {
 				target = hit.transform;
-		} else {
-			target = null;
+			} else {
+				target = null;
+			}
 		}
+		rigidbody.AddRelativeForce(Vector3.down * 500000);
 		timer = 0;
 //		collider.enabled = false;
 
@@ -90,17 +101,15 @@ public class Missile : MonoBehaviour {
 
 		//now we determine if we hit anyone!
 		foreach(Collider col in Physics.OverlapSphere(transform.position, detonationRadius)){
-			if(col!=collider && col!=colliderToIgnore){
+			if(col!=collider && col!=colliderToIgnore && !col.isTrigger){
 				Explode();
-				Debug.Log ("Missle hit "+col.name);
 				return;
 			}
 		}
 	}
 
 	void OnCollisionEnter (Collision collision) {
-		if(collision.collider!=colliderToIgnore){
-			Debug.Log ("Missile hit "+collision.gameObject.name+", which is not "+colliderToIgnore.name);
+		if(collision.collider!=colliderToIgnore && !collision.collider.isTrigger){
 			Explode();
 		}
 	}
@@ -109,7 +118,7 @@ public class Missile : MonoBehaviour {
 	public void Explode(){
 		Collider[] collidersHit = Physics.OverlapSphere(transform.position,explosionRadius);
 		foreach (Collider col in collidersHit){
-			if(col!=this.collider && col!=colliderToIgnore){
+			if(col!=this.collider && !col.isTrigger){
 				//might wanna check if they have a Health component first...
 				Vector3 closestPoint = col.ClosestPointOnBounds(transform.position);
 				Vector3 impactVector = col.transform.position-closestPoint;

@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class Targeting : MonoBehaviour {
-
-	public Material targetMaterial;
-	public GameObject marker;
+	
+	public GameObject targetObject;
+	public float targetTimer;
+	public Transform target;
 
 
 	// Use this for initialization
@@ -14,11 +15,14 @@ public class Targeting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		marker = GameObject.CreatePrimitive (PrimitiveType.Quad);
-		marker.tag = "Radar";
-		marker.layer = 16;
-		marker.transform.localScale = new Vector3(.2f, .2f, .2f);
-		marker.collider.enabled = false;
-		marker.GetComponent<MeshRenderer>().material = targetMaterial;
+		if (target != null) {
+			targetObject.transform.position = target.position;
+			targetObject.transform.LookAt (camera.transform);
+			targetObject.transform.localRotation = transform.rotation;
+			targetObject.transform.localScale = new Vector3(12f, 10f, 10f) * Vector3.Distance (targetObject.transform.position, transform.position) / 100f;
+		} else {
+			targetObject.renderer.enabled = false;
+		}
+
 	}
 }

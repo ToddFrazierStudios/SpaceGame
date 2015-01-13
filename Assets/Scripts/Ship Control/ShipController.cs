@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 //needs to control:
 // Strafe Manager
@@ -25,18 +26,33 @@ public class ShipController : MonoBehaviour {
 	public EngineThruster engineThruster;
 	[System.NonSerialized]
 	public Boost boost;
-
+	private bool resetNextFrame = false;
+	private EditorWindow gameView;
+	private bool isMaximized;
 	// Use this for initialization
 	void Start () {
+		gameView = EditorWindow.focusedWindow;
+		isMaximized = gameView.maximized;
 		strafeManager = GetComponent<StrafeManager>();
 		rotationManager = GetComponent<RotationManager>();
 		weaponsManager = GetComponent<WeaponsManager>();
 		engineThruster = GetComponent<EngineThruster>();
+		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
+	}
+
+	void OnApplicationFocus(bool focusStatus) {
+		if (focusStatus = true) {
+			ParsedInput.controller[0].ResetAllAxes();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (EditorApplication.isPaused) {
+			ParsedInput.controller[0].ResetAllAxes();
+		}
+
 		if(isAi)return;
 
 		// Strafe Manager //
@@ -88,6 +104,12 @@ public class ShipController : MonoBehaviour {
 			} else if (Input.GetKey (KeyCode.UpArrow)) {
 				strafeManager.yInput = 1;
 			}
+		}
+
+		if (strafeManager.xInput == 0f && strafeManager.yInput == 0f) {
+			engineThruster.isStrafing = false;
+		} else {
+			engineThruster.isStrafing = true;
 		}
 	}
 
@@ -157,6 +179,7 @@ public class ShipController : MonoBehaviour {
 		//controller
 		if (useController) {
 			engineThruster.throttle = ParsedInput.controller[controllerNumber].LeftTrigger;
+			engineThruster.reverse = ParsedInput.controller[0].B;
 		}
 		
 		//keyboard
