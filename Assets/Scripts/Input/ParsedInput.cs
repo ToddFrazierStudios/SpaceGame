@@ -68,7 +68,7 @@ public class ParsedInput{
 					return LeftTriggerAxis;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 9;
 				} else {
 					return LeftTriggerAxis;
@@ -119,7 +119,7 @@ public class ParsedInput{
 						return RightTriggerAxis;
 					}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 10;
 				} else {
 					return RightTriggerAxis;
@@ -184,7 +184,7 @@ public class ParsedInput{
 					return RightStickXAxis;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 4;
 				} else {
 					return RightStickXAxis;
@@ -217,7 +217,7 @@ public class ParsedInput{
 					return RightStickYAxis;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 5;
 				} else {
 					return RightStickYAxis;
@@ -253,7 +253,7 @@ public class ParsedInput{
 					return AButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 0;
 				} else {
 					return AButton;
@@ -292,7 +292,7 @@ public class ParsedInput{
 					return BButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 1;
 				} else {
 					return BButton;
@@ -331,7 +331,7 @@ public class ParsedInput{
 					return XButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 2;
 				} else {
 					return XButton;
@@ -370,7 +370,7 @@ public class ParsedInput{
 					return YButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 3;
 				} else {
 					return YButton;
@@ -409,7 +409,7 @@ public class ParsedInput{
 					return LBButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 4;
 				} else {
 					return LBButton;
@@ -448,7 +448,7 @@ public class ParsedInput{
 					return RBButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 5;
 				} else {
 					return RBButton;
@@ -487,7 +487,7 @@ public class ParsedInput{
 					return XButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 6;
 				} else {
 					return BackButton;
@@ -526,7 +526,7 @@ public class ParsedInput{
 					return XButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 7;
 				} else {
 					return XButton;
@@ -565,7 +565,7 @@ public class ParsedInput{
 					return LSButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 8;
 				} else {
 					return LSButton;
@@ -604,7 +604,7 @@ public class ParsedInput{
 					return RSButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 9;
 				} else {
 					return RSButton;
@@ -643,7 +643,7 @@ public class ParsedInput{
 					return D_DownButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 7;
 				} else {
 					return D_DownButton;
@@ -660,9 +660,7 @@ public class ParsedInput{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
 				return Input.GetKey(getButtonPrefix()+ D_DownButton);
 				#else
-				if (Input.GetAxisRaw(getAxisPrefix()+ D_DownButton) < DEAD_ZONE) {
-					return true;
-				}
+				return Input.GetAxisRaw(getAxisPrefix()+ D_DownButton) < DEAD_ZONE;
 				#endif
 			}
 		}
@@ -696,7 +694,7 @@ public class ParsedInput{
 					return D_RightButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 6;
 				} else {
 					return D_RightButton;
@@ -713,9 +711,7 @@ public class ParsedInput{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
 				return Input.GetKey(getButtonPrefix()+ D_RightButton);
 				#else
-				if (Input.GetAxisRaw(getAxisPrefix()+ D_RightButton) > DEAD_ZONE) {
-					return true;
-				}
+				return Input.GetAxisRaw(getAxisPrefix()+ D_RightButton) > DEAD_ZONE;
 				#endif
 			}
 		}
@@ -749,7 +745,7 @@ public class ParsedInput{
 					return D_LeftButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 6;
 				} else {
 					return D_LeftButton;
@@ -766,9 +762,7 @@ public class ParsedInput{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
 				return Input.GetKey(getButtonPrefix()+ D_LeftButton);
 				#else
-				if (Input.GetAxisRaw(getAxisPrefix()+ D_LeftButton) < DEAD_ZONE) {
-					return true;
-				}
+				return Input.GetAxisRaw(getAxisPrefix()+ D_LeftButton) < DEAD_ZONE;
 				#endif
 			}
 		}
@@ -802,7 +796,7 @@ public class ParsedInput{
 					return D_UpButton;
 				}
 				#else
-				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTPYE.XBOXONE) {
+				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 7;
 				} else {
 					return D_UpButton;
@@ -819,9 +813,7 @@ public class ParsedInput{
 				#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
 				return Input.GetKey(getButtonPrefix()+ D_UpButton);
 				#else
-				if (Input.GetAxisRaw(getAxisPrefix()+ D_UpButton) > DEAD_ZONE) {
-					return true;
-				}
+				return Input.GetAxisRaw(getAxisPrefix()+ D_UpButton) > DEAD_ZONE;
 				#endif
 			}
 		}

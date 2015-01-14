@@ -20,6 +20,7 @@ Shader "Custom/Two Way Progress Bar" {
 			#include "UnityCG.cginc"
 			#pragma vertex vert
 			#pragma fragment frag
+			#pragma target 3.0
 			
 			uniform sampler2D _BorderTexture, _BarTexture;
 			uniform float4 _BarColor, _BorderColor, _BarBGColor;
