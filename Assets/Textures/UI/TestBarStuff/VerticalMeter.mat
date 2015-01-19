@@ -49,7 +49,7 @@ Material:
       data:
         first:
           name: _ProgressV
-        second: 0
+        second: -6.35236438e-06
     m_Colors:
       data:
         first:

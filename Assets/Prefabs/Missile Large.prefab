@@ -199,6 +199,9 @@ MonoBehaviour:
   targeting: {fileID: 0}
   explosion: {fileID: 19800002}
   maxDeltaAnglePerFrame: 90
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294483929
   explosionRadius: 10
   damageCurve:
     serializedVersion: 2
@@ -217,6 +220,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   detonationRadius: 5
   lifeTime: 100
+  colliderToIgnore: {fileID: 0}
   explosionForce: 7.5e+07
 --- !u!114 &11400002
 MonoBehaviour:
@@ -230,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxThrust: 50000
+  reverseThrust: 250000
   maxSpeed: 500
   thrustSpeedCurve:
     serializedVersion: 2

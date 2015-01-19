@@ -42,10 +42,8 @@ public class Health : MonoBehaviour {
 		}
 		if (hull <= 0) {
 			hullColor = "red";
-			GameObject explosion = Instantiate (explosionPrefab, transform.position, transform.rotation) as GameObject;
-			Destroy (explosion, 2.0f);
-			Destroy (gameObject);
-		} else if (shield <= maxShield / 3f) {
+			networkView.RPC ("Explode", RPCMode.All);
+		} else if (hull <= maxHull / 3f) {
 			hullColor = "yellow";
 		}
 		if (tag == "Player") {
@@ -65,5 +63,22 @@ public class Health : MonoBehaviour {
 			hull -= damage;
 		}
 		timeUntilRecharge = rechargeDelay;
+	}
+
+	[RPC]
+	public void Explode() {
+//		if (tag == "Player") {
+//			MultiplayerMgr multiplayerMgr = GameObject.Find ("Menu").GetComponent<MultiplayerMgr>();
+//			if (multiplayerMgr) {
+//				multiplayerMgr.CreatePlayer();
+//			}
+		//		}
+//		yield return new WaitForSeconds(2f);
+//		Debug.Log ("waited");
+//		yield break;
+		Network.RemoveRPCs (networkView.viewID);
+		GameObject explosion = Network.Instantiate (explosionPrefab, transform.position, transform.rotation, 0) as GameObject;
+		Destroy (explosion, 2.0f);
+		Destroy (gameObject);
 	}
 }

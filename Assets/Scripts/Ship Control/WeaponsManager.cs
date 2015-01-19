@@ -67,7 +67,7 @@ public class WeaponsManager : MonoBehaviour {
 //		}
 	}
 	
-//	[RPC]
+	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
 		// Dynamically resize based on distance? Maybe later.
@@ -76,7 +76,7 @@ public class WeaponsManager : MonoBehaviour {
 		} else {
 			nextGunToFire.localRotation = Quaternion.identity;
 		}
-		GameObject created = Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation) as GameObject;
+		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
@@ -91,11 +91,19 @@ public class WeaponsManager : MonoBehaviour {
 		//		rightGun.Emit(1);
 	}
 
-//	[RPC]
+	[RPC]
 	public void shootMissile() {
-		GameObject missile = Instantiate(missilePrefab,missileBay.position,missileBay.rotation) as GameObject;
-		missile.GetComponent<Missile>().colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
-		missile.GetComponent<Missile>().radar = radar;
+		GameObject missile = Network.Instantiate(missilePrefab,missileBay.position,(transform.rotation), 0) as GameObject;
+		Missile missileComponent = missile.GetComponent<Missile>();
+		missileComponent.colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
+		RaycastHit hit;
+		if (target != null) {
+			missileComponent.target = target;
+		} else if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask)) {
+			missileComponent.target = hit.transform;
+		} else {
+			missileComponent.target = null;
+		}
 		missile.rigidbody.velocity = rigidbody.velocity;
 		missile.tag = tag;
 	}

@@ -6,32 +6,39 @@ public class CameraManager : MonoBehaviour {
 	private bool thirdPerson;
 	private GameObject currentCamera;
 	public GameObject firstPersonCamera;
-	public GameObject thirdPersonCamera;
+	public Vector3 firstPersonPosition;
+	public LayerMask firstPersonLayers;
+	public LayerMask thirdPersonLayers;
 
 	void Start () {
-		Screen.showCursor = false;
+//		Screen.showCursor = false;
 		thirdPerson = false;
 		currentCamera = firstPersonCamera;
-		thirdPersonCamera.camera.enabled = false;
-		firstPersonCamera.camera.enabled = true;
+		if (networkView.isMine) {
+			firstPersonCamera.camera.enabled = true;
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (ParsedInput.controller[0].BackDown) {
+		if (networkView.isMine && ParsedInput.controller[0].BackDown || Input.GetKeyDown (KeyCode.C)) {
 			thirdPerson = !thirdPerson;
 			if (thirdPerson) {
-				currentCamera = thirdPersonCamera;
-				firstPersonCamera.camera.enabled = false;
-				thirdPersonCamera.camera.enabled = true;
+				GetComponent<RadarMount>().enabled = false;
+				currentCamera.transform.parent = null;
+				currentCamera.GetComponent<OurSmoothFollow>().enabled = true;
+				currentCamera.camera.cullingMask = thirdPersonLayers;
 			} else {
-				currentCamera = firstPersonCamera;
-				thirdPersonCamera.camera.enabled = false;
-				firstPersonCamera.camera.enabled = true;
+				GetComponent<RadarMount>().enabled = true;
+				currentCamera.transform.parent = gameObject.transform;
+				currentCamera.GetComponent<OurSmoothFollow>().enabled = false;
+				currentCamera.transform.localPosition = firstPersonPosition;
+				currentCamera.transform.localRotation = Quaternion.identity;
+				currentCamera.camera.cullingMask = firstPersonLayers;
 			}
 		}
 
-		if (ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
+		if (networkView.isMine && ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
 			currentCamera.transform.Rotate (Vector3.up, 180f, Space.Self);
 		}
 	}

@@ -26,7 +26,7 @@ public class Missile : MonoBehaviour {
 			return maxDeltaAnglePerFrame*Mathf.Rad2Deg;
 		}
 	}
-	private int layerMask;
+	public LayerMask layerMask;
 
 	//how big the explosion will be
 	public float explosionRadius;
@@ -40,7 +40,7 @@ public class Missile : MonoBehaviour {
 	//how many seconds the missile lasts before destroying itself
 	public float lifeTime = 20.0f;
 
-	[System.NonSerialized]
+//	[System.NonSerialized]
 	public Collider colliderToIgnore;
 
 	public float explosionForce;
@@ -48,8 +48,6 @@ public class Missile : MonoBehaviour {
 
 
 	void Start () {
-		layerMask = 1 << colliderToIgnore.gameObject.layer;
-//		layerMask = ~layerMask;
 //		Destroy (gameObject, 20.0f);
 		RaycastHit hit;
 //		GameObject _GameMgr = GameObject.Find("_GameMgr");
@@ -57,35 +55,39 @@ public class Missile : MonoBehaviour {
 //			target = GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0].transform;
 //			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);
 //		} else 
-		if (target == null) {
-			if (radar != null && radar.getTarget () != null) {
-				target = radar.getTarget();
-			} else if (Physics.Raycast (transform.position, transform.forward, out hit, layerMask)) {
-				target = hit.transform;
-			} else {
-				target = null;
-			}
-		}
-		rigidbody.AddRelativeForce(Vector3.down * 500000);
+//		if (target == null) {
+//			if (radar != null && radar.getTarget () != null) {
+//				target = radar.getTarget();
+//			} else if (Physics.Raycast (transform.position, transform.forward, out hit, 10f, layerMask)) {
+//				Debug.Log (hit.transform);
+//				target = hit.transform;
+//			} else {
+//				target = null;
+//			}
+//		}
+//		rigidbody.AddRelativeForce(Vector3.down * 500000);
 		timer = 0;
 //		collider.enabled = false;
-
+		gameObject.AddComponent<NetworkView>();
 		EngineThruster et = GetComponent<EngineThruster>();
-		if(et)et.throttle = 1f;
+		if(et){
+			et.throttle = 1f;
+			et.useStabilizers = false;
+		}
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (target != null) {
-			transform.LookAt (target.transform);
+//			transform.LookAt (target.transform);
 			Vector3 targetDirection = target.transform.position - transform.position;
 			transform.forward = Vector3.RotateTowards(transform.forward,targetDirection,maxDeltaAngleRadians,0.0f);
+			brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
+			brakeVector = Vector3.Cross (brakeVector, transform.forward);
+			rigidbody.AddForce (brakeVector * brakeThrust);
+			Debug.DrawRay(transform.position, brakeVector, Color.red);
+			Debug.DrawRay (transform.position, transform.forward);
 		}
-		brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
-		brakeVector = Vector3.Cross (brakeVector, transform.forward);
-		rigidbody.AddForce (brakeVector * brakeThrust);
-		Debug.DrawRay(transform.position, brakeVector, Color.red);
-		Debug.DrawRay (transform.position, transform.forward);
 
 		timer += Time.fixedDeltaTime;
 		if (timer > clearTime) {
@@ -96,13 +98,13 @@ public class Missile : MonoBehaviour {
 
 
 		if(timer>lifeTime){
-			Explode();
+			networkView.RPC("Explode", RPCMode.All);
 		}
 
 		//now we determine if we hit anyone!
 		foreach(Collider col in Physics.OverlapSphere(transform.position, detonationRadius)){
 			if(col!=collider && col!=colliderToIgnore && !col.isTrigger){
-				Explode();
+				networkView.RPC("Explode", RPCMode.All);
 				return;
 			}
 		}
@@ -110,12 +112,15 @@ public class Missile : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision) {
 		if(collision.collider!=colliderToIgnore && !collision.collider.isTrigger){
-			Explode();
+			networkView.RPC("Explode", RPCMode.All);
 		}
 	}
 
 	//this function may need some work later if it becomes too laggy
+	[RPC]
 	public void Explode(){
+		Destroy(gameObject);
+		Network.RemoveRPCs (networkView.viewID);
 		Collider[] collidersHit = Physics.OverlapSphere(transform.position,explosionRadius);
 		foreach (Collider col in collidersHit){
 			if(col!=this.collider && !col.isTrigger){
@@ -138,11 +143,13 @@ public class Missile : MonoBehaviour {
 		}
 		if(explosion){
 			explosion.gameObject.transform.parent = null;//detatch the explosion
-			Destroy (explosion.gameObject, 2f);//destroy it after some time
+			explosion.gameObject.AddComponent<NetworkView>();
+			Destroy (explosion.gameObject, 1f);//destroy it after some time
 			//this is where i'd like to set the system's radius to match the explosionRadius, but oh well
 			explosion.Play();
+			Debug.Log ("exploded");
+			Network.RemoveRPCs (explosion.networkView.viewID);
 		}
-		Destroy(gameObject);
 	}
 
 	void OnDrawGizmosSelected(){

@@ -18,6 +18,7 @@ public class MultiplayerMgr : MonoBehaviour {
 	
 	// Use this to refer to the player after it is spawned
 	private GameObject go;
+	private GameObject player;
 
 	// IP address
 	private string ip = "129.22.50.124";

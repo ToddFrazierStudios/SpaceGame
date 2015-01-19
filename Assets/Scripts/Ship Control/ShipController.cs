@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 //needs to control:
 // Strafe Manager
@@ -27,12 +27,12 @@ public class ShipController : MonoBehaviour {
 	[System.NonSerialized]
 	public Boost boost;
 	private bool resetNextFrame = false;
-	private EditorWindow gameView;
+//	private EditorWindow gameView;
 	private bool isMaximized;
 	// Use this for initialization
 	void Start () {
-		gameView = EditorWindow.focusedWindow;
-		isMaximized = gameView.maximized;
+//		gameView = EditorWindow.focusedWindow;
+//		isMaximized = gameView.maximized;
 		strafeManager = GetComponent<StrafeManager>();
 		rotationManager = GetComponent<RotationManager>();
 		weaponsManager = GetComponent<WeaponsManager>();
@@ -49,11 +49,13 @@ public class ShipController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (EditorApplication.isPaused) {
-			ParsedInput.controller[0].ResetAllAxes();
-		}
+//		if (EditorApplication.isPaused) {
+//			ParsedInput.controller[0].ResetAllAxes();
+//		}
 
 		if(isAi)return;
+
+		if(!networkView.isMine)return;
 
 		// Strafe Manager //
 		if(strafeManager){
