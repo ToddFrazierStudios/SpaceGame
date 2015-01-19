@@ -789,7 +789,6 @@ GameObject:
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
-  - 148: {fileID: 14800000}
   - 114: {fileID: 11400002}
   m_Layer: 13
   m_Name: Player
@@ -16622,18 +16621,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -.208383292, y: 1.39698386e-08, z: 0}
     m_Extent: {x: .233383268, y: .025000032, z: .0500000119}
   m_DirtyAABB: 0
---- !u!148 &14800000
-NetworkView:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100096}
-  m_Enabled: 1
-  m_StateSynchronization: 1
-  m_Observed: {fileID: 400096}
-  m_ViewID:
-    m_ID: 0
-    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

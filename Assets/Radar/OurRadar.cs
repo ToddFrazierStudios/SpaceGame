@@ -37,15 +37,15 @@ public class OurRadar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		hostiles = new PriorityQueue<RadarBlip>(maxBlips);
+		contacts = new List<RadarBlip>(maxBlips);
+		target = null;
 		if (networkView.isMine) {
 			radarCamera.enabled = true;
 			minimap = miniMapCamera;
 			if (minimap) {
 				miniMapCamera.enabled = false;
 			}
-			hostiles = new PriorityQueue<RadarBlip>(maxBlips);
-			contacts = new List<RadarBlip>(maxBlips);
-			target = null;
 			minimap = miniMapCamera;
 		}
 	}
@@ -131,6 +131,7 @@ public class OurRadar : MonoBehaviour {
 				case "Hostile":
 					blip = new RadarBlip(other.gameObject, hostileBlip, hostileBlipDot);
 					blip.factionNumber = HOSTILE;
+					Debug.Log ("Found hostile " + blip.realObject.name + " " + Time.frameCount);
 	//				hostiles.add (blip);
 					break;
 				case "Friendly":
