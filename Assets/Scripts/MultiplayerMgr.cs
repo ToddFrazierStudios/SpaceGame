@@ -40,7 +40,7 @@ public class MultiplayerMgr : MonoBehaviour {
 	public void CreatePlayer() {
 		// Instantiate the ship, with an offset based on how many are connected.
 		go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position + new Vector3(Network.connections.Length * 20, 0, 0), Quaternion.identity, 0);
-		go.networkView.SetScope (go.networkView.owner, true);
+//		go.networkView.SetScope (go.networkView.owner, true);
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {

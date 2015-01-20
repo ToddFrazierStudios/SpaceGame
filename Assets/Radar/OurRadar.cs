@@ -155,7 +155,7 @@ public class OurRadar : MonoBehaviour {
 				blip.marker.layer = 16;
 				blip.projection.name = blip.realObject.name;
 				blip.marker.name = blip.realObject.name;
-				contacts.Add (blip);
+//				contacts.Add (blip);
 			}
 		}
 	}
