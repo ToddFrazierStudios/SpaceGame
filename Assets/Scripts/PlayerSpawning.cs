@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//[RequireComponent(typeof (NetworkView))]
+[RequireComponent(typeof (NetworkView))]
 public class PlayerSpawning : MonoBehaviour {
 	
 	public GameObject playerCamera;
 	public Camera radarCamera;
 
 	void Awake () {
-		gameObject.AddComponent<NetworkView>();
+//		gameObject.AddComponent<NetworkView>();
 		radarCamera = GameObject.Find ("RadarCamera").camera;
 		GetComponent<RadarMount>().cameraToPosition = radarCamera;
 		GetComponent<OurRadar>().radarCamera = radarCamera;

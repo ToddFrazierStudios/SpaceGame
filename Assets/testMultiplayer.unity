@@ -5691,6 +5691,7 @@ GameObject:
   - 114: {fileID: 317453035}
   - 114: {fileID: 317453034}
   - 114: {fileID: 317453033}
+  - 148: {fileID: 317453051}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -6070,6 +6071,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!148 &317453051
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 317453031}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 317453032}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1 &319550665
 GameObject:
   m_ObjectHideFlags: 0
