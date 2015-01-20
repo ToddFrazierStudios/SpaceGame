@@ -6480,7 +6480,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &100822
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -6541,6 +6541,21 @@ GameObject:
   - 4: {fileID: 400828}
   m_Layer: 14
   m_Name: pb_hex_nut_2_10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400830}
+  m_Layer: 13
+  m_Name: Player Camera Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7178,7 +7193,6 @@ Transform:
   m_Children:
   - {fileID: 400338}
   - {fileID: 400568}
-  - {fileID: 400822}
   - {fileID: 400734}
   - {fileID: 400162}
   - {fileID: 400314}
@@ -7186,6 +7200,7 @@ Transform:
   - {fileID: 400638}
   - {fileID: 400130}
   - {fileID: 400180}
+  - {fileID: 400830}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &400098
@@ -7403,7 +7418,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: .100000001}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!4 &400132
 Transform:
   m_ObjectHideFlags: 1
@@ -7604,7 +7619,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: .100000001}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &400164
 Transform:
   m_ObjectHideFlags: 1
@@ -7715,7 +7730,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!4 &400182
 Transform:
   m_ObjectHideFlags: 1
@@ -8579,7 +8594,7 @@ Transform:
   - {fileID: 400426}
   - {fileID: 400650}
   m_Father: {fileID: 400096}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!4 &400316
 Transform:
   m_ObjectHideFlags: 1
@@ -10752,7 +10767,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!4 &400640
 Transform:
   m_ObjectHideFlags: 1
@@ -11358,7 +11373,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: .100000001}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &400736
 Transform:
   m_ObjectHideFlags: 1
@@ -11482,7 +11497,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400096}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!4 &400756
 Transform:
   m_ObjectHideFlags: 1
@@ -11897,11 +11912,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .75, z: .200000003}
-  m_LocalScale: {x: 1, y: 1, z: .100000001}
+  m_LocalPosition: {x: 0, y: -.75, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 400096}
-  m_RootOrder: 2
+  m_Father: {fileID: 400830}
+  m_RootOrder: 0
 --- !u!4 &400824
 Transform:
   m_ObjectHideFlags: 1
@@ -11940,6 +11955,19 @@ Transform:
   - {fileID: 400488}
   m_Father: {fileID: 400426}
   m_RootOrder: 78
+--- !u!4 &400830
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: .75, z: .200000003}
+  m_LocalScale: {x: 1, y: 1, z: .100000001}
+  m_Children:
+  - {fileID: 400822}
+  m_Father: {fileID: 400096}
+  m_RootOrder: 9
 --- !u!20 &2000000
 Camera:
   m_ObjectHideFlags: 1
@@ -16290,7 +16318,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100822}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d22777b923aa64dba78e4d34164848, type: 3}
   m_Name: 
@@ -16299,8 +16327,8 @@ MonoBehaviour:
   maxDistance: .25
   maxAcceleration: .5
   clampToMax: 1
-  maxAngleDelta: 15
-  maxAnglularAcceleration: 0
+  maxAngleDelta: 5
+  maxAnglularAcceleration: .100000001
   clampToMaxAngle: 1
   smoothTime: .5
   maxSpeed: 3
