@@ -38,7 +38,7 @@ Material:
       data:
         first:
           name: _ProgressH
-        second: -.00225434988
+        second: 0
       data:
         first:
           name: _ProgressV
