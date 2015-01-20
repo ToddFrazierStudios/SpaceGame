@@ -54,31 +54,33 @@ public class HeadBob : MonoBehaviour {
 	
 	// Fun Fact: Update is called once per frame
 	void FixedUpdate () {
-		Vector3 currentVelocity = rgb.GetPointVelocity(target.position);
-		Vector3 accel = currentVelocity-previousVelocity;
-		Vector3 positionOffset = accel / maxAcceleration * maxDistance;
+		if (target.transform) {
+			Vector3 currentVelocity = rgb.GetPointVelocity(target.position);
+			Vector3 accel = currentVelocity-previousVelocity;
+			Vector3 positionOffset = accel / maxAcceleration * maxDistance;
 
-		Vector3 currentAngVelocity = rgb.angularVelocity;
-		Vector3 angAccel = currentAngVelocity-previousAngVelocity;
-		Vector3 angleOffset = angAccel / maxAnglularAcceleration * maxAngleDelta;
+			Vector3 currentAngVelocity = rgb.angularVelocity;
+			Vector3 angAccel = currentAngVelocity-previousAngVelocity;
+			Vector3 angleOffset = angAccel / maxAnglularAcceleration * maxAngleDelta;
 
-		if(clampToMax){
-			positionOffset = Vector3.ClampMagnitude(positionOffset,maxDistance);
+			if(clampToMax){
+				positionOffset = Vector3.ClampMagnitude(positionOffset,maxDistance);
+			}
+			if(clampToMaxAngle){
+				angleOffset.x = Mathf.Clamp(angleOffset.x, -maxAngleDelta, maxAngleDelta);
+				angleOffset.y = Mathf.Clamp(angleOffset.y, -maxAngleDelta, maxAngleDelta);
+				angleOffset.z = Mathf.Clamp(angleOffset.z, -maxAngleDelta, maxAngleDelta);
+			}
+			Vector3 targetPosition = target.position+positionOffset;//where the camera wants to be
+			transform.position = Vector3.SmoothDamp(transform.position,targetPosition,ref cameraVelocity,smoothTime,maxSpeed,Time.fixedDeltaTime);
+
+			Vector3 targetRotation = target.eulerAngles + angleOffset;//how the camera wants to be pointed
+			transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(targetRotation),Time.fixedDeltaTime);
+
+			previousVelocity = currentVelocity;
+			previousAngVelocity = currentAngVelocity;
+			DebugHUD.setValue(gameObject.name+".HeadBob.Acceleration",accel);
+			DebugHUD.setValue(gameObject.name+".HeadBob.AngAcceleration",angAccel);
 		}
-		if(clampToMaxAngle){
-			angleOffset.x = Mathf.Clamp(angleOffset.x, -maxAngleDelta, maxAngleDelta);
-			angleOffset.y = Mathf.Clamp(angleOffset.y, -maxAngleDelta, maxAngleDelta);
-			angleOffset.z = Mathf.Clamp(angleOffset.z, -maxAngleDelta, maxAngleDelta);
-		}
-		Vector3 targetPosition = target.position+positionOffset;//where the camera wants to be
-		transform.position = Vector3.SmoothDamp(transform.position,targetPosition,ref cameraVelocity,smoothTime,maxSpeed,Time.fixedDeltaTime);
-
-		Vector3 targetRotation = target.rotation.eulerAngles + angleOffset;//how the camera wants to be pointed
-		transform.eulerAngles = Vector3.SmoothDamp(transform.eulerAngles,targetRotation,ref cameraAngVelocity,smoothTime,maxSpeed,Time.fixedDeltaTime);
-
-		previousVelocity = currentVelocity;
-		previousAngVelocity = currentAngVelocity;
-		DebugHUD.setValue(gameObject.name+".HeadBob.Acceleration",accel);
-		DebugHUD.setValue(gameObject.name+".HeadBob.AngAcceleration",angAccel);
 	}
 }
