@@ -5,8 +5,10 @@ public class Health : MonoBehaviour {
 
 	public float hull;
 	public float maxHull;
+	public SpriteRenderer hullSprite;
 	public float shield;
 	public float maxShield;
+	public SpriteRenderer shieldSprite;
 	public float shieldRegenRate;
 	public float rechargeDelay;
 	public GameObject explosionPrefab;
@@ -25,6 +27,12 @@ public class Health : MonoBehaviour {
 		} else {
 			timeUntilRecharge = 0;
 		}
+		if (shieldSprite) {
+			shieldSprite.color = new Color(1f, shield/maxShield, shield/maxShield);
+			DebugHUD.setValue ("shield color", shieldSprite.color);
+		}
+//		DebugHUD.setValue ("shield health", shield/maxShield * 255f);
+		if (hullSprite) hullSprite.color = new Color(1f, hull/maxHull, hull/maxHull);
 		string shieldColor = "blue";
 		string hullColor = "blue";
 		if (shield < maxShield) {
