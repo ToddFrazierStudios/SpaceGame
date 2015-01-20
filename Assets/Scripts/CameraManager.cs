@@ -38,8 +38,8 @@ public class CameraManager : MonoBehaviour {
 			}
 		}
 
-		if (networkView.isMine && ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
-			currentCamera.transform.Rotate (Vector3.up, 180f, Space.Self);
-		}
+//		if (networkView.isMine && ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
+//			currentCamera.transform.Rotate (Vector3.up, 180f, Space.Self);
+//		}
 	}
 }
