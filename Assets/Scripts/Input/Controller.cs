@@ -1,107 +1,177 @@
 ﻿public class Controller {
-	public float LookX{
+	public virtual float LookX{
 		get{
 			return 0.0f;
 		}
 	}
-	public float LookY{
+	public virtual float LookY{
 		get{
 			return 0.0f;
 		}
 	}
-	public float StrafeX{
+	public virtual float StrafeX{
 		get{
 			return 0.0f;
 		}
 	}
-	public float StrafeY{
+	public virtual float StrafeY{
 		get{
 			return 0.0f;
 		}
 	}
-	public bool Fire{
+	public virtual bool Fire{
 		get{
 			return false;
 		}
 	}
-	public bool AltFire{
+	public virtual bool FirePressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool AltFire{
+		get{
+			return false;
+		}
+	}
+	public virtual bool AltFirePressed{
 		get{
 			return false;
 		}
 	}
 
-	public float Roll{
+	public virtual float Roll{
 		get{
 			return 0.0f;
 		}
 	}
-	public float Throttle{
+	public virtual float Throttle{
 		get{
 			return 0.0f;
 		}
 	}
 
-	public bool Dampeners{
+	public virtual bool Dampeners{
 		get{
 			return false;
 		}
 	}
-	public bool Boost{
+	public virtual bool DampenersPressed{
 		get{
 			return false;
 		}
 	}
-	public bool RadarButton{
+	public virtual bool Boost{
 		get{
 			return false;
 		}
 	}
-	public bool CameraButton{
+	public virtual bool BoostPressed{
 		get{
 			return false;
 		}
 	}
-	public bool PauseButton{
+	public virtual bool RadarButton{
 		get{
 			return false;
 		}
 	}
-	public bool TargetButton{
+	public virtual bool RadarButtonPressed{
 		get{
 			return false;
 		}
 	}
-	public bool NextWeapon{
+	public virtual bool CameraButton{
 		get{
 			return false;
 		}
 	}
-	public bool PreviousWeapon{
+	public virtual bool CameraButtonPressed{
 		get{
 			return false;
 		}
 	}
-	public bool SelectWeapon1{
+	public virtual bool PauseButton{
 		get{
 			return false;
 		}
 	}
-	public bool SelectWeapon2{
+	public virtual bool PauseButtonPressed{
 		get{
 			return false;
 		}
 	}
-	public bool SelectWeapon3{
+	public virtual bool TargetButton{
 		get{
 			return false;
 		}
 	}
-	public bool SelectWeapon4{
+	public virtual bool TargetButtonPressed{
 		get{
 			return false;
 		}
 	}
-	public void SetVibration(float left, float right){
+	public virtual bool NextWeapon{
+		get{
+			return false;
+		}
+	}
+	public virtual bool NextWeaponPressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool PreviousWeapon{
+		get{
+			return false;
+		}
+	}
+	public virtual bool PreviousWeaponPressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon1{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon1Pressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon2{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon2Pressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon3{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon3Pressed{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon4{
+		get{
+			return false;
+		}
+	}
+	public virtual bool SelectWeapon4Pressed{
+		get{
+			return false;
+		}
+	}
+	public virtual void SetVibration(float left, float right){
 
 	}
 }
