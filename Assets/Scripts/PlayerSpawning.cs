@@ -9,7 +9,7 @@ public class PlayerSpawning : MonoBehaviour {
 
 	void Awake () {
 //		gameObject.AddComponent<NetworkView>();
-//		radarCamera = GameObject.Find ("RadarCamera").camera;
+		radarCamera = GameObject.Find ("RadarCamera").camera;
 		GetComponent<RadarMount>().cameraToPosition = radarCamera;
 		GetComponent<OurRadar>().radarCamera = radarCamera;
 		playerCamera.camera.enabled = false; // Have the camera disabled by default.
