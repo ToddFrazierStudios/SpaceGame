@@ -21,4 +21,6 @@
 	public abstract void SetBindingForControl(Controls control, string newBinding);
 
 	public abstract void ResetBindingsToDefault();
+
+	public abstract int GetControllerNumber();
 }

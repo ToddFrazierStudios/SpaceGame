@@ -64,6 +64,11 @@ public class XInputController : Controller {
 		return "XInput Controller";
 	}
 
+	public override int GetControllerNumber ()
+	{
+		return (int)playerIndex;
+	}
+
 	public override void SetVibration (float left, float right){
 		GamePad.SetVibration(playerIndex, left, right);
 	}
