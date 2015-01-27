@@ -152,7 +152,7 @@ public class UnityController : Controller {
 		Debug.Log ("init");
 		platformLookupTable = new Dictionary<string,string>();
 		platformLookupTable.Add("NOBIND","NOBIND");
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
 		Debug.Log ("Loading Windows platformLookupTable...");
 		///WINDOWS!
 		//digital
@@ -186,7 +186,7 @@ public class UnityController : Controller {
 		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
 		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 5-");
 		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 6-");
-#elif UNITY_STANDALONE_OSX | UNITY_EDITOR_OSX
+#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
 		//MACMAMAC!
 		//digital
 		platformLookupTable.Add("Buttons.A", "button 16");
@@ -204,21 +204,21 @@ public class UnityController : Controller {
 		platformLookupTable.Add("DPad.Left", "button 7");
 		platformLookupTable.Add("DPad.Right", "button 8");
 		//analog
-		platformLookupTable.Add("Thumbsticks.Left.X", "axis X");
-		platformLookupTable.Add("Thumbsticks.Left.Y", "axis Y");
-		platformLookupTable.Add("Thumbsticks.Right.X", "axis 3");
-		platformLookupTable.Add("Thumbsticks.Right.Y", "axis 4");
+		platformLookupTable.Add("ThumbSticks.Left.X", "axis X");
+		platformLookupTable.Add("ThumbSticks.Left.Y", "axis Y");
+		platformLookupTable.Add("ThumbSticks.Right.X", "axis 3");
+		platformLookupTable.Add("ThumbSticks.Right.Y", "axis 4");
 		platformLookupTable.Add("Triggers.Left", "axis 5");
 		platformLookupTable.Add("Triggers.Right", "axis 6");
 		//analog-to-digital
-		platformLookupTable.Add("Thumbsticks.Left.X+", "axis X+");
-		platformLookupTable.Add("Thumbsticks.Left.Y+", "axis Y+");
-		platformLookupTable.Add("Thumbsticks.Right.X+", "axis 3+");
-		platformLookupTable.Add("Thumbsticks.Right.Y+", "axis 4+");
-		platformLookupTable.Add("Thumbsticks.Left.X-", "axis X-");
-		platformLookupTable.Add("Thumbsticks.Left.Y-", "axis Y-");
-		platformLookupTable.Add("Thumbsticks.Right.X-", "axis 3-");
-		platformLookupTable.Add("Thumbsticks.Right.Y-", "axis 4-");
+		platformLookupTable.Add("ThumbSticks.Left.X+", "axis X+");
+		platformLookupTable.Add("ThumbSticks.Left.Y+", "axis Y+");
+		platformLookupTable.Add("ThumbSticks.Right.X+", "axis 3+");
+		platformLookupTable.Add("ThumbSticks.Right.Y+", "axis 4+");
+		platformLookupTable.Add("ThumbSticks.Left.X-", "axis X-");
+		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
+		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 3-");
+		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 4-");
 #endif
 	}
 }
