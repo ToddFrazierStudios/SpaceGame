@@ -31,6 +31,7 @@ public class ShipController : MonoBehaviour {
 	private bool isMaximized;
 	// Use this for initialization
 	void Start () {
+		rigidbody.inertiaTensor = new Vector3(55015.5f, 55015.5f, 55015.5f);
 //		gameView = EditorWindow.focusedWindow;
 //		isMaximized = gameView.maximized;
 		strafeManager = GetComponent<StrafeManager>();

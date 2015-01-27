@@ -93,7 +93,7 @@ public class WeaponsManager : MonoBehaviour {
 
 	[RPC]
 	public void shootMissile() {
-		GameObject missile = Network.Instantiate(missilePrefab,missileBay.position,(transform.rotation), 0) as GameObject;
+		GameObject missile = Network.Instantiate(missilePrefab,missileBay.position,transform.rotation, 0) as GameObject;
 		Missile missileComponent = missile.GetComponent<Missile>();
 		missileComponent.colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
 		RaycastHit hit;
@@ -104,7 +104,7 @@ public class WeaponsManager : MonoBehaviour {
 		} else {
 			missileComponent.target = null;
 		}
-		missile.rigidbody.velocity = rigidbody.velocity;
-		missile.tag = tag;
+//		missile.rigidbody.velocity = rigidbody.velocity;
+		if (tag != "Player") missile.tag = tag;
 	}
 }

@@ -50,7 +50,7 @@ TrailRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: .0500000007
+  m_Time: .0250000004
   m_StartWidth: 1
   m_EndWidth: 1
   m_Colors:
@@ -69,7 +69,7 @@ TrailRenderer:
     m_Color[4]:
       serializedVersion: 2
       rgba: 4278231538
-  m_MinVertexDistance: .100000001
+  m_MinVertexDistance: 0
   m_Autodestruct: 0
 --- !u!114 &11400000
 MonoBehaviour:

@@ -18,12 +18,12 @@ public class RadarBlip : IComparable<RadarBlip> {
 		marker.AddComponent<NetworkView>();
 		marker.tag = "Radar";
 //		marker.layer = layer;
-		marker.transform.localScale = new Vector3(.2f, .2f, .2f);
+		marker.transform.localScale = new Vector3(.01f, .01f, .01f);
 		marker.collider.enabled = false;
 		marker.GetComponent<MeshRenderer>().material = blipDot;
 		projection = GameObject.CreatePrimitive (PrimitiveType.Quad);
 		projection.AddComponent<NetworkView>();
-		projection.transform.localScale = new Vector3(1f, 1f, 1f);
+		projection.transform.localScale = new Vector3(0.12f, 0.1f, 0.1f);
 		projection.tag = "Radar";
 //		projection.layer = layer;
 		projection.collider.enabled = false;
