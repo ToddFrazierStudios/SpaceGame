@@ -136,7 +136,6 @@ public class OurRadar : MonoBehaviour {
 				case "Hostile":
 					blip = new RadarBlip(other.gameObject, hostileBlip, hostileBlipDot);
 					blip.factionNumber = HOSTILE;
-					Debug.Log ("Found hostile " + blip.realObject.name + " " + Time.frameCount);
 	//				hostiles.add (blip);
 					break;
 				case "Friendly":
@@ -158,10 +157,14 @@ public class OurRadar : MonoBehaviour {
 				}
 				blip.projection.transform.parent = radarTransform;
 				blip.marker.transform.parent = radarTransform;
+				blip.marker.transform.localScale = new Vector3(.005f, .005f, .005f);
+				blip.projection.transform.localScale = new Vector3(0.03f, 0.03f, 0.1f);
 				blip.marker.transform.localPosition = Vector3.zero;
 				blip.projection.transform.localPosition = Vector3.zero;
-				blip.projection.transform.LookAt (cameraTransform);
-				blip.marker.transform.LookAt (cameraTransform);
+//				blip.projection.transform.LookAt (cameraTransform);
+//				blip.marker.transform.LookAt (cameraTransform);
+				blip.projection.transform.localRotation = Quaternion.identity;
+				blip.marker.transform.localRotation = Quaternion.identity;
 				blip.projection.layer = 16;
 				blip.marker.layer = 16;
 				blip.projection.name = blip.realObject.name;

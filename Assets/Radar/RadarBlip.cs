@@ -8,7 +8,7 @@ public class RadarBlip : IComparable<RadarBlip> {
 	public int factionNumber;
 	public float distance;
 	public GameObject marker;
-	public Vector3 markerScale = Vector3.one * 0.2f;
+//	public Vector3 markerScale = Vector3.one * 0.2f;
 	public GameObject projection;
 
 	public RadarBlip (GameObject foundObject, Material blip, Material blipDot) {
@@ -18,12 +18,12 @@ public class RadarBlip : IComparable<RadarBlip> {
 		marker.AddComponent<NetworkView>();
 		marker.tag = "Radar";
 //		marker.layer = layer;
-		marker.transform.localScale = new Vector3(.01f, .01f, .01f);
+//		marker.transform.localScale = new Vector3(.015f, .015f, .015f);
 		marker.collider.enabled = false;
 		marker.GetComponent<MeshRenderer>().material = blipDot;
 		projection = GameObject.CreatePrimitive (PrimitiveType.Quad);
 		projection.AddComponent<NetworkView>();
-		projection.transform.localScale = new Vector3(0.12f, 0.1f, 0.1f);
+//		projection.transform.localScale = new Vector3(0.1f, 0.8f, 0.1f);
 		projection.tag = "Radar";
 //		projection.layer = layer;
 		projection.collider.enabled = false;

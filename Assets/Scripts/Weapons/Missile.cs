@@ -147,7 +147,6 @@ public class Missile : MonoBehaviour {
 			Destroy (explosion.gameObject, 1f);//destroy it after some time
 			//this is where i'd like to set the system's radius to match the explosionRadius, but oh well
 			explosion.Play();
-			Debug.Log ("exploded");
 			Network.RemoveRPCs (explosion.networkView.viewID);
 		}
 	}
