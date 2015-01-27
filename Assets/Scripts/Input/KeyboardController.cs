@@ -3,10 +3,8 @@ using System.Collections;
 
 public class KeyboardController : Controller {
 	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
-	private int controllerNumber;
 
-	public KeyboardController(int controllerNumber){
-		this.controllerNumber = controllerNumber;
+	public KeyboardController(){
 		ResetBindingsToDefault();
 	}
 
@@ -47,7 +45,7 @@ public class KeyboardController : Controller {
 	}
 	public override int GetControllerNumber ()
 	{
-		return controllerNumber;
+		return -1;
 	}
 
 	public override void SetBindingForControl (Controls control, string newBinding){
@@ -57,9 +55,9 @@ public class KeyboardController : Controller {
 	public override void ResetBindingsToDefault (){
 		bindings[(int)Controls.LOOK_X] = "Mouse X";
 		bindings[(int)Controls.LOOK_Y] = "Mouse Y";
-		bindings[(int)Controls.STRAFE_X] = "a-d";
-		bindings[(int)Controls.STRAFE_Y] = "s-w";
-		bindings[(int)Controls.ROLL] = "e-q";
+		bindings[(int)Controls.STRAFE_X] = "a_d";
+		bindings[(int)Controls.STRAFE_Y] = "s_w";
+		bindings[(int)Controls.ROLL] = "e_q";
 		bindings[(int)Controls.THROTTLE] = "left shift";
 		bindings[(int)Controls.FIRE] = "mouse 0";
 		bindings[(int)Controls.ALT_FIRE] = "mouse 1";
@@ -82,8 +80,8 @@ public class KeyboardController : Controller {
  		if (identifier == "Mouse X" || identifier == "Mouse Y"){
 			return Input.GetAxis(identifier);
 		}else{
-			if(identifier.Contains ("-")){
-				string[] split = identifier.Split('-');
+			if(identifier.Contains ("_")){
+				string[] split = identifier.Split('_');
 				string minusButton = split[0];
 				string plusButton = split[1];
 				float val = 0.0f;

@@ -74,26 +74,26 @@ public class XInputController : Controller {
 	}
 
 	public override void ResetBindingsToDefault (){
-		bindings[(int)Controls.LOOK_X] = "ThumbSticks.Left.X";
-		bindings[(int)Controls.LOOK_Y] = "ThumbSticks.Left.Y";
-		bindings[(int)Controls.STRAFE_X] = "ThumbSticks.Right.X";
-		bindings[(int)Controls.STRAFE_Y] = "ThumbSticks.Right.Y";
-		bindings[(int)Controls.ROLL] = "Buttons.Y-Buttons.X;Buttons.RightShoulder-Buttons.LeftShoulder";
-		bindings[(int)Controls.THROTTLE] = "Triggers.Left";
-		bindings[(int)Controls.FIRE] = "Triggers.Right";
-		bindings[(int)Controls.ALT_FIRE] = "Buttons.B";
-		bindings[(int)Controls.DAMPENERS] = "Buttons.LeftStick";
-		bindings[(int)Controls.BOOST] = "Buttons.RightStick";
-		bindings[(int)Controls.RADAR_BUTTON] = "DPad.Down";
-		bindings[(int)Controls.CAMERA_BUTTON] = "Buttons.Back";
-		bindings[(int)Controls.PAUSE_BUTTON] = "Buttons.Start";
-		bindings[(int)Controls.TARGET_BUTTON] = "Buttons.A";
-		bindings[(int)Controls.NEXT_WEAPON] = "DPad.Up";
-		bindings[(int)Controls.PREVIOUS_WEAPON] = "NOBIND";
-		bindings[(int)Controls.SELECT_WEAPON_1] = "NOBIND";
-		bindings[(int)Controls.SELECT_WEAPON_2] = "NOBIND";
-		bindings[(int)Controls.SELECT_WEAPON_3] = "NOBIND";
-		bindings[(int)Controls.SELECT_WEAPON_4] = "NOBIND";
+		SetBindingForControl(Controls.LOOK_X,"ThumbSticks.Left.X");
+		SetBindingForControl(Controls.LOOK_Y,"ThumbSticks.Left.Y");
+     	SetBindingForControl(Controls.STRAFE_X,"ThumbSticks.Right.X");
+		SetBindingForControl(Controls.STRAFE_Y,"ThumbSticks.Right.Y");
+		SetBindingForControl(Controls.ROLL,"Buttons.Y_Buttons.X;Buttons.RightShoulder_Buttons.LeftShoulder");
+		SetBindingForControl(Controls.THROTTLE,"Triggers.Left");
+		SetBindingForControl(Controls.FIRE,"Triggers.Right");
+		SetBindingForControl(Controls.ALT_FIRE,"Buttons.B");
+		SetBindingForControl(Controls.DAMPENERS,"Buttons.LeftStick");
+		SetBindingForControl(Controls.BOOST,"Buttons.RightStick");
+		SetBindingForControl(Controls.RADAR_BUTTON,"DPad.Down");
+		SetBindingForControl(Controls.CAMERA_BUTTON,"Buttons.Back");
+		SetBindingForControl(Controls.PAUSE_BUTTON,"Buttons.Start");
+		SetBindingForControl(Controls.TARGET_BUTTON,"Buttons.A");
+		SetBindingForControl(Controls.NEXT_WEAPON,"DPad.Up");
+		SetBindingForControl(Controls.PREVIOUS_WEAPON,"NOBIND");
+		SetBindingForControl(Controls.SELECT_WEAPON_1,"NOBIND");
+		SetBindingForControl(Controls.SELECT_WEAPON_2,"NOBIND");
+		SetBindingForControl(Controls.SELECT_WEAPON_3,"NOBIND");
+		SetBindingForControl(Controls.SELECT_WEAPON_4,"NOBIND");
 	}
 
 	private static float absMax(float a, float b){
@@ -103,7 +103,7 @@ public class XInputController : Controller {
 
 	private static float lookupAnalog(GamePadState state, string identifier){
 		if(identifier == "NOBIND")return 0.0f;
-		if(!identifier.Contains("-")){
+		if(!identifier.Contains("_")){
 			switch(identifier){
 			case "Triggers.Right": return state.Triggers.Right;
 			case "Triggers.Left": return state.Triggers.Left;
@@ -117,7 +117,7 @@ public class XInputController : Controller {
 				return 0.0f;
 			}
 		}else{
-			string[] split = identifier.Split('-');
+			string[] split = identifier.Split('_');
 			string minusButton = split[0];
 			string plusButton = split[1];
 			float val = 0.0f;

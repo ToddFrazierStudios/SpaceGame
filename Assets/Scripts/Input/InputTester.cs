@@ -5,7 +5,8 @@ using System;
 public class InputTester : MonoBehaviour {
 
 	public enum ControllerTypes{
-		KeyboardController
+		KeyboardController,
+		UnityController
 		#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		,XInputController
 		#endif
@@ -28,10 +29,11 @@ public class InputTester : MonoBehaviour {
 		prevType = controllerType;
 		prevPlayerNumber = playerNumber;
 		switch(controllerType){
-		case ControllerTypes.KeyboardController: controller = new KeyboardController(playerNumber);break;
+		case ControllerTypes.KeyboardController: controller = new KeyboardController();break;
 			#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		case ControllerTypes.XInputController: controller = new XInputController(playerNumber);break;
 			#endif
+		case ControllerTypes.UnityController: controller = new UnityController(playerNumber);break;
 		}
 	}
 	
@@ -40,7 +42,7 @@ public class InputTester : MonoBehaviour {
 //		DebugHUD.setValue("Frame",Time.frameCount);
 		if(prevType!=controllerType || prevPlayerNumber!=playerNumber)init();
 		DebugHUD.setValue("Controller Type",controller.GetControllerType());
-		DebugHUD.setValue("Player Number", controller.GetControllerNumber());
+		DebugHUD.setValue("Controller Number", controller.GetControllerNumber());
 		for(int i = 0; i<(int)Controls.NUMBER_OF_CONTROLS; i++){
 			if(Controller.IsADigitalControl((Controls)i)){
 				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetDigitalControl((Controls)i));
