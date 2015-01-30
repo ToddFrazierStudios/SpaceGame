@@ -121,7 +121,7 @@ public class UnityController : Controller {
 	private float lookupAnalog(string identifier){
 		if(identifier=="NOBIND")return 0.0f;
 		if(identifier.Contains("axis")){
-			return Input.GetAxis(prefix+identifier);
+			return GetAxis(identifier);
 		}else if(identifier.Contains("_")){
 			string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
 			string minusButton = split[0];
@@ -155,12 +155,16 @@ public class UnityController : Controller {
 		float value = Input.GetAxis(prefix+identifier);
 		if(identifier==rightThumbStickYAxisName)value = -value;
 		#if (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
+		DebugHUD.setValue("LeftUsed",leftTriggerUsed);
+		DebugHUD.setValue("RightUsed",rightTriggerUsed);
 		if(identifier == leftTriggerAxis){
+			value = Input.GetAxisRaw(prefix+identifier);
 			if(leftTriggerUsed)return (value+1f)/2f;
 			if(value!=0.0f)leftTriggerUsed = true;
 			return 0.0f;
 		}
 		if(identifier == rightTriggerAxis){
+			value = Input.GetAxisRaw(prefix+identifier);
 			if(rightTriggerUsed)return (value+1f)/2f;
 			if(value!=0.0f)rightTriggerUsed = true;
 			return 0.0f;
