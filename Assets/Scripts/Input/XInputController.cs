@@ -33,9 +33,14 @@ public class XInputController : Controller {
 		bindings[(int)control] = newBinding;
 	}
 
+	public override ControllerType GetControllerType ()
+	{
+		return ControllerType.JOYSTICK;
+	}
+
 	public override float GetAnalogControl(Controls c){
 		poll ();
-		string[] binds = bindings[(int)c].Split(';');
+		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 		float val = 0.0f;
 		foreach (string s in binds){
 			val = absMax(val, lookupAnalog(state, s));
@@ -53,14 +58,14 @@ public class XInputController : Controller {
 	}
 
 	private bool getDigitalForState(Controls c, GamePadState s){
-		string[] binds = bindings[(int)c].Split(';');
+		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
 		foreach(string subBind in binds){
 			if(lookupDigital(s,subBind)) return true;
 		}
 		return false;
 	}
 
-	public override string GetControllerType (){
+	public override string GetControllerDescription (){
 		return "XInput Controller";
 	}
 
@@ -117,7 +122,7 @@ public class XInputController : Controller {
 				return 0.0f;
 			}
 		}else{
-			string[] split = identifier.Split('_');
+			string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
 			string minusButton = split[0];
 			string plusButton = split[1];
 			float val = 0.0f;

@@ -1,14 +1,24 @@
-﻿using UnityEngine;
+﻿#define UNITY_EDITOR_OSX
+//TODO: remember to remove this line!!!
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
 public class UnityController : Controller {
 	private static Dictionary<string,string> platformLookupTable;
+	private static string rightThumbStickYAxisName;
 	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
 	private string[] originalBindings = new string[(int) Controls.NUMBER_OF_CONTROLS];
 	private int controllerNumber;
 	private string prefix;
+
+	#if (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
+	private bool rightTriggerUsed = false;
+	private bool leftTriggerUsed = false;
+	private static string leftTriggerAxis,rightTriggerAxis;
+	#endif
+
 
 	public UnityController(int controllerNumber){
 		this.controllerNumber = controllerNumber;
@@ -18,7 +28,7 @@ public class UnityController : Controller {
 
 	public override float GetAnalogControl (Controls c)
 	{
-		string[] binds = bindings[(int)c].Split(';');
+		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
 		float val = 0.0f;
 		foreach (string s in binds){
 			val = absMax(val, lookupAnalog(s));
@@ -36,14 +46,14 @@ public class UnityController : Controller {
 		return getDigitalFromBind(c,true);
 	}
 	private bool getDigitalFromBind(Controls control, bool down){
-		string[] binds = bindings[(int) control].Split(';');
+		string[] binds = bindings[(int) control].Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
 		foreach(string bind in binds){
 			if(lookupDigital(bind,down))return true;
 		}
 		return false;
 	}
 
-	public override string GetControllerType ()
+	public override string GetControllerDescription ()
 	{
 		return "Unity Controller";
 	}
@@ -62,7 +72,7 @@ public class UnityController : Controller {
 	{
 		Debug.Log ("Binding "+newBinding+" to control "+Enum.GetName(typeof(Controls),control));
 		originalBindings[(int)control] = newBinding;//for saving and stuff
-		string[] binds = newBinding.Split(';');
+		string[] binds = newBinding.Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
 		for(int i = 0; i<binds.Length;i++){
 			binds[i] = translateBind(binds[i]);
 		}
@@ -71,10 +81,9 @@ public class UnityController : Controller {
 	}
 
 	private string translateBind(string bind){
-		Debug.Log("Translating bind "+bind);
 		if(bind.Contains("_")){
-			string[] split = bind.Split('_');
-			return platformLookupTable[split[0]]+"_"+platformLookupTable[split[1]];
+			string[] split = bind.Split(DIGITAL_TO_ANALOG_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
+			return platformLookupTable[split[0]]+new string(DIGITAL_TO_ANALOG_SEPERATOR)+platformLookupTable[split[1]];
 		}else{
 			return platformLookupTable[bind];
 		}
@@ -114,7 +123,7 @@ public class UnityController : Controller {
 		if(identifier.Contains("axis")){
 			return Input.GetAxis(prefix+identifier);
 		}else if(identifier.Contains("_")){
-			string[] split = identifier.Split('_');
+			string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
 			string minusButton = split[0];
 			string plusButton = split[1];
 			float val = 0.0f;
@@ -134,12 +143,35 @@ public class UnityController : Controller {
 			if(down)return Input.GetKeyDown(prefix+identifier);
 			return Input.GetKey(prefix+identifier);
 		}else if(identifier.EndsWith("+")){
-			return Input.GetAxis(prefix+identifier.Remove(identifier.Length-1))>=Controller.ANALOG_DIGITAL_THRESHOLD;
+			return GetAxis(identifier.Remove(identifier.Length-1))>=Controller.ANALOG_DIGITAL_THRESHOLD;
 		}else if(identifier.EndsWith("-")){
-			return Input.GetAxis(prefix+identifier.Remove(identifier.Length-1))<=-Controller.ANALOG_DIGITAL_THRESHOLD;
+			return GetAxis(identifier.Remove(identifier.Length-1))<=-Controller.ANALOG_DIGITAL_THRESHOLD;
 		}else{
-			return Input.GetAxis(prefix+identifier)>=Controller.ANALOG_DIGITAL_THRESHOLD;
+			return GetAxis(identifier)>=Controller.ANALOG_DIGITAL_THRESHOLD;
 		}
+	}
+
+	private float GetAxis(string identifier){
+		float value = Input.GetAxis(prefix+identifier);
+		if(identifier==rightThumbStickYAxisName)value = -value;
+		#if (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
+		if(identifier == leftTriggerAxis){
+			if(leftTriggerUsed)return (value+1f)/2f;
+			if(value!=0.0f)leftTriggerUsed = true;
+			return 0.0f;
+		}
+		if(identifier == rightTriggerAxis){
+			if(rightTriggerUsed)return (value+1f)/2f;
+			if(value!=0.0f)rightTriggerUsed = true;
+			return 0.0f;
+		}
+		#endif
+		return value;
+	}
+
+	public override ControllerType GetControllerType ()
+	{
+		return ControllerType.JOYSTICK;
 	}
 
 	private static float absMax(float a, float b){
@@ -186,7 +218,7 @@ public class UnityController : Controller {
 		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
 		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 5-");
 		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 6-");
-#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
+#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
 		//MACMAMAC!
 		//digital
 		platformLookupTable.Add("Buttons.A", "button 16");
@@ -219,6 +251,10 @@ public class UnityController : Controller {
 		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
 		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 3-");
 		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 4-");
+
+		rightTriggerAxis = platformLookupTable["Triggers.Right"];
+		leftTriggerAxis = platformLookupTable["Triggers.Left"];
 #endif
+		rightThumbStickYAxisName = platformLookupTable["ThumbSticks.Right.Y"];
 	}
 }

@@ -5,6 +5,9 @@ public abstract class Controller {
 	///the minimum absolute value required for an analog device to be considered "pressed" when used as a digital button
 	public const float ANALOG_DIGITAL_THRESHOLD = 0.25f;
 
+	public static char[] BIND_SEPERATOR = {';'};
+	public static char[] DIGITAL_TO_ANALOG_SEPERATOR = {'_'};
+
 	///returns the current value of the given analog control
 	public abstract float GetAnalogControl(Controls c);
 
@@ -24,9 +27,12 @@ public abstract class Controller {
 	public static bool IsADigitalControl(Controls c){
 		return c >= Controls.FIRE;
 	}
+	public static int GetNumberOfAnalogControls(){
+		return ((int)Controls.FIRE);
+	}
 
 	///Returns a string identifing the general type of the controller
-	public abstract string GetControllerType();
+	public abstract string GetControllerDescription();
 
 	///Sets the current vibration level for the controller,
 	///currently only supported on XInput.
@@ -50,4 +56,18 @@ public abstract class Controller {
 	/// </summary>
 	/// <returns>The controller number.</returns>
 	public abstract int GetControllerNumber();
+
+	public abstract ControllerType GetControllerType();
+
+	public enum ControllerType{
+		JOYSTICK,KEYBOARD
+	}
+
+	public enum Implementations {
+		KEYBOARD_CONTROLLER,
+		UNITY_CONTROLLER
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+		,XINPUT_CONTROLLER
+#endif
+	};
 }

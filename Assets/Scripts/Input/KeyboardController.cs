@@ -9,7 +9,7 @@ public class KeyboardController : Controller {
 	}
 
 	public override float GetAnalogControl (Controls c){
-		string[] binds = bindings[(int)c].Split(';');
+		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
 		float val = 0.0f;
 		foreach (string s in binds){
 			val = absMax(val, pollAnalog(s));
@@ -33,14 +33,14 @@ public class KeyboardController : Controller {
 	}
 
 	private bool getDigitalFromBind(Controls control, bool down){
-		string[] binds = bindings[(int) control].Split(';');
+		string[] binds = bindings[(int) control].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
 		foreach(string bind in binds){
 			if(pollDigital(bind,down))return true;
 		}
 		return false;
 	}
 	
-	public override string GetControllerType (){
+	public override string GetControllerDescription (){
 		return "Keyboard/Mouse";
 	}
 	public override int GetControllerNumber ()
@@ -75,13 +75,18 @@ public class KeyboardController : Controller {
 		bindings[(int)Controls.SELECT_WEAPON_4] = "4";
 	}
 
+	public override ControllerType GetControllerType ()
+	{
+		return ControllerType.KEYBOARD;
+	}
+
 	private float pollAnalog(string identifier){
 		if(identifier=="NOBIND")return 0.0f;
  		if (identifier == "Mouse X" || identifier == "Mouse Y"){
 			return Input.GetAxis(identifier);
 		}else{
-			if(identifier.Contains ("_")){
-				string[] split = identifier.Split('_');
+			if(identifier.Contains("_")){
+				string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
 				string minusButton = split[0];
 				string plusButton = split[1];
 				float val = 0.0f;
