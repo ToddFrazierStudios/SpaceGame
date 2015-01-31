@@ -27,7 +27,7 @@ public class RadarMount : MonoBehaviour {
 
 		DebugHUD.setValue("Radar Rect",newView);
 
-		foreach(Camera cam in cameraToPosition.GetComponentsInChildren<Camera>())
-			cam.rect = newView;
+//		foreach(Camera cam in cameraToPosition.GetComponentsInChildren<Camera>())
+//			cam.rect = newView;
 	}
 }

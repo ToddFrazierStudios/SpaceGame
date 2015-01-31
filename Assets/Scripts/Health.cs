@@ -49,6 +49,8 @@ public class Health : MonoBehaviour {
 			shield = maxShield;
 		}
 		if (hull <= 0) {
+			if (hullSprite)
+				hullSprite.color = new Color(0f, 0f, 0f, 0f);
 			hullColor = "red";
 			networkView.RPC ("Explode", RPCMode.All);
 		} else if (hull <= maxHull / 3f) {
