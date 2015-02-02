@@ -79,6 +79,10 @@ public class MultiplayerMgr : MonoBehaviour {
 		buttonY = Screen.width * 0.05f;
 		buttonWidth = Screen.width * 0.1f;
 		buttonHeight = Screen.width * 0.1f;
+		refreshHostList();
+		if (hostData == null) {
+			startServer ();
+		}
 //		DontDestroyOnLoad (this);
 //		networkView.group = 1;
 //		Application.LoadLevel(disconnectedLevel);
