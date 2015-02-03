@@ -39,8 +39,6 @@ public class StabilizedEngineThruster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		DebugHUD.setValue ("LT", ParsedInput.controller[0].LeftTrigger);
-		DebugHUD.setValue ("RT", ParsedInput.controller[0].RightTrigger);
 		Vector3 localVelocity = transform.InverseTransformVector(rgb.velocity);
 		DebugHUD.setValue("Local Velocity",localVelocity);
 		speed = rgb.velocity.magnitude;

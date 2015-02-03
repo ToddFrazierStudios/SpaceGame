@@ -16,7 +16,12 @@ public class PlayerPref
 	public bool HasController(){
 		return controller!=null;
 	}
-	
+
+	public Controller.Implementations GetControllerImplementation(){
+		if(controller==null)return Controller.Implementations.NONE;
+		return controller.GetControllerImplementation();
+	}
+
 	public void ChangeController(Controller newController){
 		if(controller!=null){
 			saveToPrefs();
@@ -32,6 +37,10 @@ public class PlayerPref
 		bindings[(int)c] = newBind;
 		controller.SetBindingForControl(c,newBind);
 		saveToPrefs();
+	}
+
+	public string GetBindingsForControl(Controls c){
+		return bindings[(int)c];
 	}
 
 	public float GetAnalogControl(Controls c){

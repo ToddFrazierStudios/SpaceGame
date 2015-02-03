@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if false
+using UnityEngine;
 using System.Collections;
 
 public class ControlLayout : MonoBehaviour {
@@ -60,3 +61,4 @@ public class ControlLayout : MonoBehaviour {
 //	}
 
 }
+#endif

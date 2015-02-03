@@ -217,6 +217,11 @@ public class UnityController : Controller {
 		return ControllerType.JOYSTICK;
 	}
 
+	public override Implementations GetControllerImplementation()
+	{
+		return Implementations.UNITY_CONTROLLER;
+	}
+
 	private static float absMax(float a, float b){
 		if(Mathf.Abs(a)>Mathf.Abs(b))return a;
 		return b;

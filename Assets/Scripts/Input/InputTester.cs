@@ -7,26 +7,32 @@ public class InputTester : MonoBehaviour {
 	private Controller.Implementations prevType;
 	[Range(0,3)]
 	public int controllerNumber;
+	[Range(0,3)]
+	public int playerNumber;
+	private int prevPlayerNumber;
 	private int prevControllerNumber;
 	[Range(0f,1f)]
 	public float leftMotor,rightMotor;
 
+	public bool readOnly = false;
+
 	// Use this for initialization
 	void Start () {
-		init ();
+		if(!readOnly)init ();
 	}
 
 	private void init(){
-		GlobalControllerManager.AssignControllerToPlayer(0,controllerType,controllerNumber);
+		GlobalControllerManager.AssignControllerToPlayer(playerNumber,controllerType,controllerNumber);
 		prevType = controllerType;
 		prevControllerNumber = controllerNumber;
+		prevPlayerNumber = playerNumber;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 //		DebugHUD.setValue("Frame",Time.frameCount);
-		if(prevType!=controllerType || prevControllerNumber!=controllerNumber)init();
-		PlayerPref controller = GlobalControllerManager.GetPlayer(0);
+		if(!readOnly && (prevType!=controllerType || prevControllerNumber!=controllerNumber || prevPlayerNumber!=playerNumber))init();
+		PlayerPref controller = GlobalControllerManager.GetPlayer(playerNumber);
 		DebugHUD.setValue("Controller Type",controller.GetControllerDescription());
 		DebugHUD.setValue("Controller Number", controller.GetControllerNumber());
 		for(int i = 0; i<(int)Controls.NUMBER_OF_CONTROLS; i++){
@@ -36,6 +42,6 @@ public class InputTester : MonoBehaviour {
 				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetAnalogControl((Controls)i));
 			}
 		}
-		controller.SetVibration(leftMotor,rightMotor);
+		if(!readOnly)controller.SetVibration(leftMotor,rightMotor);
 	}
 }

@@ -12,7 +12,7 @@ using System.Collections;
 public class ShipController : MonoBehaviour {
 	public bool isAi = false;
 	[Range(0,3)]
-	public int controllerNumber = 0;
+	public int playerNumber = 0;
 	public bool useKeyboard = true;
 	public bool useController = true;
 
@@ -29,6 +29,7 @@ public class ShipController : MonoBehaviour {
 	private bool resetNextFrame = false;
 //	private EditorWindow gameView;
 	private bool isMaximized;
+	private PlayerPref controller;
 	// Use this for initialization
 	void Start () {
 		rigidbody.inertiaTensor = new Vector3(55015.5f, 55015.5f, 55015.5f);
@@ -40,13 +41,14 @@ public class ShipController : MonoBehaviour {
 		engineThruster = GetComponent<EngineThruster>();
 		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
+		controller = GlobalControllerManager.GetPlayer(playerNumber);
 	}
 
-	void OnApplicationFocus(bool focusStatus) {
-		if (focusStatus = true) {
-			ParsedInput.controller[0].ResetAllAxes();
-		}
-	}
+//	void OnApplicationFocus(bool focusStatus) {
+//		if (focusStatus = true) {
+//			ParsedInput.controller[0].ResetAllAxes();
+//		}
+//	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -60,149 +62,40 @@ public class ShipController : MonoBehaviour {
 
 		// Strafe Manager //
 		if(strafeManager){
-			doStrafeManagerInput();
+			strafeManager.xInput = controller.GetAnalogControl(Controls.STRAFE_X);
+			strafeManager.yInput = controller.GetAnalogControl(Controls.STRAFE_Y);
+			
+			if (strafeManager.xInput == 0f && strafeManager.yInput == 0f) {
+				engineThruster.isStrafing = false;
+			} else {
+				engineThruster.isStrafing = true;
+			}
 		}
 
 		// Rotation Manager //
 		if(rotationManager){
-			doRotationManagerInput();
+			rotationManager.xInput = controller.GetAnalogControl(Controls.LOOK_X);
+			rotationManager.yInput = controller.GetAnalogControl(Controls.LOOK_Y);
+//			rotationManager.xRightInput = ParsedInput.controller [playerNumber].RightStickX;
+//			rotationManager.yRightInput = ParsedInput.controller [playerNumber].RightStickY;
+			rotationManager.rotationInput = controller.GetAnalogControl(Controls.ROLL);
 		}
 
 		// Weapons Manager //
 		if(weaponsManager){
-			doWeaponsManagerInput();
+			weaponsManager.primaryFire = controller.GetDigitalControl(Controls.FIRE);
+			weaponsManager.secondaryFire = controller.GetDigitalControlPressed(Controls.ALT_FIRE);
 		}
 
 		// Engine Thruster //
 		if(engineThruster){
-			doEngineThrusterInput();
+			engineThruster.throttle = controller.GetAnalogControl(Controls.THROTTLE);
+			engineThruster.reverse = controller.GetDigitalControl(Controls.DAMPENERS);
 		}
 
 		// Boost //
 		if(boost){
-			doBoostInput();
-		}
-	}
-
-	private void doStrafeManagerInput(){
-		//reset input variables
-		strafeManager.xInput = 0f;
-		strafeManager.yInput = 0f;
-		
-		//controller
-		if (useController) {
-			strafeManager.xInput = ParsedInput.controller[controllerNumber].RightStickX;
-			strafeManager.yInput = ParsedInput.controller[controllerNumber].RightStickY;
-		}
-		
-		//keyboard
-		if(useKeyboard){
-			if (Input.GetKey(KeyCode.RightArrow)) {
-				strafeManager.xInput = 1;
-			} else if (Input.GetKey (KeyCode.LeftArrow)) {
-				strafeManager.xInput = -1;
-			}
-			if (Input.GetKey (KeyCode.DownArrow)) {
-				strafeManager.yInput = -1;
-			} else if (Input.GetKey (KeyCode.UpArrow)) {
-				strafeManager.yInput = 1;
-			}
-		}
-
-		if (strafeManager.xInput == 0f && strafeManager.yInput == 0f) {
-			engineThruster.isStrafing = false;
-		} else {
-			engineThruster.isStrafing = true;
-		}
-	}
-
-	void doRotationManagerInput (){
-		//reset input variables
-		rotationManager.rotateRight = false;
-		rotationManager.rotateLeft = false;
-		rotationManager.xInput = 0f;
-		rotationManager.yInput = 0f;
-		rotationManager.xRightInput = 0f;
-		rotationManager.yRightInput = 0f;
-		//controller
-		if (useController) {
-			rotationManager.xInput = ParsedInput.controller [controllerNumber].LeftStickX;
-			rotationManager.yInput = ParsedInput.controller [controllerNumber].LeftStickY;
-			rotationManager.xRightInput = ParsedInput.controller [controllerNumber].RightStickX;
-			rotationManager.yRightInput = ParsedInput.controller [controllerNumber].RightStickY;
-			if (ParsedInput.controller [controllerNumber].LeftBumper)
-				rotationManager.rotateLeft = true;
-			if (ParsedInput.controller [controllerNumber].RightBumper)
-				rotationManager.rotateRight = true;
-		}
-		//keyboard
-		if (useKeyboard) {
-			if (Input.GetKey (KeyCode.D)) {
-				rotationManager.xInput = 1f;
-			}
-			else
-				if (Input.GetKey (KeyCode.A)) {
-					rotationManager.xInput = -1f;
-				}
-			if (Input.GetKey (KeyCode.W)) {
-				rotationManager.yInput = 1f;
-			}
-			else
-				if (Input.GetKey (KeyCode.S)) {
-					rotationManager.yInput = -1f;
-				}
-			if (Input.GetKey (KeyCode.Q))
-				rotationManager.rotateLeft = true;
-			if (Input.GetKey (KeyCode.E))
-				rotationManager.rotateRight = true;
-		}
-	}
-
-	private void doWeaponsManagerInput(){
-		//reset input variables
-		weaponsManager.primaryFire = false;
-		weaponsManager.secondaryFire = false;
-		
-		//controller
-		if (useController) {
-			if(ParsedInput.controller[controllerNumber].RightTrigger > 0)weaponsManager.primaryFire = true;
-			if(ParsedInput.controller[controllerNumber].Xdown)weaponsManager.secondaryFire = true;
-		}
-		
-		//keyboard
-		if(useKeyboard){
-			if(Input.GetKey (KeyCode.Space))weaponsManager.primaryFire = true;
-			if(Input.GetKeyDown (KeyCode.X))weaponsManager.secondaryFire = true;
-		}
-	}
-
-	private void doEngineThrusterInput(){
-		//reset input variables
-			engineThruster.throttle = 0f;
-		//controller
-		if (useController) {
-			engineThruster.throttle = ParsedInput.controller[controllerNumber].LeftTrigger;
-			engineThruster.reverse = ParsedInput.controller[0].B;
-		}
-		
-		//keyboard
-		if(useKeyboard){
-			if(Input.GetKey(KeyCode.LeftShift))engineThruster.throttle = 1f;
-		}
-	}
-
-	private void doBoostInput(){
-		//reset input variables
-		boost.activate = false;
-
-		//controller
-		if(useController){
-			if(ParsedInput.controller[controllerNumber].LS) boost.activate = true;
-		}
-
-		//keyboard
-		if(useKeyboard){
-			if (Input.GetKey(KeyCode.R)) boost.activate = true;
+			boost.activate = controller.GetDigitalControl(Controls.BOOST);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if false
+using UnityEngine;
 using System.Collections;
 
 public class ParsedInput{
@@ -837,3 +838,4 @@ public class ParsedInput{
 		}
 	}
 }
+#endif
