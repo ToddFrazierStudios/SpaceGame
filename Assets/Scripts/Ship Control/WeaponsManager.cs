@@ -78,6 +78,7 @@ public class WeaponsManager : MonoBehaviour {
 		}
 		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
+		b.layerMask = layerMask;
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
 

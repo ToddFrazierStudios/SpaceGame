@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour {
 	public float maxLife = 1.5f;
 	public float damage;
 	public Collider colliderToIgnore;
+	public int layerMask;
 	private Vector3 velocity;//251 m/s
 	
 //	public AudioClip[] hitEnemySounds,hitWallSounds;
@@ -35,7 +36,7 @@ public class Bullet : MonoBehaviour {
 		//raycast; did we hit anything?
 		RaycastHit hit;
 		transform.position+=velocity*Time.deltaTime;
-		if(Physics.Linecast(oldPos,transform.position,out hit)){
+		if(Physics.Linecast(oldPos,transform.position,out hit, layerMask)){
 			if (hit.collider != colliderToIgnore) {
 				Vector3 direction = transform.position - oldPos;
 				Quaternion parameters = new Quaternion(direction.x, direction.y, direction.z, damage);

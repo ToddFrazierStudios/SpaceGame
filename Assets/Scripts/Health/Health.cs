@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(NetworkView))]
 public class Health : MonoBehaviour {
 
+	public bool mainHealth;
 	public float hull;
 	public float maxHull;
 	public SpriteRenderer hullSprite;
@@ -14,9 +15,13 @@ public class Health : MonoBehaviour {
 	public float rechargeDelay;
 	public GameObject explosionPrefab;
 	private float timeUntilRecharge;
+	private MultiplayerMgr multiplayer;
 
 	// Use this for initialization
 	void Start () {
+		if (mainHealth) {
+			multiplayer = GameObject.Find ("Menu").GetComponent<MultiplayerMgr>();
+		}
 		hull = maxHull;
 		shield = maxShield;
 	}
@@ -78,18 +83,16 @@ public class Health : MonoBehaviour {
 
 	[RPC]
 	public void Explode() {
-//		if (tag == "Player") {
-//			MultiplayerMgr multiplayerMgr = GameObject.Find ("Menu").GetComponent<MultiplayerMgr>();
-//			if (multiplayerMgr) {
-//				multiplayerMgr.CreatePlayer();
-//			}
-		//		}
-//		yield return new WaitForSeconds(2f);
-//		Debug.Log ("waited");
-//		yield break;
+		if (tag == "Player" && mainHealth) {
+			multiplayer.Respawn();
+		}
 		Network.RemoveRPCs (networkView.viewID);
 		GameObject explosion = Network.Instantiate (explosionPrefab, transform.position, transform.rotation, 0) as GameObject;
 		Destroy (explosion, 2.0f);
-		Destroy (gameObject);
+		if (mainHealth) {
+			Destroy (transform.parent.gameObject);
+		} else {
+			Destroy (gameObject);
+		}
 	}
 }

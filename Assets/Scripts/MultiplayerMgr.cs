@@ -9,6 +9,9 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	// Where the player spawns
 	public Transform spawnPoint;
+	public float respawnDelay = 3.0f;
+	private float respawnCountdown;
+	private bool toRespawn = false;
 
 	// Connection button placement and dimensions
 	public float buttonX;
@@ -40,7 +43,15 @@ public class MultiplayerMgr : MonoBehaviour {
 	public void CreatePlayer() {
 		// Instantiate the ship, with an offset based on how many are connected.
 		go = (GameObject) Network.Instantiate (playerPrefab, spawnPoint.position + new Vector3(Network.connections.Length * 20, 0, 0), Quaternion.identity, 0);
+		toRespawn = false;
 //		go.networkView.SetScope (go.networkView.owner, true);
+	}
+
+	public void Respawn() {
+//		Debug.Log ("respawn in two seconds");
+//		yield return new WaitForSeconds(2);
+		toRespawn = true;
+		respawnCountdown = respawnDelay;
 	}
 
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -150,6 +161,13 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (toRespawn) {
+			if (respawnCountdown <= 0) {
+				CreatePlayer ();
+			} else {
+				respawnCountdown -= Time.fixedDeltaTime;
+			}
+		}
 		// Give the host list a chance to fill up
 		if (refreshing) {
 			if (MasterServer.PollHostList().Length > 0) {
