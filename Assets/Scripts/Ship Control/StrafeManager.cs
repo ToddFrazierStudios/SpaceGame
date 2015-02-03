@@ -25,7 +25,7 @@ public class StrafeManager : MonoBehaviour {
 		} else if (inputX < 0) {
 			inputX = -(inputX - 1) * (inputX - 1);
 		}
-		float inputY = -yInput;
+		float inputY = yInput;
 		if (inputY > 0) {
 			inputY = (inputY + 1) * (inputY + 1);
 		} else if (inputY < 0) {
