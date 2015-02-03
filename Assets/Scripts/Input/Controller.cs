@@ -4,6 +4,7 @@
 public abstract class Controller {
 	///the minimum absolute value required for an analog device to be considered "pressed" when used as a digital button
 	public const float ANALOG_DIGITAL_THRESHOLD = 0.25f;
+	public const Controls FIRST_DIGITAL_CONTROL = Controls.FIRE;
 
 	public static char[] BIND_SEPERATOR = {';'};
 	public static char[] DIGITAL_TO_ANALOG_SEPERATOR = {'_'};
@@ -25,10 +26,10 @@ public abstract class Controller {
 	/// <returns><c>true</c> if the specified control is a digital control; otherwise, <c>false</c>.</returns>
 	/// <param name="c">C.</param>
 	public static bool IsADigitalControl(Controls c){
-		return c >= Controls.FIRE;
+		return c >= FIRST_DIGITAL_CONTROL;
 	}
 	public static int GetNumberOfAnalogControls(){
-		return ((int)Controls.FIRE);
+		return ((int)FIRST_DIGITAL_CONTROL);
 	}
 
 	///Returns a string identifing the general type of the controller
@@ -56,11 +57,14 @@ public abstract class Controller {
 
 	public abstract ControllerType GetControllerType();
 
+	public abstract Implementations GetControllerImplementation();
+
 	public enum ControllerType{
 		JOYSTICK,KEYBOARD
 	}
 
 	public enum Implementations {
+		NONE,
 		KEYBOARD_CONTROLLER,
 		UNITY_CONTROLLER
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN

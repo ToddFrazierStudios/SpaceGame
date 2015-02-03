@@ -128,6 +128,11 @@ public class XInputController : Controller {
 		return "XInput Controller";
 	}
 
+	public override Implementations GetControllerImplementation()
+	{
+		return Implementations.XINPUT_CONTROLLER;
+	}
+
 	public override int GetControllerNumber ()
 	{
 		return (int)playerIndex;

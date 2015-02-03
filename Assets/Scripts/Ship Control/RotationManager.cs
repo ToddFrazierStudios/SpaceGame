@@ -10,10 +10,7 @@ public class RotationManager : MonoBehaviour {
 
 	//*** INPUT VARIABLES; see ShipController.cs ***//
 	[System.NonSerialized]
-	public float xInput = 0f,yInput = 0f, xRightInput = 0f, yRightInput = 0f;
-
-	[System.NonSerialized]
-	public bool rotateLeft = false, rotateRight = false;
+	public float xInput = 0f,yInput = 0f, xRightInput = 0f, yRightInput = 0f, rotationInput = 0f;
 
 	void Awake() {
 		Vector3 inert = rgb.inertiaTensor;
@@ -46,20 +43,8 @@ public class RotationManager : MonoBehaviour {
 
 		inputRightX = xRightInput * barrelForce.x;
 		inputRightY = yRightInput * barrelForce.y;
-		inputZ = 0f;
-		if(rotateLeft) {
-//			if (ParsedInput.controller[0].LeftBumperDown) {
-//				if (inputRightX > 0 || inputRightY > 0) {
-//					Vector3 strafeVector = new Vector3(inputRightX,inputRightY,0);
-//					rgb.AddRelativeForce(strafeVector);
-//				}
-//			}
 
-			inputZ += force.z;
-		}
-		if(rotateRight) {
-			inputZ-=force.z;
-		}
+		inputZ = force.z*rotationInput;
 
 		Vector3 forceVector = new Vector3(inputY,inputX,inputZ);
 		
