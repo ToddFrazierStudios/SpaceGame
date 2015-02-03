@@ -62,6 +62,7 @@ public class KeyboardController : Controller {
 	}
 	//Builds a Binding based on the raw single bind string
 	private Binding buildBinding(string bind, Binding previous){
+		Debug.Log ("Building binding for " + bind);
 		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
 		bool inverted = (meta & 8) != 0;//isolate the inversion
 		meta = meta & 7;//strip out the inversion bit
