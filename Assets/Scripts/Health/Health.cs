@@ -8,13 +8,8 @@ public class Health : MonoBehaviour {
 	public float hull;
 	public float maxHull;
 	public SpriteRenderer hullSprite;
-	public float shield;
-	public float maxShield;
-	public SpriteRenderer shieldSprite;
-	public float shieldRegenRate;
-	public float rechargeDelay;
+	public Shield shield;
 	public GameObject explosionPrefab;
-	private float timeUntilRecharge;
 	private MultiplayerMgr multiplayer;
 
 	// Use this for initialization
@@ -23,48 +18,19 @@ public class Health : MonoBehaviour {
 			multiplayer = GameObject.Find ("Menu").GetComponent<MultiplayerMgr>();
 		}
 		hull = maxHull;
-		shield = maxShield;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (timeUntilRecharge > 0) {
-			timeUntilRecharge -= Time.deltaTime;
-		} else {
-			timeUntilRecharge = 0;
-		}
-		if (shieldSprite) {
-			shieldSprite.color = new Color(1f, shield/maxShield, shield/maxShield);
-			DebugHUD.setValue ("shield color", shieldSprite.color);
-		}
 //		DebugHUD.setValue ("shield health", shield/maxShield * 255f);
-		if (hullSprite) hullSprite.color = new Color(1f, hull/maxHull, hull/maxHull);
-		string shieldColor = "blue";
-		string hullColor = "blue";
-		if (shield < maxShield) {
-			if (timeUntilRecharge == 0) {
-				shield += shieldRegenRate * Time.deltaTime;
-			}
-			if (shield <= 0) {
-				shield = 0;
-				shieldColor = "red";
-			} else if (shield <= maxShield / 3f) {
-				shieldColor = "yellow";
-			}
-		} else {
-			shield = maxShield;
+		if (hullSprite) {
+			hullSprite.color = new Color(1f, hull/maxHull, hull/maxHull);
 		}
 		if (hull <= 0) {
-			if (hullSprite)
+			if (hullSprite) {
 				hullSprite.color = new Color(0f, 0f, 0f, 0f);
-			hullColor = "red";
+			}
 			networkView.RPC ("Explode", RPCMode.All);
-		} else if (hull <= maxHull / 3f) {
-			hullColor = "yellow";
-		}
-		if (tag == "Player") {
-			DebugHUD.setValue ("Hull", "<color=" + hullColor + ">" + hull + "</color>");
-			DebugHUD.setValue ("Shields", "<color=" + shieldColor + ">" + shield + "</color>");
 		}
 	}
 
@@ -73,12 +39,11 @@ public class Health : MonoBehaviour {
 	public void hurt(Quaternion parameters) {
 		float damage = parameters.w;
 		Vector3 direction = new Vector3(parameters.x, parameters.y, parameters.z);
-		if (shield > 0) {
-			shield -= damage;
+		if (shield && shield.shield > 0) {
+			shield.decrementShield (damage);
 		} else if (hull > 0) {
 			hull -= damage;
 		}
-		timeUntilRecharge = rechargeDelay;
 	}
 
 	[RPC]

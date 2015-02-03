@@ -70,15 +70,25 @@ public class WeaponsManager : MonoBehaviour {
 	[RPC]
 	public void shootMachineGuns() {
 		RaycastHit hit;
+		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
+//		LineRenderer line = created.GetComponent<LineRenderer>();
 		// Dynamically resize based on distance? Maybe later.
 		if (Physics.SphereCast (transform.position, 7f, transform.forward, out hit, range, layerMask)) {
-			nextGunToFire.LookAt (hit.point); 
+//			nextGunToFire.LookAt (hit.point); 
+//			line.SetPosition (0, transform.position);
+//			line.SetPosition (1, hit.point);
 		} else {
-			nextGunToFire.localRotation = Quaternion.identity;
+//			nextGunToFire.localRotation = Quaternion.identity;
+//			line.SetPosition (0, transform.position);
+//			line.SetPosition (1, transform.TransformPoint (Vector3.forward * 20f));
 		}
-		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
+
 		Bullet b = created.GetComponent<Bullet>();
-		b.layerMask = layerMask;
+		if (gameObject.layer == 13) {
+//			b.layerMask = layerMask;
+		} else {
+//			b.layerMask = 
+		}
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
 

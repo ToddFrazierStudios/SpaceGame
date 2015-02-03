@@ -24,7 +24,7 @@ public class MultiplayerMgr : MonoBehaviour {
 	private GameObject player;
 
 	// IP address
-	private string ip = "129.22.50.124";
+//	private string ip = "129.22.50.124";
 
 	// This lets you wait for the refresh to finish so you don't get an empty list
 	private bool refreshing;
