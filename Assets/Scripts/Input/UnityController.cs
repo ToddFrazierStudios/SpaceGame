@@ -1,6 +1,4 @@
-﻿#define UNITY_EDITOR_OSX
-//TODO: remember to remove this line!!!
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -8,8 +6,7 @@ using System;
 public class UnityController : Controller {
 	private static Dictionary<string,string> platformLookupTable;
 	private static string rightThumbStickYAxisName;
-	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
-	private string[] originalBindings = new string[(int) Controls.NUMBER_OF_CONTROLS];
+	private Binding[] bindings = new Binding[(int)Controls.NUMBER_OF_CONTROLS];
 	private int controllerNumber;
 	private string prefix;
 
@@ -22,18 +19,18 @@ public class UnityController : Controller {
 
 	public UnityController(int controllerNumber){
 		this.controllerNumber = controllerNumber;
-		ResetBindingsToDefault();
 		prefix = "joystick "+(controllerNumber+1)+" ";
+		ResetBindingsToDefault();
 	}
 
-	public override float GetAnalogControl (Controls c)
-	{
-		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
+	public override float GetAnalogControl (Controls c){
+		Binding bind = bindings[(int)c];
 		float val = 0.0f;
-		foreach (string s in binds){
-			val = absMax(val, lookupAnalog(s));
+		while(bind!=null){
+			val+=Mathf.Clamp(pollAnalog(bind), -1.0f, 1.0f);
+			bind = bind.AlternateBinding;
 		}
-		return val;
+		return Mathf.Clamp(val, -1.0f, 1.0f);
 	}
 
 	public override bool GetDigitalControl (Controls c)
@@ -46,9 +43,10 @@ public class UnityController : Controller {
 		return getDigitalFromBind(c,true);
 	}
 	private bool getDigitalFromBind(Controls control, bool down){
-		string[] binds = bindings[(int) control].Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
-		foreach(string bind in binds){
-			if(lookupDigital(bind,down))return true;
+		Binding bind = bindings[(int) control];
+		while(bind!=null){
+			if(pollDigital(bind,down))return true;
+			bind = bind.AlternateBinding;
 		}
 		return false;
 	}
@@ -63,49 +61,72 @@ public class UnityController : Controller {
 		//NOP
 	}
 
-	public override string GetBindingForControl (Controls control)
-	{
-		return originalBindings[(int)control];
-	}
-
-	public override void SetBindingForControl (Controls control, string newBinding)
-	{
-		Debug.Log ("Binding "+newBinding+" to control "+Enum.GetName(typeof(Controls),control));
-		originalBindings[(int)control] = newBinding;//for saving and stuff
-		string[] binds = newBinding.Split(BIND_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
-		for(int i = 0; i<binds.Length;i++){
-			binds[i] = translateBind(binds[i]);
+	public override void SetBindingForControl (Controls control, string newBinding){
+		if(newBinding=="NOBIND"){
+			bindings[(int)control] = null;
+		} else {
+			Binding b = null;
+			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+			foreach(string s in alternates){
+				b = buildBinding(s,b);//each new binding is built and linked to the previous one
+			}
+			bindings[(int)control] = b;
 		}
-		bindings[(int)control] = string.Join(";",binds);
-
 	}
+	//Builds a Binding based on the raw single bind string
+	private Binding buildBinding(string bind, Binding previous){
+		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
+		bool inverted = (meta & 8) != 0;//isolate the inversion
+		meta = meta & 7;//strip out the inversion bit
+		string bindString = bind.Substring(1);
 
-	private string translateBind(string bind){
-		if(bind.Contains("_")){
-			string[] split = bind.Split(DIGITAL_TO_ANALOG_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
-			return platformLookupTable[split[0]]+new string(DIGITAL_TO_ANALOG_SEPERATOR)+platformLookupTable[split[1]];
-		}else{
-			return platformLookupTable[bind];
+#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
+		//special fixes for windows where the DPad is an axis instead of buttons
+		if(bindString.Contains("DPad")){
+			switch((Binding.BindType)meta){
+			case Binding.BindType.DIRECT_DIGIAL:
+				if(bindString.Contains("Up")||bindString.Contains("Right")){
+					meta = (int)Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE;
+				}else{
+					meta = (int)Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE;
+				}
+				break;
+			case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+				meta = (int)Binding.BindType.DIRECT_ANALOG;
+				if(bindString.Contains("Down")||bindString.Contains("Left")){
+					inverted = !inverted;
+				}
+				break;
+			case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+				meta = (int)Binding.BindType.DIRECT_ANALOG;
+				if(bindString.Contains("Up")||bindString.Contains("Right")){
+					inverted = !inverted;
+				}
+				break;
+			}
 		}
+#endif
+
+		return new Binding(platformLookupTable[bindString],(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
 	}
 
 	public override void ResetBindingsToDefault ()
 	{
-		SetBindingForControl(Controls.LOOK_X,"ThumbSticks.Left.X");
-		SetBindingForControl(Controls.LOOK_Y,"ThumbSticks.Left.Y");
-		SetBindingForControl(Controls.STRAFE_X,"ThumbSticks.Right.X");
-		SetBindingForControl(Controls.STRAFE_Y,"ThumbSticks.Right.Y");
-		SetBindingForControl(Controls.ROLL,"Buttons.Y_Buttons.X;Buttons.RightShoulder_Buttons.LeftShoulder");
-		SetBindingForControl(Controls.THROTTLE,"Triggers.Left");
-		SetBindingForControl(Controls.FIRE,"Triggers.Right");
-		SetBindingForControl(Controls.ALT_FIRE,"Buttons.B");
-		SetBindingForControl(Controls.DAMPENERS,"Buttons.LeftStick");
-		SetBindingForControl(Controls.BOOST,"Buttons.RightStick");
-		SetBindingForControl(Controls.RADAR_BUTTON,"DPad.Down");
-		SetBindingForControl(Controls.CAMERA_BUTTON,"Buttons.Back");
-		SetBindingForControl(Controls.PAUSE_BUTTON,"Buttons.Start");
-		SetBindingForControl(Controls.TARGET_BUTTON,"Buttons.A");
-		SetBindingForControl(Controls.NEXT_WEAPON,"DPad.Up");
+		SetBindingForControl(Controls.LOOK_X,"3ThumbSticks.Left.X");
+		SetBindingForControl(Controls.LOOK_Y,"3ThumbSticks.Left.Y");
+		SetBindingForControl(Controls.STRAFE_X,"3ThumbSticks.Right.X");
+		SetBindingForControl(Controls.STRAFE_Y,"3ThumbSticks.Right.Y");
+		SetBindingForControl(Controls.ROLL,"5Buttons.Y;4Buttons.X;5Buttons.RightShoulder;4Buttons.LeftShoulder");
+		SetBindingForControl(Controls.THROTTLE,"3Triggers.Left");
+		SetBindingForControl(Controls.FIRE,"1Triggers.Right");
+		SetBindingForControl(Controls.ALT_FIRE,"0Buttons.B");
+		SetBindingForControl(Controls.DAMPENERS,"0Buttons.LeftStick");
+		SetBindingForControl(Controls.BOOST,"0Buttons.RightStick");
+		SetBindingForControl(Controls.RADAR_BUTTON,"0DPad.Down");
+		SetBindingForControl(Controls.CAMERA_BUTTON,"0Buttons.Back");
+		SetBindingForControl(Controls.PAUSE_BUTTON,"0Buttons.Start");
+		SetBindingForControl(Controls.TARGET_BUTTON,"0Buttons.A");
+		SetBindingForControl(Controls.NEXT_WEAPON,"0DPad.Up");
 		SetBindingForControl(Controls.PREVIOUS_WEAPON,"NOBIND");
 		SetBindingForControl(Controls.SELECT_WEAPON_1,"NOBIND");
 		SetBindingForControl(Controls.SELECT_WEAPON_2,"NOBIND");
@@ -118,39 +139,57 @@ public class UnityController : Controller {
 		return controllerNumber;
 	}
 
-	private float lookupAnalog(string identifier){
-		if(identifier=="NOBIND")return 0.0f;
-		if(identifier.Contains("axis")){
-			return GetAxis(identifier);
-		}else if(identifier.Contains("_")){
-			string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,StringSplitOptions.RemoveEmptyEntries);
-			string minusButton = split[0];
-			string plusButton = split[1];
-			float val = 0.0f;
-			if(lookupDigital(minusButton,false)) val-=1.0f;
-			if(lookupDigital(plusButton,false)) val+=1.0f;
-			return val;
-		}else{
-			if(lookupDigital(identifier,false))
-				return 1.0f;
+	private float pollAnalog(Binding bind){
+		float value = 0.0f;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_ANALOG:
+			value = GetAxis(bind.BindString);
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+			if(Input.GetKey(prefix+bind.BindString))
+				value = -1.0f;
+			else 
+				value = 0.0f;
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+			if(Input.GetKey(prefix+bind.BindString))
+				value = 1.0f;
+			else 
+				value = 0.0f;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as an analog bind, but it is type "+bind.Type);
 			return 0.0f;
 		}
+		if(bind.IsATrigger && bind.IsInverted)return 1.0f - value;
+		if(bind.IsInverted) return -value;
+		return value;
 	}
 
-	private bool lookupDigital(string identifier, bool down){
-		if(identifier=="NOBIND")return false;
-		if(identifier.Contains("button")){
-			if(down)return Input.GetKeyDown(prefix+identifier);
-			return Input.GetKey(prefix+identifier);
-		}else if(identifier.EndsWith("+")){
-			return GetAxis(identifier.Remove(identifier.Length-1))>=Controller.ANALOG_DIGITAL_THRESHOLD;
-		}else if(identifier.EndsWith("-")){
-			return GetAxis(identifier.Remove(identifier.Length-1))<=-Controller.ANALOG_DIGITAL_THRESHOLD;
-		}else{
-			return GetAxis(identifier)>=Controller.ANALOG_DIGITAL_THRESHOLD;
+	private bool pollDigital(Binding bind, bool down){
+		bool value = false;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_DIGIAL:
+			if(down)
+				value = Input.GetKeyDown(prefix+bind.BindString);
+			else 
+				value = Input.GetKey(prefix+bind.BindString);
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
+			value = GetAxis(bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
+			value = GetAxis(bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);
+			return false;
 		}
+		if(bind.IsInverted)return !value;
+		return value;
 	}
-
+	//Special GetAxis function, replaces Input.GetAxis for this class,
+	//includes compensation for the upside-down right thubstick and for macmamac trigger issues
 	private float GetAxis(string identifier){
 		float value = Input.GetAxis(prefix+identifier);
 		if(identifier==rightThumbStickYAxisName)value = -value;
@@ -209,20 +248,11 @@ public class UnityController : Controller {
 		platformLookupTable.Add("ThumbSticks.Right.Y", "axis 5");
 		platformLookupTable.Add("Triggers.Left", "axis 9");
 		platformLookupTable.Add("Triggers.Right", "axis 10");
-		platformLookupTable.Add("DPad.Up", "axis 7+");
-		platformLookupTable.Add("DPad.Down", "axis 7-");
-		platformLookupTable.Add("DPad.Right", "axis 6+");
-		platformLookupTable.Add("DPad.Left", "axis 6-");
-		//analog-to-digital
-		platformLookupTable.Add("ThumbSticks.Left.X+", "axis X+");
-		platformLookupTable.Add("ThumbSticks.Left.Y+", "axis Y+");
-		platformLookupTable.Add("ThumbSticks.Right.X+", "axis 5+");
-		platformLookupTable.Add("ThumbSticks.Right.Y+", "axis 6+");
-		platformLookupTable.Add("ThumbSticks.Left.X-", "axis X-");
-		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
-		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 5-");
-		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 6-");
-#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+		platformLookupTable.Add("DPad.Up", "axis 7");
+		platformLookupTable.Add("DPad.Down", "axis 7");
+		platformLookupTable.Add("DPad.Right", "axis 6");
+		platformLookupTable.Add("DPad.Left", "axis 6");
+#elif (UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX)
 		//MACMAMAC!
 		//digital
 		platformLookupTable.Add("Buttons.A", "button 16");
@@ -246,15 +276,6 @@ public class UnityController : Controller {
 		platformLookupTable.Add("ThumbSticks.Right.Y", "axis 4");
 		platformLookupTable.Add("Triggers.Left", "axis 5");
 		platformLookupTable.Add("Triggers.Right", "axis 6");
-		//analog-to-digital
-		platformLookupTable.Add("ThumbSticks.Left.X+", "axis X+");
-		platformLookupTable.Add("ThumbSticks.Left.Y+", "axis Y+");
-		platformLookupTable.Add("ThumbSticks.Right.X+", "axis 3+");
-		platformLookupTable.Add("ThumbSticks.Right.Y+", "axis 4+");
-		platformLookupTable.Add("ThumbSticks.Left.X-", "axis X-");
-		platformLookupTable.Add("ThumbSticks.Left.Y-", "axis Y-");
-		platformLookupTable.Add("ThumbSticks.Right.X-", "axis 3-");
-		platformLookupTable.Add("ThumbSticks.Right.Y-", "axis 4-");
 
 		rightTriggerAxis = platformLookupTable["Triggers.Right"];
 		leftTriggerAxis = platformLookupTable["Triggers.Left"];

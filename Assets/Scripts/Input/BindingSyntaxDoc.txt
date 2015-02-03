@@ -1,0 +1,156 @@
+Binding Syntax Document v1.0
+
+*** Basics ***
+
+A Binding represents a possible key/button, trigger, stick, etc. (in general, a Device) that can be used by a player.  
+Bindings are applied to an already existing controller, so they don't care which device's controls are being bound.  
+
+A Control is a field that contains an input value needed to control the game.  
+The Controls are named by the enumeration located in Controls.cs.  
+Controls are mapped to integers so that Bindings can be stored in an array for quick lookup.  
+A Control has one or more Bindings associated with it.  
+A Control's value is determined by the values from the input device that correspond with that Control's Bindings.  
+
+The value of a digital Control is ether true or false.  
+The value of an analog Control is a float ranging from -1.0f to 1.0f.  By convention, a value of 0.0f means that the user is not using the device.
+
+*** The Binding class (Binding.cs) ***
+
+The 'meat' of a Binding is the BindString.  
+The BindString represents the actual string that is sent to the controller in order to poll input. 
+
+There are 6 types of Bindings, they are enumerated as Binding.BindType.  
+Three types are for analog Controls, and the other three are for digital Controls.  
+
+BindTypes for Digital Controls:
+	0. DIRECT_DIGITAL
+		The bind represents a digital button being used directly to supply a digital control.  
+	1. ANALOG_TO_DIGITAL_POSITIVE
+		The bind represents an analog device being used to supply a digital control.
+		If the analog device's value is greater than or equal to Controller.ANALOG_DIGITAL_THRESHOLD, the Control is considered 'pressed'
+	2. ANALOG_TO_DIGITAL_NEGATIVE
+		The bind represents an analog device being used to supply a digital control.
+		If the analog device's value is less than or equal to negative Controller.ANALOG_DIGITAL_THRESHOLD, the Control is considered 'pressed'
+		
+BindTypes for Analog Controls:
+	3. DIRECT_ANALOG
+		The bind represents an analog device being used directly to supply an analog control.  
+	4. DIGITAL_TO_ANALOG_POSITIVE
+		The bind represents a digital button being used to increase the value of an analog control.
+		If the button is pressed, it will add 1.0f to the analog control (never exceeding 1.0f total, of course), else it will add nothing
+	5. DIGITAL_TO_ANALOG_NEGATIVE
+		The bind represents a digital button being used to decrease the value of an analog control.
+		If the button is pressed, it will subtract 1.0f from the analog control (never exceeding -1.0f total, of course), else it will subtract nothing
+		
+A Binding can also be inverted.  An inverted control will have the IsInverted flag set.  
+An inverted digital binding will return true when it is not being pressed, and vice versa.  
+An inverted analog binding will return its standard value, but it will be negated.  
+If the IsATrigger flag is set on an inverted analog binding, it will now return its value reversed, but still in the range 0.0f-1.0f.  (ie a value of 0.0f will become 1.0f...)
+
+Bindings optionally contain a reference to another Binding called AlternateBinding.
+This field allows Bindings to form a linked-list of Bindings.  
+Each Binding in the list is called an Alternate.
+The value of a Control is determined by the 'sum' of all its associated Alternates.  
+
+*** The Binding Class in use ***
+A Controller is an Input-Device-Specific Class that contains Bindings and uses them to poll the physical hardware.  
+Within a Controller, there is an array of Bindings of the same length as there are Controls.  
+
+When a Control is polled, the Controller will pull up the Binding in the array corresponding to the given Control.  
+The controller will then iterate through that Binding and any AlternateBindings it or its Alternates may have.  
+From these Bindings and their properties (and some sort of underlying input API), the Controller determines the value of that Control.
+
+For Analog Controls, this means literally suming up the values of the devices indicated by the Bindings, then clamping the sum between -1.0f and 1.0f
+For Digital Controls, if any binding returns true, then the value of the Control is considered true.  
+
+Quick Note:
+A Binding does not actually "Return" anything; The "return value" of a Binding is just a shorthand way of saying:
+"The value that is returned by the controller when it uses its native API to lookup the current value of the device represented by this binding."
+
+*** Binding String Syntax ***
+Before any input is to be polled, the Bindings must be set up.  Each control's bindings can be represented by a single string.  
+The syntax is as follows:
+Each Control has one string that has one or more Bindings seperated by ';'
+The syntax for an individual Binding is as follows:
+The first character is a hex digit identifying the properties of the Binding.  If the first (most signifigant) bit of this integer is set, the Binding is inverted.  
+The remaining 3 bits are used to refer to one of the BindTypes defined above.  
+The IsATrigger flag is not stored, but is determined automatically by the rest of the string.  
+
+For convience, here is a list of codes and their corresponding values:
+Code:	Value:
+0		Non-inverted DIRECT_DIGITAL
+1		Non-inverted ANALOG_TO_DIGITAL_POSITIVE
+2		Non-inverted ANALOG_TO_DIGITAL_NEGATIVE
+3		Non-inverted DIRECT_ANALOG
+4		Non-inverted DIGITAL_TO_ANALOG_POSITIVE
+5		Non-inverted DIGITAL_TO_ANALOG_NEGATIVE
+8		Inverted DIRECT_DIGITAL
+9		Inverted ANALOG_TO_DIGITAL_POSITIVE
+A		Inverted ANALOG_TO_DIGITAL_NEGATIVE
+B		Inverted DIRECT_ANALOG
+C		Inverted DIGITAL_TO_ANALOG_POSITIVE
+D		Inverted DIGITAL_TO_ANALOG_NEGATIVE
+
+6,7,E, and F are currently unused, but are reserved for future expansion
+
+The rest of the string represents the actual binding according to the following:
+If the underlying Controller is a Keyboard/Mouse setup, Buttons follow the Unity Input.GetKey() syntax.  
+This syntax is described here: http://docs.unity3d.com/Manual/ConventionalGameInput.html#ButtonNames (see the section entitled "Button Names")
+
+The table from that page is copied here for convience:
+    Normal keys: “a”, “b”, “c” …
+    Number keys: “1”, “2”, “3”, …
+    Arrow keys: “up”, “down”, “left”, “right”
+    Keypad keys: “[1]”, “[2]”, “[3]”, “[+]”, “[equals]”
+    Modifier keys: “right shift”, “left shift”, “right ctrl”, “left ctrl”, “right alt”, “left alt”, “right cmd”, “left cmd”
+    Mouse Buttons: “mouse 0”, “mouse 1”, “mouse 2”, …
+    Special keys: “backspace”, “tab”, “return”, “escape”, “space”, “delete”, “enter”, “insert”, “home”, “end”, “page up”, “page down”
+    Function keys: “f1”, “f2”, “f3”, …
+
+The only Analog Devices that exist for Keyboard/Mouse are the Mouse and MouseWheel.  
+For mouse movement in the X direction, use "Mouse X", and for the Y axis use "Mouse Y"
+The value returned is based on the movement of the mouse since the last frame and is not bounded.  At this time, the way this value will be normalized has not been determined.  
+For the mouse wheel, use "Mouse Wheel".  The mouse wheel returns a positive value when scrolling up, and a negative value when scrolling down.  
+The mouse wheel value is the number of mouse wheel 'clicks' since the last frame.  
+Again, the method of normalization for the mouse wheel has not yet been determined, however, if used as a digital bind it doesn't matter and will work as expected.  
+
+All Gamepad-Type Controllers use a standard syntax for all their Bindings, reguardless of underlying system or API.  
+All Gamepads use the XInput style, but in strings instead of as code.  
+All Gamepads are assumed to be XBox360 controllers, or a controller with the equivalent layout.  
+Gamepad Bindings may have their BindStrings converted into a platform-specific format when actually stored in the Binding object.  
+Here is a list of the supported strings for Gamepads, the Actual column shows what that BindString corresponds to on an Xbox360 Controller.
+
+BindString:								Actual:
+
+Digital:
+Buttons.A								The A face button
+Buttons.B								The B face button
+Buttons.Y								The X face button
+Buttons.X								The Y face button
+Buttons.Back							The Back button
+Buttons.Start							The Start button
+Buttons.Guide							The XBox Guide button*
+Buttons.RightShoulder					The right shoulder button (RB)
+Buttons.LeftShoulder					The left shoulder button (LB)
+Buttons.LeftStick						The left stick 'click' ('LS' or 'L3')
+Buttons.RightStick						The right stick 'click' ('RS' or 'R3')
+DPad.Up									Upwards on the directional pad
+DPad.Down								Downwards on the directional pad
+DPad.Left								Leftwards on the directional pad
+DPad.Right								Rightwards on the directional pad
+
+Analog:
+Triggers.Right							The right trigger (RT)**
+Triggers.Left							The left trigger (LT)**
+ThumbSticks.Left.X						The left stick (horizontal)
+ThumbSticks.Left.Y						The left stick (vertical)
+ThumbSticks.Right.X						The right stick (horizontal)
+ThumbSticks.Right.Y						The right stick (vertical)
+
+*Buttons.Guide is currently supported, but is strongly discouraged and may not work on all platforms!
+**Triggers have values ranging from 0.0f-1.0f instead of -1.0f-1.0f and will have the IsATrigger flag set for their Bindings
+
+The directions for the ThumbSticks are as follows:
+Positive X is to the right, negative X is to the left
+Positive Y is upwards, negative Y is downwards
+  

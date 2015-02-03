@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class KeyboardController : Controller {
-	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
+	private Binding[] bindings = new Binding[(int)Controls.NUMBER_OF_CONTROLS];
 
 	public KeyboardController(){
 		ResetBindingsToDefault();
 	}
 
 	public override float GetAnalogControl (Controls c){
-		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+		Binding bind = bindings[(int)c];
 		float val = 0.0f;
-		foreach (string s in binds){
-			val = absMax(val, pollAnalog(s));
+		while(bind!=null){
+			val+=Mathf.Clamp(pollAnalog(bind), -1.0f, 1.0f);
+			bind = bind.AlternateBinding;
 		}
-		return val;
+		return Mathf.Clamp(val, -1.0f, 1.0f);
 	}
 
 	public override void SetVibration (float left, float right){
 		//NOP
 	}
-
-	public override string GetBindingForControl (Controls control){
-		return bindings[(int)control];
-	}
+	
 	public override bool GetDigitalControl (Controls c){
 		return getDigitalFromBind (c,false);
 	}
@@ -33,9 +32,10 @@ public class KeyboardController : Controller {
 	}
 
 	private bool getDigitalFromBind(Controls control, bool down){
-		string[] binds = bindings[(int) control].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
-		foreach(string bind in binds){
+		Binding bind = bindings[(int) control];
+		while(bind!=null){
 			if(pollDigital(bind,down))return true;
+			bind = bind.AlternateBinding;
 		}
 		return false;
 	}
@@ -49,30 +49,46 @@ public class KeyboardController : Controller {
 	}
 
 	public override void SetBindingForControl (Controls control, string newBinding){
-		bindings[(int)control] = newBinding;
+		if(newBinding=="NOBIND"){
+			bindings[(int)control] = null;
+		} else {
+			Binding b = null;
+			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+			foreach(string s in alternates){
+				b = buildBinding(s,b);//each new binding is built and linked to the previous one
+			}
+			bindings[(int)control] = b;
+		}
+	}
+	//Builds a Binding based on the raw single bind string
+	private Binding buildBinding(string bind, Binding previous){
+		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
+		bool inverted = (meta & 8) != 0;//isolate the inversion
+		meta = meta & 7;//strip out the inversion bit
+		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,false);
 	}
 
 	public override void ResetBindingsToDefault (){
-		bindings[(int)Controls.LOOK_X] = "Mouse X";
-		bindings[(int)Controls.LOOK_Y] = "Mouse Y";
-		bindings[(int)Controls.STRAFE_X] = "a_d";
-		bindings[(int)Controls.STRAFE_Y] = "s_w";
-		bindings[(int)Controls.ROLL] = "e_q";
-		bindings[(int)Controls.THROTTLE] = "left shift";
-		bindings[(int)Controls.FIRE] = "mouse 0";
-		bindings[(int)Controls.ALT_FIRE] = "mouse 1";
-		bindings[(int)Controls.DAMPENERS] = "f";
-		bindings[(int)Controls.BOOST] = "space";
-		bindings[(int)Controls.RADAR_BUTTON] = "r";
-		bindings[(int)Controls.CAMERA_BUTTON] = "tab";
-		bindings[(int)Controls.PAUSE_BUTTON] = "escape";
-		bindings[(int)Controls.TARGET_BUTTON] = "mouse 2";
-		bindings[(int)Controls.NEXT_WEAPON] = "Mouse Wheel Up";
-		bindings[(int)Controls.PREVIOUS_WEAPON] = "Mouse Wheel Down";
-		bindings[(int)Controls.SELECT_WEAPON_1] = "1";
-		bindings[(int)Controls.SELECT_WEAPON_2] = "2";
-		bindings[(int)Controls.SELECT_WEAPON_3] = "3";
-		bindings[(int)Controls.SELECT_WEAPON_4] = "4";
+		SetBindingForControl(Controls.LOOK_X, "3Mouse X");
+		SetBindingForControl(Controls.LOOK_Y, "3Mouse Y");
+		SetBindingForControl(Controls.STRAFE_X, "5a;4d");
+		SetBindingForControl(Controls.STRAFE_Y, "5s;4w");
+		SetBindingForControl(Controls.ROLL, "5e;4q");
+		SetBindingForControl(Controls.THROTTLE, "4left shift");
+		SetBindingForControl(Controls.FIRE, "0mouse 0");
+		SetBindingForControl(Controls.ALT_FIRE, "0mouse 1");
+		SetBindingForControl(Controls.DAMPENERS, "0f");
+		SetBindingForControl(Controls.BOOST, "0space");
+		SetBindingForControl(Controls.RADAR_BUTTON, "0r");
+		SetBindingForControl(Controls.CAMERA_BUTTON, "0tab");
+		SetBindingForControl(Controls.PAUSE_BUTTON, "0escape");
+		SetBindingForControl(Controls.TARGET_BUTTON, "0mouse 2");
+		SetBindingForControl(Controls.NEXT_WEAPON, "1Mouse Wheel");
+		SetBindingForControl(Controls.PREVIOUS_WEAPON, "2Mouse Wheel");
+		SetBindingForControl(Controls.SELECT_WEAPON_1, "01");
+		SetBindingForControl(Controls.SELECT_WEAPON_2, "02");
+		SetBindingForControl(Controls.SELECT_WEAPON_3, "03");
+		SetBindingForControl(Controls.SELECT_WEAPON_4, "04");
 	}
 
 	public override ControllerType GetControllerType ()
@@ -80,40 +96,54 @@ public class KeyboardController : Controller {
 		return ControllerType.KEYBOARD;
 	}
 
-	private float pollAnalog(string identifier){
-		if(identifier=="NOBIND")return 0.0f;
- 		if (identifier == "Mouse X" || identifier == "Mouse Y"){
-			return Input.GetAxis(identifier);
-		}else{
-			if(identifier.Contains("_")){
-				string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
-				string minusButton = split[0];
-				string plusButton = split[1];
-				float val = 0.0f;
-				if(pollDigital(minusButton,false)) val-=1.0f;
-				if(pollDigital(plusButton,false)) val+=1.0f;
-				return val;
-			}else{
-				if(pollDigital(identifier,false))
-					return 1.0f;
-				return 0.0f;
-			}
+	private float pollAnalog(Binding bind){
+		float value = 0.0f;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_ANALOG:
+			value = Input.GetAxis(bind.BindString);
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+			if(Input.GetKey(bind.BindString))
+				value = -1.0f;
+			else 
+				value = 0.0f;
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+			if(Input.GetKey(bind.BindString))
+				value = 1.0f;
+			else 
+				value = 0.0f;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as an analog bind, but it is type "+bind.Type);
+			return 0.0f;
 		}
+		if(bind.IsATrigger && bind.IsInverted)return 1.0f - value;
+		if(bind.IsInverted) return -value;
+		return value;
 	}
 
-	private bool pollDigital(string identifier, bool down){
-		if(identifier=="NOBIND")return false;
-		if(identifier == "Mouse Wheel Up"){
-			return Input.GetAxis("Mouse Wheel") > 0.0f;
+	private bool pollDigital(Binding bind, bool down){
+		bool value = false;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_DIGIAL:
+			if(down)
+				value = Input.GetKeyDown(bind.BindString);
+			else 
+				value = Input.GetKey(bind.BindString);
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
+			value = Input.GetAxis(bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
+			value = Input.GetAxis(bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);
+			return false;
 		}
-		if(identifier == "Mouse Wheel Down"){
-			return Input.GetAxis("Mouse Wheel") < 0.0f;
-		}
-		if(down){
-			return Input.GetKeyDown(identifier);
-		}else{
-			return Input.GetKey(identifier);
-		}
+		if(bind.IsInverted)return !value;
+		return value;
 	}
 	private static float absMax(float a, float b){
 		if(Mathf.Abs(a)>Mathf.Abs(b))return a;

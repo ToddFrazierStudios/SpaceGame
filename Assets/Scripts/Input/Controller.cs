@@ -39,9 +39,6 @@ public abstract class Controller {
 	///NOTE: you MUST set both values back to zero when you're done!
 	public abstract void SetVibration(float left, float right);
 
-	///Returns the current binding for the given control
-	public abstract string GetBindingForControl(Controls control);
-
 	///Sets the binding for the given control
 	public abstract void SetBindingForControl(Controls control, string newBinding);
 

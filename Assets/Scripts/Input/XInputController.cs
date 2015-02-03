@@ -9,7 +9,7 @@ public class XInputController : Controller {
 	private GamePadState state;
 	private GamePadState prevState;
 
-	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
+	private Binding[] bindings = new Binding[(int)Controls.NUMBER_OF_CONTROLS];
 
 	public XInputController(int controllerNumber){
 		playerIndex = (PlayerIndex)controllerNumber;
@@ -25,12 +25,23 @@ public class XInputController : Controller {
 		}
 	}
 
-	public override string GetBindingForControl (Controls control){
-		return bindings[(int)control];
-	}
-
 	public override void SetBindingForControl (Controls control, string newBinding){
-		bindings[(int)control] = newBinding;
+		if(newBinding=="NOBIND"){
+			bindings[(int)control] = null;
+		} else {
+			Binding b = null;
+			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+			foreach(string s in alternates){
+				b = buildBinding(s,b);//each new binding is built and linked to the previous one
+			}
+			bindings[(int)control] = b;
+		}
+	}
+	private Binding buildBinding(string bind, Binding previous){
+		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
+		bool inverted = (meta & 8) != 0;//isolate the inversion
+		meta = meta & 7;//strip out the inversion bit
+		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
 	}
 
 	public override ControllerType GetControllerType ()
@@ -40,12 +51,59 @@ public class XInputController : Controller {
 
 	public override float GetAnalogControl(Controls c){
 		poll ();
-		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
+		Binding bind = bindings[(int)c];
 		float val = 0.0f;
-		foreach (string s in binds){
-			val = absMax(val, lookupAnalog(state, s));
+		while(bind!=null){
+			val+=Mathf.Clamp(pollAnalog(bind), -1.0f, 1.0f);
+			bind = bind.AlternateBinding;
 		}
-		return val;
+		return Mathf.Clamp(val, -1.0f, 1.0f);
+	}
+	private float pollAnalog(Binding bind){
+		float value = 0.0f;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_ANALOG:
+			value = lookupAnalog(state,bind.BindString);
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+			if(lookupDigital(state,bind.BindString))
+				value = -1.0f;
+			else 
+				value = 0.0f;
+			break;
+		case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+			if(lookupDigital(state,bind.BindString))
+				value = 1.0f;
+			else 
+				value = 0.0f;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as an analog bind, but it is type "+bind.Type);
+			return 0.0f;
+		}
+		if(bind.IsATrigger && bind.IsInverted)return 1.0f - value;
+		if(bind.IsInverted) return -value;
+		return value;
+	}
+
+	private bool pollDigital(GamePadState s, Binding bind){
+		bool value = false;
+		switch(bind.Type){
+		case Binding.BindType.DIRECT_DIGIAL:
+			value = lookupDigital(s,bind.BindString);
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
+			value = lookupAnalog(s,bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
+			value = lookupAnalog(s,bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+			break;
+		default:
+			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);
+			return false;
+		}
+		if(bind.IsInverted)return !value;
+		return value;
 	}
 
 	public override bool GetDigitalControl (Controls c){
@@ -58,9 +116,10 @@ public class XInputController : Controller {
 	}
 
 	private bool getDigitalForState(Controls c, GamePadState s){
-		string[] binds = bindings[(int)c].Split(BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
-		foreach(string subBind in binds){
-			if(lookupDigital(s,subBind)) return true;
+		Binding bind = bindings[(int) c];
+		while(bind!=null){
+			if(pollDigital(s,bind))return true;
+			bind = bind.AlternateBinding;
 		}
 		return false;
 	}
@@ -79,21 +138,21 @@ public class XInputController : Controller {
 	}
 
 	public override void ResetBindingsToDefault (){
-		SetBindingForControl(Controls.LOOK_X,"ThumbSticks.Left.X");
-		SetBindingForControl(Controls.LOOK_Y,"ThumbSticks.Left.Y");
-     	SetBindingForControl(Controls.STRAFE_X,"ThumbSticks.Right.X");
-		SetBindingForControl(Controls.STRAFE_Y,"ThumbSticks.Right.Y");
-		SetBindingForControl(Controls.ROLL,"Buttons.Y_Buttons.X;Buttons.RightShoulder_Buttons.LeftShoulder");
-		SetBindingForControl(Controls.THROTTLE,"Triggers.Left");
-		SetBindingForControl(Controls.FIRE,"Triggers.Right");
-		SetBindingForControl(Controls.ALT_FIRE,"Buttons.B");
-		SetBindingForControl(Controls.DAMPENERS,"Buttons.LeftStick");
-		SetBindingForControl(Controls.BOOST,"Buttons.RightStick");
-		SetBindingForControl(Controls.RADAR_BUTTON,"DPad.Down");
-		SetBindingForControl(Controls.CAMERA_BUTTON,"Buttons.Back");
-		SetBindingForControl(Controls.PAUSE_BUTTON,"Buttons.Start");
-		SetBindingForControl(Controls.TARGET_BUTTON,"Buttons.A");
-		SetBindingForControl(Controls.NEXT_WEAPON,"DPad.Up");
+		SetBindingForControl(Controls.LOOK_X,"3ThumbSticks.Left.X");
+		SetBindingForControl(Controls.LOOK_Y,"3ThumbSticks.Left.Y");
+		SetBindingForControl(Controls.STRAFE_X,"3ThumbSticks.Right.X");
+		SetBindingForControl(Controls.STRAFE_Y,"3ThumbSticks.Right.Y");
+		SetBindingForControl(Controls.ROLL,"5Buttons.Y;4Buttons.X;5Buttons.RightShoulder;4Buttons.LeftShoulder");
+		SetBindingForControl(Controls.THROTTLE,"3Triggers.Left");
+		SetBindingForControl(Controls.FIRE,"1Triggers.Right");
+		SetBindingForControl(Controls.ALT_FIRE,"0Buttons.B");
+		SetBindingForControl(Controls.DAMPENERS,"0Buttons.LeftStick");
+		SetBindingForControl(Controls.BOOST,"0Buttons.RightStick");
+		SetBindingForControl(Controls.RADAR_BUTTON,"0DPad.Down");
+		SetBindingForControl(Controls.CAMERA_BUTTON,"0Buttons.Back");
+		SetBindingForControl(Controls.PAUSE_BUTTON,"0Buttons.Start");
+		SetBindingForControl(Controls.TARGET_BUTTON,"0Buttons.A");
+		SetBindingForControl(Controls.NEXT_WEAPON,"0DPad.Up");
 		SetBindingForControl(Controls.PREVIOUS_WEAPON,"NOBIND");
 		SetBindingForControl(Controls.SELECT_WEAPON_1,"NOBIND");
 		SetBindingForControl(Controls.SELECT_WEAPON_2,"NOBIND");
@@ -108,27 +167,14 @@ public class XInputController : Controller {
 
 	private static float lookupAnalog(GamePadState state, string identifier){
 		if(identifier == "NOBIND")return 0.0f;
-		if(!identifier.Contains("_")){
-			switch(identifier){
-			case "Triggers.Right": return state.Triggers.Right;
-			case "Triggers.Left": return state.Triggers.Left;
-			case "ThumbSticks.Left.X": return state.ThumbSticks.Left.X;
-			case "ThumbSticks.Left.Y": return state.ThumbSticks.Left.Y;
-			case "ThumbSticks.Right.X": return state.ThumbSticks.Right.X;
-			case "ThumbSticks.Right.Y": return state.ThumbSticks.Right.Y;
-			default:
-				if(lookupDigital(state,identifier))
-					return 1.0f;
-				return 0.0f;
-			}
-		}else{
-			string[] split = identifier.Split(DIGITAL_TO_ANALOG_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
-			string minusButton = split[0];
-			string plusButton = split[1];
-			float val = 0.0f;
-			if(lookupDigital(state,minusButton)) val-=1.0f;
-			if(lookupDigital(state,plusButton)) val+=1.0f;
-			return val;
+		switch(identifier){
+		case "Triggers.Right": return state.Triggers.Right;
+		case "Triggers.Left": return state.Triggers.Left;
+		case "ThumbSticks.Left.X": return state.ThumbSticks.Left.X;
+		case "ThumbSticks.Left.Y": return state.ThumbSticks.Left.Y;
+		case "ThumbSticks.Right.X": return state.ThumbSticks.Right.X;
+		case "ThumbSticks.Right.Y": return state.ThumbSticks.Right.Y;
+		default:return 0.0f;
 		}
 		
 	}
@@ -142,6 +188,7 @@ public class XInputController : Controller {
 		case "Buttons.Y": return state.Buttons.Y == ButtonState.Pressed;
 		case "Buttons.Start": return state.Buttons.Start == ButtonState.Pressed;
 		case "Buttons.Back": return state.Buttons.Back == ButtonState.Pressed;
+		case "Buttons.Guide": return state.Buttons.Guide == ButtonState.Pressed;
 		case "Buttons.RightShoulder": return state.Buttons.RightShoulder == ButtonState.Pressed;
 		case "Buttons.LeftShoulder": return state.Buttons.LeftShoulder == ButtonState.Pressed;
 		case "Buttons.RightStick": return state.Buttons.RightStick == ButtonState.Pressed;
@@ -150,18 +197,6 @@ public class XInputController : Controller {
 		case "DPad.Down": return state.DPad.Down == ButtonState.Pressed;
 		case "DPad.Left": return state.DPad.Left == ButtonState.Pressed;
 		case "DPad.Right": return state.DPad.Right == ButtonState.Pressed;
-			//Analog to digital conversions
-		case "Triggers.Right": return state.Triggers.Right >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "Triggers.Left": return state.Triggers.Left >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Left.X+": return state.ThumbSticks.Left.X >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Left.X-": return state.ThumbSticks.Left.X <= -Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Left.Y+": return state.ThumbSticks.Left.Y >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Left.Y-": return state.ThumbSticks.Left.Y <= -Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Right.X+": return state.ThumbSticks.Right.X >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Right.X-": return state.ThumbSticks.Right.X <= -Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Right.Y+": return state.ThumbSticks.Right.Y >= Controller.ANALOG_DIGITAL_THRESHOLD;
-		case "ThumbSticks.Right.Y-": return state.ThumbSticks.Right.Y <= -Controller.ANALOG_DIGITAL_THRESHOLD;
-			
 		default: return false;
 		}
 	}
