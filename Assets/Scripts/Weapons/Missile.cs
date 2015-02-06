@@ -67,7 +67,7 @@ public class Missile : MonoBehaviour {
 //		}
 //		rigidbody.AddRelativeForce(Vector3.down * 500000);
 		timer = 0;
-//		collider.enabled = false;
+		collider.enabled = false;
 		gameObject.AddComponent<NetworkView>();
 		EngineThruster et = GetComponent<EngineThruster>();
 		if(et){

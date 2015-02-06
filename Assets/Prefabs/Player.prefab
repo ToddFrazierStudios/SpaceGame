@@ -787,11 +787,11 @@ GameObject:
   - 114: {fileID: 11400010}
   - 64: {fileID: 6400000}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
   - 148: {fileID: 14800000}
   - 114: {fileID: 11400050}
+  - 114: {fileID: 11400006}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -19876,13 +19876,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 100096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1545ea15d5b5490d88d5947414ea8ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 1878ac5cc101442d3ae9557cd6182e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invertX: 0
-  invertY: 0
-  controllerType: 0
-  layout: 0
+  playerCamera: {fileID: 2000002}
+  range: 1000
+  layerMask: 0
+  targetObject: {fileID: 0}
+  targetTimer: 0
+  target: {fileID: 0}
+  hitPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19958,7 +19961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAi: 0
-  controllerNumber: 0
+  playerNumber: 0
   useKeyboard: 1
   useController: 1
 --- !u!114 &11400016
@@ -20077,7 +20080,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 100000, guid: df068dc0f8404411a90a871df820b4c0, type: 2}
   missilePrefab: {fileID: 100002, guid: 65aa02695d9ed4a0781c6b95b789bcea, type: 2}
   delay: .075000003
+  missileDelay: 2
   range: 1000
+  targeting: {fileID: 11400006}
 --- !u!114 &11400024
 MonoBehaviour:
   m_ObjectHideFlags: 1

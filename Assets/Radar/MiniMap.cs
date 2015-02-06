@@ -39,7 +39,7 @@ public class MiniMap : MonoBehaviour {
 		Vector3 markerPosition;
 		RadarBlip toRemove = null;
 		foreach(RadarBlip blip in contacts) {
-			if (blip.realObject != null) {
+			if (blip.realObject != null && blip.marker != null && blip.projection != null) {
 				blip.marker.renderer.enabled = false;
 				blip.projection.name = blip.realObject.name;
 				blip.marker.name = blip.realObject.name;

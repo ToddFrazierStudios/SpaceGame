@@ -218,7 +218,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  detonationRadius: 5
+  detonationRadius: 0
   lifeTime: 20
   colliderToIgnore: {fileID: 0}
   explosionForce: 7.5e+07
@@ -264,12 +264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bdaee1f3bafb4d239718e3258fdf635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainHealth: 0
   hull: 20
   maxHull: 20
-  shield: 0
-  maxShield: 0
-  shieldRegenRate: 0
-  rechargeDelay: 0
+  hullSprite: {fileID: 0}
+  shield: {fileID: 0}
   explosionPrefab: {fileID: 100006}
 --- !u!136 &13600000
 CapsuleCollider:

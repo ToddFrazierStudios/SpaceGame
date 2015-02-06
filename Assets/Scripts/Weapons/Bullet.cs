@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour {
 	public float maxLife = 1.5f;
 	public float damage;
 	public Collider colliderToIgnore;
-	public LayerMask layerMask;
+	public int layerMask;
 	private Vector3 velocity;//251 m/s
 	
 //	public AudioClip[] hitEnemySounds,hitWallSounds;
@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour {
 		RaycastHit hit;
 		transform.position+=velocity*Time.deltaTime;
 		if(Physics.Linecast(oldPos,transform.position,out hit)){
-			if (hit.collider != colliderToIgnore) {
+			if (hit.collider != colliderToIgnore && (hit.collider.gameObject.layer == 13 && layerMask != ~(1 << 13))) {
 				Vector3 direction = transform.position - oldPos;
 				Quaternion parameters = new Quaternion(direction.x, direction.y, direction.z, damage);
 				hit.collider.gameObject.SendMessage("hurt", parameters, SendMessageOptions.DontRequireReceiver);
