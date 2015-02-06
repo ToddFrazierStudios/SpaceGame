@@ -70,6 +70,8 @@ public class MultiplayerMgr : MonoBehaviour {
 
 	void OnConnectedToServer() {
 		CreatePlayer ();
+		Screen.showCursor = false;
+		Screen.showCursor = false;
 	}
 
 	void OnServerInitialized() {

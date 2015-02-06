@@ -105,12 +105,12 @@ public class KeyboardController : Controller {
 		float value = 0.0f;
 		switch(bind.Type){
 		case Binding.BindType.DIRECT_ANALOG:
-			if(bind.BindString.Substring(1)=="MouseAbs X"){
+			if(bind.BindString=="MouseAbs X"){
 				float mouseX = Input.mousePosition.x;
 				mouseX = (mouseX-(Screen.width/2));
 				value = mouseX/(Screen.width/2);
 				if(value<MOUSE_ABS_DEADZONE && value>-MOUSE_ABS_DEADZONE) value = 0f;
-			}else if(bind.BindString.Substring(1)=="MouseAbs Y"){
+			}else if(bind.BindString=="MouseAbs Y"){
 				float mouseY = Input.mousePosition.y;
 				mouseY = (mouseY-(Screen.height/2));
 				value = mouseY/(Screen.height/2);

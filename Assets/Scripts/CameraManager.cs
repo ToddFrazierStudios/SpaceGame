@@ -21,6 +21,7 @@ public class CameraManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		Screen.showCursor = false;
 		if (networkView.isMine && GlobalControllerManager.GetPlayer(0).GetDigitalControlPressed(Controls.CAMERA_BUTTON) || Input.GetKeyDown (KeyCode.C)) {
 			thirdPerson = !thirdPerson;
 			if (thirdPerson) {
