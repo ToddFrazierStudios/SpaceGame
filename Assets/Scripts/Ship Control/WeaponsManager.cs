@@ -130,7 +130,8 @@ public class WeaponsManager : MonoBehaviour {
 		} else {
 			missileComponent.target = null;
 		}
-		missile.rigidbody.velocity = rigidbody.velocity;
+		float forwardVelocity = transform.InverseTransformVector (rigidbody.velocity).z;
+		missile.rigidbody.velocity = missile.transform.forward * forwardVelocity;
 		timeUntilFireMissile = missileDelay;
 		if (tag != "Player") missile.tag = tag;
 	}

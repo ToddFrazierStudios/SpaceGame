@@ -257,7 +257,7 @@ public class ParsedInput{
 				if (controllerType == CONTROLLERTYPE.XBOX360 || controllerType == CONTROLLERTYPE.XBOXONE) {
 					return 0;
 				} else {
-					return AButton;
+					return AButton;t
 				}
 				#endif
 			}
