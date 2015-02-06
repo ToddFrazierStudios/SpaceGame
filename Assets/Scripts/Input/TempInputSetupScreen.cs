@@ -77,6 +77,17 @@ public class TempInputSetupScreen : MonoBehaviour {
 					GlobalControllerManager.AssignControllerToPlayer(selectedPlayer,selectedControllerType,controllerNumber);
 				}
 				currentLineHeight+=LINE_HEIGHT+5;
+
+				if(selectedControllerType == Controller.Implementations.UNITY_CONTROLLER){
+					string[] names = Input.GetJoystickNames();
+					string cont = "None";
+					if(controllerNumber<names.Length) cont = names[controllerNumber];
+					string connectedControllerString = CONNECTED_CONTROLLER_NAME_STRING + cont;
+
+					float conStrWidth = GUI.skin.label.CalcSize(new GUIContent(connectedControllerString)).x;
+					GUI.Label (new Rect(20,currentLineHeight,conStrWidth,LINE_HEIGHT),connectedControllerString);
+					currentLineHeight+=LINE_HEIGHT+5;
+				}
 			}
 
 			//now it's time to list the bindings!
@@ -321,6 +332,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 		switch(bindString){
 		case "Mouse X":
 		case "Mouse Y":
+		case "MouseAbs X":
+		case "MouseAbs Y":
 		case "Mouse Wheel":
 		case "Triggers.Right":
 		case "Triggers.Left":
@@ -337,6 +350,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 
 	//static strings
 	private const string SELECT_CONTROLLER_TYPE_STRING = "Controller Type: ";
+	private const string CONNECTED_CONTROLLER_NAME_STRING = "Connected Controller: ";
 	private const string SELECT_CONTROLLER_NUMBER_STRING = "Controller Number: ";
 	private const string RESET_BINDINGS_STRING = "Reset all bindings to defaults";
 	private const string TOGGLE_DEBUG_STRING = "Toggle Controller Input Display";

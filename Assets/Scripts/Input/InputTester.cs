@@ -43,5 +43,6 @@ public class InputTester : MonoBehaviour {
 			}
 		}
 		if(!readOnly)controller.SetVibration(leftMotor,rightMotor);
+		DebugHUD.setValue("Joysticks",String.Join(", ",Input.GetJoystickNames()));
 	}
 }

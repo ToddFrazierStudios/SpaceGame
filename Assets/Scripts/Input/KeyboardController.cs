@@ -4,6 +4,7 @@ using System;
 
 public class KeyboardController : Controller {
 	private Binding[] bindings = new Binding[(int)Controls.NUMBER_OF_CONTROLS];
+	private const float MOUSE_ABS_DEADZONE = 0.1f;
 
 	public KeyboardController(){
 		ResetBindingsToDefault();
@@ -104,7 +105,19 @@ public class KeyboardController : Controller {
 		float value = 0.0f;
 		switch(bind.Type){
 		case Binding.BindType.DIRECT_ANALOG:
-			value = Input.GetAxis(bind.BindString);
+			if(bind.BindString.Substring(1)=="MouseAbs X"){
+				float mouseX = Input.mousePosition.x;
+				mouseX = (mouseX-(Screen.width/2));
+				value = mouseX/(Screen.width/2);
+				if(value<MOUSE_ABS_DEADZONE && value>-MOUSE_ABS_DEADZONE) value = 0f;
+			}else if(bind.BindString.Substring(1)=="MouseAbs Y"){
+				float mouseY = Input.mousePosition.y;
+				mouseY = (mouseY-(Screen.height/2));
+				value = mouseY/(Screen.height/2);
+				if(value<MOUSE_ABS_DEADZONE && value>-MOUSE_ABS_DEADZONE) value = 0f;
+			}else{
+				value = Input.GetAxis(bind.BindString);
+			}
 			break;
 		case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
 			if(Input.GetKey(bind.BindString))
