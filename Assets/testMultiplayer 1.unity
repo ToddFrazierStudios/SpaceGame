@@ -4530,6 +4530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 2131680991}
   range: 1000
+  coneAngle: 15
   layerMask: 0
   targetObject: {fileID: 0}
   targetTimer: 0
@@ -15143,7 +15144,7 @@ MonoBehaviour:
   brakeThrust: 10000
   maxDamage: 50
   target: {fileID: 0}
-  clearTime: 1
+  clearTime: .100000001
   radar: {fileID: 0}
   targeting: {fileID: 0}
   explosion: {fileID: 1935617281}

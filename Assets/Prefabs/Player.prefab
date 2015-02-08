@@ -19881,6 +19881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 2000002}
   range: 1000
+  coneAngle: 15
   layerMask: 0
   targetObject: {fileID: 0}
   targetTimer: 0
