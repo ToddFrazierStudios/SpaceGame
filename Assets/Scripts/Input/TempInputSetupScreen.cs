@@ -140,7 +140,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 		float maxWidthUsed = currentX;
 		string fullBindString = GlobalControllerManager.GetPlayer(selectedPlayer).GetBindingsForControl(control);
 		if(fullBindString!="NOBIND"){
-			string[] binds = fullBindString.Split(Controller.BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+            string[] binds = fullBindString.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 			string[] outBinds = binds.Clone() as string[];
 			for(int i = 0; i<binds.Length; i++){
 				int heightUsed = 0;
@@ -176,7 +176,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 					}
 				}
 				string newBinds = "NOBIND";
-				if(stringStack.Count!=0) newBinds = string.Join(new string(Controller.BIND_SEPERATOR),stringStack.ToArray());
+                if (stringStack.Count != 0) newBinds = string.Join(new string(InputUtils.BIND_SEPERATOR), stringStack.ToArray());
 				GlobalControllerManager.GetPlayer(selectedPlayer).RebindControl(control,newBinds);
 				Debug.Log("Binds updated!");
 			}
@@ -322,7 +322,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 				break;
 			}
 		}
-		string output = string.Join(new string(Controller.BIND_SEPERATOR),stringEditorBindsToUpdate);
+        string output = string.Join(new string(InputUtils.BIND_SEPERATOR), stringEditorBindsToUpdate);
 		if(!found)output = output+";"+stringToWrite;
 		if(output==";"||string.IsNullOrEmpty(output))output = "NOBIND";
 		GlobalControllerManager.GetPlayer(selectedPlayer).RebindControl(stringEditorControlBeingEdited,output);

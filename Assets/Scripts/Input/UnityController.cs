@@ -66,7 +66,7 @@ public class UnityController : Controller {
 			bindings[(int)control] = null;
 		} else {
 			Binding b = null;
-			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+            string[] alternates = newBinding.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 			foreach(string s in alternates){
 				b = buildBinding(s,b);//each new binding is built and linked to the previous one
 			}
@@ -176,10 +176,10 @@ public class UnityController : Controller {
 				value = Input.GetKey(prefix+bind.BindString);
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
-			value = GetAxis(bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+            value = GetAxis(bind.BindString) <= -InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
-			value = GetAxis(bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+            value = GetAxis(bind.BindString) >= InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		default:
 			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);
