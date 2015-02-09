@@ -78,6 +78,7 @@ public class Missile : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		Debug.Log (target);
 		if (target != null) {
 //			transform.LookAt (target.transform);
 			Vector3 targetDirection = target.transform.position - transform.position;

@@ -80,15 +80,8 @@ public class WeaponsManager : MonoBehaviour {
 		RaycastHit hit;
 //		LineRenderer line = created.GetComponent<LineRenderer>();
 		// Dynamically resize based on distance? Maybe later.
-		if (targeting.getTarget () != null) {
-			nextGunToFire.LookAt(targeting.hitPosition, transform.up);
-			Quaternion rotation = new Quaternion(
-				Mathf.Clamp (nextGunToFire.rotation.x, -20.0f, 20.0f),
-				Mathf.Clamp (nextGunToFire.rotation.y, -7.0f, 20.0f),
-				0f,
-				1f
-				);
-			nextGunToFire.rotation = rotation;
+		if (targeting && targeting.getTarget () != null) {
+			nextGunToFire.LookAt(targeting.hitPosition);
 //			line.SetPosition (0, transform.position);
 //			line.SetPosition (1, hit.point);
 		} else {
@@ -99,11 +92,7 @@ public class WeaponsManager : MonoBehaviour {
 		
 		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
-		if (gameObject.layer == 13) {
-			b.layerMask = layerMask;
-		} else {
-			b.layerMask = ~(1 << 16);
-		}
+		b.playerBullet = (gameObject.layer == 13);
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
 
@@ -126,12 +115,15 @@ public class WeaponsManager : MonoBehaviour {
 		if (target != null) {
 			missileComponent.target = target;
 		} else if (targeting.getTarget () != null) {
-			missileComponent.target = target;
+			Debug.Log ("set missile target");
+			missileComponent.target = targeting.getTarget ();
 		} else {
 			missileComponent.target = null;
 		}
-		missile.rigidbody.velocity = rigidbody.velocity;
+		float forwardVelocity = transform.InverseTransformVector (rigidbody.velocity).z;
+		missile.rigidbody.velocity = missile.transform.forward * forwardVelocity;
 		timeUntilFireMissile = missileDelay;
 		if (tag != "Player") missile.tag = tag;
+		missile.layer = gameObject.layer;
 	}
 }
