@@ -44,9 +44,9 @@ public class XInputController : Controller {
 		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
 	}
 
-	public override ControllerType GetControllerType ()
+    public override InputUtils.ControllerType GetControllerType()
 	{
-		return ControllerType.JOYSTICK;
+        return InputUtils.ControllerType.JOYSTICK;
 	}
 
 	public override float GetAnalogControl(Controls c){
@@ -128,9 +128,9 @@ public class XInputController : Controller {
 		return "XInput Controller";
 	}
 
-	public override Implementations GetControllerImplementation()
+    public override InputUtils.Implementations GetControllerImplementation()
 	{
-		return Implementations.XINPUT_CONTROLLER;
+        return InputUtils.Implementations.XINPUT_CONTROLLER;
 	}
 
 	public override int GetControllerNumber ()

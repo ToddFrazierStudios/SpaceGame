@@ -44,9 +44,9 @@ public class KeyboardController : Controller {
 	public override string GetControllerDescription (){
 		return "Keyboard/Mouse";
 	}
-	public override Implementations GetControllerImplementation()
+    public override InputUtils.Implementations GetControllerImplementation()
 	{
-		return Implementations.KEYBOARD_CONTROLLER;
+        return InputUtils.Implementations.KEYBOARD_CONTROLLER;
 	}
 	public override int GetControllerNumber ()
 	{
@@ -96,9 +96,9 @@ public class KeyboardController : Controller {
 		SetBindingForControl(Controls.SELECT_WEAPON_4, "04");
 	}
 
-	public override ControllerType GetControllerType ()
+    public override InputUtils.ControllerType GetControllerType()
 	{
-		return ControllerType.KEYBOARD;
+        return InputUtils.ControllerType.KEYBOARD;
 	}
 
 	private float pollAnalog(Binding bind){

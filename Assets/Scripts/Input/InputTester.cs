@@ -2,9 +2,9 @@
 using System.Collections;
 using System;
 
-public class InputTester : MonoBehaviour {	
-	public Controller.Implementations controllerType;
-	private Controller.Implementations prevType;
+public class InputTester : MonoBehaviour {
+    public InputUtils.Implementations controllerType;
+    private InputUtils.Implementations prevType;
 	[Range(0,3)]
 	public int controllerNumber;
 	[Range(0,3)]
@@ -36,7 +36,8 @@ public class InputTester : MonoBehaviour {
 		DebugHUD.setValue("Controller Type",controller.GetControllerDescription());
 		DebugHUD.setValue("Controller Number", controller.GetControllerNumber());
 		for(int i = 0; i<(int)Controls.NUMBER_OF_CONTROLS; i++){
-			if(Controller.IsADigitalControl((Controls)i)){
+            if (InputUtils.IsADigitalControl((Controls)i))
+            {
 				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetDigitalControl((Controls)i));
 			}else{
 				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetAnalogControl((Controls)i));

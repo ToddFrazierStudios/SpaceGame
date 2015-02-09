@@ -212,14 +212,14 @@ public class UnityController : Controller {
 		return value;
 	}
 
-	public override ControllerType GetControllerType ()
+    public override InputUtils.ControllerType GetControllerType()
 	{
-		return ControllerType.JOYSTICK;
+        return InputUtils.ControllerType.JOYSTICK;
 	}
 
-	public override Implementations GetControllerImplementation()
+    public override InputUtils.Implementations GetControllerImplementation()
 	{
-		return Implementations.UNITY_CONTROLLER;
+        return InputUtils.Implementations.UNITY_CONTROLLER;
 	}
 
 	private static float absMax(float a, float b){
@@ -233,7 +233,6 @@ public class UnityController : Controller {
 		platformLookupTable = new Dictionary<string,string>();
 		platformLookupTable.Add("NOBIND","NOBIND");
 #if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
-		Debug.Log ("Loading Windows platformLookupTable...");
 		///WINDOWS!
 		//digital
 		platformLookupTable.Add("Buttons.A", "button 0");

@@ -12,7 +12,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 
 	private int lastDrawHeight = Screen.height;
 
-	private Controller.Implementations selectedControllerType;
+    private InputUtils.Implementations selectedControllerType;
 
 	private bool stringEditorOpen = false;
 	private string stringEditorDefaultValue = "";
@@ -54,8 +54,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 		float contTypeWidth = GUI.skin.label.CalcSize(new GUIContent(SELECT_CONTROLLER_TYPE_STRING)).x;
 		GUI.Label(new Rect(20,currentLineHeight,contTypeWidth,LINE_HEIGHT),SELECT_CONTROLLER_TYPE_STRING);
 		Rect contrTypeGridRect = new Rect(20+contTypeWidth,currentLineHeight,Screen.width-40-contTypeWidth,LINE_HEIGHT);
-		Controller.Implementations newSelectedControllerType = 
-			(Controller.Implementations)GUI.SelectionGrid(contrTypeGridRect,(int)selectedControllerType,controllerTypeTabs,controllerTypeTabs.Length);
+        InputUtils.Implementations newSelectedControllerType =
+            (InputUtils.Implementations)GUI.SelectionGrid(contrTypeGridRect, (int)selectedControllerType, controllerTypeTabs, controllerTypeTabs.Length);
 		currentLineHeight+=LINE_HEIGHT+5;
 		if(newSelectedControllerType != selectedControllerType){
 			GlobalControllerManager.AssignControllerToPlayer(selectedPlayer,newSelectedControllerType,controllerNumber);
@@ -65,8 +65,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 		}
 
 		//now that we know what kind of controller we are dealing with, we can move on
-		if(selectedControllerType != Controller.Implementations.NONE){
-			if(selectedControllerType != Controller.Implementations.KEYBOARD_CONTROLLER){
+        if (selectedControllerType != InputUtils.Implementations.NONE) {
+            if (selectedControllerType != InputUtils.Implementations.KEYBOARD_CONTROLLER) {
 				//allow for selecting the controller number
 				float contNumWidth = GUI.skin.label.CalcSize(new GUIContent(SELECT_CONTROLLER_NUMBER_STRING)).x;
 				GUI.Label(new Rect(20,currentLineHeight,contNumWidth,LINE_HEIGHT),SELECT_CONTROLLER_NUMBER_STRING);
@@ -78,7 +78,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 				}
 				currentLineHeight+=LINE_HEIGHT+5;
 
-				if(selectedControllerType == Controller.Implementations.UNITY_CONTROLLER){
+                if (selectedControllerType == InputUtils.Implementations.UNITY_CONTROLLER) {
 					string[] names = Input.GetJoystickNames();
 					string cont = "None";
 					if(controllerNumber<names.Length) cont = names[controllerNumber];
@@ -128,7 +128,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 	private void doControlLine(Controls control, int currentLineHeight, out float widthUsed, out int newLineHeight){
 		int maxHeightUsed = LINE_HEIGHT+5;
 
-		bool isAnalog = !Controller.IsADigitalControl(control);
+        bool isAnalog = !InputUtils.IsADigitalControl(control);
 
 		bool bindsUpdated = false;
 

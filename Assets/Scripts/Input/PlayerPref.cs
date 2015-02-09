@@ -17,8 +17,8 @@ public class PlayerPref
 		return controller!=null;
 	}
 
-	public Controller.Implementations GetControllerImplementation(){
-		if(controller==null)return Controller.Implementations.NONE;
+    public InputUtils.Implementations GetControllerImplementation(){
+        if (controller == null) return InputUtils.Implementations.NONE;
 		return controller.GetControllerImplementation();
 	}
 
@@ -78,7 +78,7 @@ public class PlayerPref
 
 	private void saveToPrefs(){
 		string controllerType = "controller";
-		if(controller.GetControllerType()==Controller.ControllerType.KEYBOARD) controllerType = "keyboard";
+		if(controller.GetControllerType()==InputUtils.ControllerType.KEYBOARD) controllerType = "keyboard";
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
 			PlayerPrefs.SetString("InputBindings.player"+playerNumber+"."+controllerType+":"+Enum.GetName(typeof(Controls),(Controls)i),bindings[i]);
 		}
@@ -86,7 +86,7 @@ public class PlayerPref
 	}
 
 	private void loadFromPrefs(){
-		bool isKeyboard = controller.GetControllerType()==Controller.ControllerType.KEYBOARD;
+        bool isKeyboard = controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD;
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
 			if(isKeyboard){
 				bindings[i] = PlayerPrefs.GetString("InputBindings.player"+playerNumber+".keyboard:"+Enum.GetName(typeof(Controls),(Controls)i),defaultKeyboardBindings[i]);
@@ -97,7 +97,7 @@ public class PlayerPref
 	}
 
 	public void ResetBindingsToDefault(){
-		if(controller.GetControllerType()==Controller.ControllerType.KEYBOARD){
+        if (controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD) {
 			Array.Copy(defaultKeyboardBindings,bindings,(long)Controls.NUMBER_OF_CONTROLS);
 		}else{
 			Array.Copy(defaultControllerBindings,bindings,(long)Controls.NUMBER_OF_CONTROLS);
