@@ -10,7 +10,7 @@ public class KeyboardController : Controller {
 		ResetBindingsToDefault();
 	}
 
-	public override float GetAnalogControl (Controls c){
+	public float GetAnalogControl (Controls c){
 		Binding bind = bindings[(int)c];
 		float val = 0.0f;
 		while(bind!=null){
@@ -20,15 +20,15 @@ public class KeyboardController : Controller {
 		return Mathf.Clamp(val, -1.0f, 1.0f);
 	}
 
-	public override void SetVibration (float left, float right){
+	public void SetVibration (float left, float right){
 		//NOP
 	}
 	
-	public override bool GetDigitalControl (Controls c){
+	public bool GetDigitalControl (Controls c){
 		return getDigitalFromBind (c,false);
 	}
 	
-	public override bool GetDigitalControlPressed (Controls c){
+	public bool GetDigitalControlPressed (Controls c){
 		return getDigitalFromBind(c,true);
 	}
 
@@ -41,24 +41,24 @@ public class KeyboardController : Controller {
 		return false;
 	}
 	
-	public override string GetControllerDescription (){
+	public string GetControllerDescription (){
 		return "Keyboard/Mouse";
 	}
-    public override InputUtils.Implementations GetControllerImplementation()
+    public InputUtils.Implementations GetControllerImplementation()
 	{
         return InputUtils.Implementations.KEYBOARD_CONTROLLER;
 	}
-	public override int GetControllerNumber ()
+	public int GetControllerNumber ()
 	{
 		return -1;
 	}
 
-	public override void SetBindingForControl (Controls control, string newBinding){
+	public void SetBindingForControl (Controls control, string newBinding){
 		if(newBinding=="NOBIND"){
 			bindings[(int)control] = null;
 		} else {
 			Binding b = null;
-			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+            string[] alternates = newBinding.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 			foreach(string s in alternates){
 				b = buildBinding(s,b);//each new binding is built and linked to the previous one
 			}
@@ -73,7 +73,7 @@ public class KeyboardController : Controller {
 		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,false);
 	}
 
-	public override void ResetBindingsToDefault (){
+	public void ResetBindingsToDefault (){
 		SetBindingForControl(Controls.LOOK_X, "3Mouse X");
 		SetBindingForControl(Controls.LOOK_Y, "3Mouse Y");
 		SetBindingForControl(Controls.STRAFE_X, "5a;4d");
@@ -96,7 +96,7 @@ public class KeyboardController : Controller {
 		SetBindingForControl(Controls.SELECT_WEAPON_4, "04");
 	}
 
-    public override InputUtils.ControllerType GetControllerType()
+    public InputUtils.ControllerType GetControllerType()
 	{
         return InputUtils.ControllerType.KEYBOARD;
 	}
@@ -150,10 +150,10 @@ public class KeyboardController : Controller {
 				value = Input.GetKey(bind.BindString);
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
-			value = Input.GetAxis(bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+            value = Input.GetAxis(bind.BindString) <= -InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
-			value = Input.GetAxis(bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+            value = Input.GetAxis(bind.BindString) >= InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		default:
 			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);

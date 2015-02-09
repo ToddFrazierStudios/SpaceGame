@@ -25,12 +25,12 @@ public class XInputController : Controller {
 		}
 	}
 
-	public override void SetBindingForControl (Controls control, string newBinding){
+	public void SetBindingForControl (Controls control, string newBinding){
 		if(newBinding=="NOBIND"){
 			bindings[(int)control] = null;
 		} else {
 			Binding b = null;
-			string[] alternates = newBinding.Split (BIND_SEPERATOR,System.StringSplitOptions.RemoveEmptyEntries);
+            string[] alternates = newBinding.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 			foreach(string s in alternates){
 				b = buildBinding(s,b);//each new binding is built and linked to the previous one
 			}
@@ -44,12 +44,12 @@ public class XInputController : Controller {
 		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
 	}
 
-    public override InputUtils.ControllerType GetControllerType()
+    public InputUtils.ControllerType GetControllerType()
 	{
         return InputUtils.ControllerType.JOYSTICK;
 	}
 
-	public override float GetAnalogControl(Controls c){
+	public float GetAnalogControl(Controls c){
 		poll ();
 		Binding bind = bindings[(int)c];
 		float val = 0.0f;
@@ -93,10 +93,10 @@ public class XInputController : Controller {
 			value = lookupDigital(s,bind.BindString);
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
-			value = lookupAnalog(s,bind.BindString) <= -Controller.ANALOG_DIGITAL_THRESHOLD;
+			value = lookupAnalog(s,bind.BindString) <= -InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
-			value = lookupAnalog(s,bind.BindString) >= Controller.ANALOG_DIGITAL_THRESHOLD;
+            value = lookupAnalog(s, bind.BindString) >= InputUtils.ANALOG_DIGITAL_THRESHOLD;
 			break;
 		default:
 			Debug.LogError("Invalid Binding! Bind "+bind.BindString+" was polled as a analog bind, but it is type "+bind.Type);
@@ -106,12 +106,12 @@ public class XInputController : Controller {
 		return value;
 	}
 
-	public override bool GetDigitalControl (Controls c){
+	public bool GetDigitalControl (Controls c){
 		poll();
 		return getDigitalForState(c,state);
 	}
 
-	public override bool GetDigitalControlPressed (Controls c){
+	public bool GetDigitalControlPressed (Controls c){
 		return GetDigitalControl(c) && getDigitalForState (c,prevState);
 	}
 
@@ -124,25 +124,25 @@ public class XInputController : Controller {
 		return false;
 	}
 
-	public override string GetControllerDescription (){
+	public string GetControllerDescription (){
 		return "XInput Controller";
 	}
 
-    public override InputUtils.Implementations GetControllerImplementation()
+    public InputUtils.Implementations GetControllerImplementation()
 	{
         return InputUtils.Implementations.XINPUT_CONTROLLER;
 	}
 
-	public override int GetControllerNumber ()
+	public int GetControllerNumber ()
 	{
 		return (int)playerIndex;
 	}
 
-	public override void SetVibration (float left, float right){
+	public void SetVibration (float left, float right){
 		GamePad.SetVibration(playerIndex, left, right);
 	}
 
-	public override void ResetBindingsToDefault (){
+	public void ResetBindingsToDefault (){
 		SetBindingForControl(Controls.LOOK_X,"3ThumbSticks.Left.X");
 		SetBindingForControl(Controls.LOOK_Y,"3ThumbSticks.Left.Y");
 		SetBindingForControl(Controls.STRAFE_X,"3ThumbSticks.Right.X");

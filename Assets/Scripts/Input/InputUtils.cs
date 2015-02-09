@@ -4,6 +4,12 @@ using System.Collections;
 public static class InputUtils {
 	public const Controls FIRST_DIGITAL_CONTROL = Controls.FIRE;
 
+    ///the minimum absolute value required for an analog device to be considered "pressed" when used as a digital button
+    public const float ANALOG_DIGITAL_THRESHOLD = 0.25f;
+
+    public static char[] BIND_SEPERATOR = { ';' };
+    public static char[] DIGITAL_TO_ANALOG_SEPERATOR = { '_' };
+
 	/// <summary>
 	/// Determines if the specified Control is a digital control.
 	/// </summary>

@@ -23,7 +23,7 @@ public class UnityController : Controller {
 		ResetBindingsToDefault();
 	}
 
-	public override float GetAnalogControl (Controls c){
+	public float GetAnalogControl (Controls c){
 		Binding bind = bindings[(int)c];
 		float val = 0.0f;
 		while(bind!=null){
@@ -33,12 +33,12 @@ public class UnityController : Controller {
 		return Mathf.Clamp(val, -1.0f, 1.0f);
 	}
 
-	public override bool GetDigitalControl (Controls c)
+	public bool GetDigitalControl (Controls c)
 	{
 		return getDigitalFromBind(c,false);
 	}
 
-	public override bool GetDigitalControlPressed (Controls c)
+	public bool GetDigitalControlPressed (Controls c)
 	{
 		return getDigitalFromBind(c,true);
 	}
@@ -51,17 +51,17 @@ public class UnityController : Controller {
 		return false;
 	}
 
-	public override string GetControllerDescription ()
+	public string GetControllerDescription ()
 	{
 		return "Unity Controller";
 	}
 
-	public override void SetVibration (float left, float right)
+	public void SetVibration (float left, float right)
 	{
 		//NOP
 	}
 
-	public override void SetBindingForControl (Controls control, string newBinding){
+	public void SetBindingForControl (Controls control, string newBinding){
 		if(newBinding=="NOBIND"){
 			bindings[(int)control] = null;
 		} else {
@@ -110,7 +110,7 @@ public class UnityController : Controller {
 		return new Binding(platformLookupTable[bindString],(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
 	}
 
-	public override void ResetBindingsToDefault ()
+	public void ResetBindingsToDefault ()
 	{
 		SetBindingForControl(Controls.LOOK_X,"3ThumbSticks.Left.X");
 		SetBindingForControl(Controls.LOOK_Y,"3ThumbSticks.Left.Y");
@@ -134,7 +134,7 @@ public class UnityController : Controller {
 		SetBindingForControl(Controls.SELECT_WEAPON_4,"NOBIND");
 	}
 
-	public override int GetControllerNumber ()
+	public int GetControllerNumber ()
 	{
 		return controllerNumber;
 	}
@@ -212,12 +212,12 @@ public class UnityController : Controller {
 		return value;
 	}
 
-    public override InputUtils.ControllerType GetControllerType()
+    public InputUtils.ControllerType GetControllerType()
 	{
         return InputUtils.ControllerType.JOYSTICK;
 	}
 
-    public override InputUtils.Implementations GetControllerImplementation()
+    public InputUtils.Implementations GetControllerImplementation()
 	{
         return InputUtils.Implementations.UNITY_CONTROLLER;
 	}
