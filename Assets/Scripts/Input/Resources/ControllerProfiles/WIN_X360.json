@@ -1,0 +1,32 @@
+﻿{
+    "names": [ "Controller (Xbox 360 Wireless Receiver for Windows)", "Controller (XBOX 360 For Windows)", "Controller (XBOX One For Windows)" ],
+    "displayname": "Xbox 360/One controller for Windows",
+    "OSXTriggerCompensationRequired": false,
+    "analogDpad": true,
+    "invertedRightStick": true,
+    "platform": "WIN",
+    "table": {
+        //digital
+        "Buttons.A": "joystick {0} button 0",
+        "Buttons.B": "joystick {0} button 1",
+        "Buttons.X": "joystick {0} button 2",
+        "Buttons.Y": "joystick {0} button 3",
+        "Buttons.LeftShoulder": "joystick {0} button 4",
+        "Buttons.RightShoulder": "joystick {0} button 5",
+        "Buttons.Back": "joystick {0} button 6",
+        "Buttons.Start": "joystick {0} button 7",
+        "Buttons.LeftStick": "joystick {0} button 8",
+        "Buttons.RightStick": "joystick {0} button 9",
+        //analog
+        "ThumbSticks.Left.X": "joystick {0} axis X",
+        "ThumbSticks.Left.Y": "joystick {0} axis Y",
+        "ThumbSticks.Right.X": "joystick {0} axis 4",
+        "ThumbSticks.Right.Y": "joystick {0} axis 5",
+        "Triggers.Left": "joystick {0} axis 9",
+        "Triggers.Right": "joystick {0} axis 10",
+        "DPad.Up": "joystick {0} axis 7",
+        "DPad.Down": "joystick {0} axis 7",
+        "DPad.Right": "joystick {0} axis 6",
+        "DPad.Left": "joystick {0} axis 6"
+    }
+}

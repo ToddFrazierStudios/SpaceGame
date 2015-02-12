@@ -1,0 +1,33 @@
+﻿{
+    "names": [ "CONTROLLER NAMES GO HERE!", "and here..." ],
+    "displayname": "Xbox 360 controller for OSX",
+    "OSXTriggerCompensationRequired": true,
+    "analogDpad": false,
+    "invertedRightStick": true,
+    "platform": "OSX",
+    "table": {
+        //digital
+        "Buttons.A": "joystick {0} button 16",
+        "Buttons.B": "joystick {0} button 17",
+        "Buttons.X": "joystick {0} button 18",
+        "Buttons.Y": "joystick {0} button 19",
+        "Buttons.LeftShoulder": "joystick {0} button 13",
+        "Buttons.RightShoulder": "joystick {0} button 14",
+        "Buttons.Back": "joystick {0} button 10",
+        "Buttons.Start": "joystick {0} button 9",
+        "Buttons.Guide": "joystick {0} button 15",
+        "Buttons.LeftStick": "joystick {0} button 11",
+        "Buttons.RightStick": "joystick {0} button 12",
+        "DPad.Up": "joystick {0} button 5",
+        "DPad.Down": "joystick {0} button 6",
+        "DPad.Right": "joystick {0} button 8",
+        "DPad.Left": "joystick {0} button 7",
+        //analog
+        "ThumbSticks.Left.X": "joystick {0} axis X",
+        "ThumbSticks.Left.Y": "joystick {0} axis Y",
+        "ThumbSticks.Right.X": "joystick {0} axis 3",
+        "ThumbSticks.Right.Y": "joystick {0} axis 4",
+        "Triggers.Left": "joystick {0} axis 5",
+        "Triggers.Right": "joystick {0} axis 6"
+    }
+}

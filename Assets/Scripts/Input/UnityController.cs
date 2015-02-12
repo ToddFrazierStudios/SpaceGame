@@ -73,42 +73,50 @@ public class UnityController : Controller {
 			bindings[(int)control] = b;
 		}
 	}
+
+    private string convertBindString(string bindString) {
+        if(bindString == "NOBIND")return bindString;
+        string[] split = bindString.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < split.Length; i++) {
+            split[i] = split[i].Substring(0, 1) + platformLookupTable[split[i].Substring(1)];
+        }
+        return String.Join(new String(InputUtils.BIND_SEPERATOR), split);
+    }
+
 	//Builds a Binding based on the raw single bind string
-	private Binding buildBinding(string bind, Binding previous){
-		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
-		bool inverted = (meta & 8) != 0;//isolate the inversion
-		meta = meta & 7;//strip out the inversion bit
-		string bindString = bind.Substring(1);
+    private Binding buildBinding(string bind, Binding previous) {
+        string convertedBindString = bind.Substring(0, 1) + platformLookupTable[bind.Substring(1)];
+        Binding binding = Binding.BuildBinding(convertedBindString, previous);
 
 #if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
-		//special fixes for windows where the DPad is an axis instead of buttons
-		if(bindString.Contains("DPad")){
-			switch((Binding.BindType)meta){
-			case Binding.BindType.DIRECT_DIGIAL:
-				if(bindString.Contains("Up")||bindString.Contains("Right")){
-					meta = (int)Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE;
-				}else{
-					meta = (int)Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE;
-				}
-				break;
-			case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
-				meta = (int)Binding.BindType.DIRECT_ANALOG;
-				if(bindString.Contains("Down")||bindString.Contains("Left")){
-					inverted = !inverted;
-				}
-				break;
-			case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
-				meta = (int)Binding.BindType.DIRECT_ANALOG;
-				if(bindString.Contains("Up")||bindString.Contains("Right")){
-					inverted = !inverted;
-				}
-				break;
-			}
-		}
+        //special fixes for windows where the DPad is an axis instead of buttons
+        if (bind.Contains("DPad")) {
+            switch (binding.Type) {
+                case Binding.BindType.DIRECT_DIGIAL:
+                    if (bind.Contains("Up") || bind.Contains("Right")) {
+                        binding.Type = Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE;
+                    } else {
+                        binding.Type = Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE;
+                    }
+                    break;
+                case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+                    binding.Type = Binding.BindType.DIRECT_ANALOG;
+                    if (bind.Contains("Down") || bind.Contains("Left")) {
+                        binding.IsInverted = !binding.IsInverted;
+                    }
+                    break;
+                case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+                    binding.Type = Binding.BindType.DIRECT_ANALOG;
+                    if (bind.Contains("Up") || bind.Contains("Right")) {
+                        binding.IsInverted = !binding.IsInverted;
+                    }
+                    break;
+            }
+        }
 #endif
 
-		return new Binding(platformLookupTable[bindString],(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
-	}
+        return binding;
+    }
 
 	public void ResetBindingsToDefault ()
 	{

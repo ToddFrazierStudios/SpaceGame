@@ -26,22 +26,7 @@ public class XInputController : Controller {
 	}
 
 	public void SetBindingForControl (Controls control, string newBinding){
-		if(newBinding=="NOBIND"){
-			bindings[(int)control] = null;
-		} else {
-			Binding b = null;
-            string[] alternates = newBinding.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
-			foreach(string s in alternates){
-				b = buildBinding(s,b);//each new binding is built and linked to the previous one
-			}
-			bindings[(int)control] = b;
-		}
-	}
-	private Binding buildBinding(string bind, Binding previous){
-		int meta = System.Int32.Parse(bind.Substring(0,1),System.Globalization.NumberStyles.AllowHexSpecifier);
-		bool inverted = (meta & 8) != 0;//isolate the inversion
-		meta = meta & 7;//strip out the inversion bit
-		return new Binding(bind.Substring(1),(Binding.BindType)meta,previous,inverted,bind.Contains("Trigger"));
+        bindings[(int)control] = Binding.BuildBindingChain(newBinding);
 	}
 
     public InputUtils.ControllerType GetControllerType()
