@@ -1,12 +1,11 @@
 ﻿{
-    "names": [ "CONTROLLER NAMES GO HERE!", "and here..." ],
+    "names": [ "Microsoft X360Controller" ],
     "displayname": "Xbox One controller for OSX",
     "OSXTriggerCompensationRequired": true,
     "analogDpad": false,
     "invertedRightStick": true,
     "platform": "OSX",
     "table": {
-        //digital
         "Buttons.A": "joystick {0} button 11",
         "Buttons.B": "joystick {0} button 12",
         "Buttons.X": "joystick {0} button 13",
@@ -22,7 +21,6 @@
         "DPad.Down": "joystick {0} button 1",
         "DPad.Right": "joystick {0} button 3",
         "DPad.Left": "joystick {0} button 2",
-        //analog
         "ThumbSticks.Left.X": "joystick {0} axis X",
         "ThumbSticks.Left.Y": "joystick {0} axis Y",
         "ThumbSticks.Right.X": "joystick {0} axis 3",

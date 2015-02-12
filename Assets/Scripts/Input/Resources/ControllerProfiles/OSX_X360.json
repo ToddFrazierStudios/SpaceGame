@@ -1,12 +1,11 @@
 ﻿{
-    "names": [ "CONTROLLER NAMES GO HERE!", "and here..." ],
+    "names": [ "\u00a9Microsoft Corporation Xbox 360 Wired Controller", "Microsoft Wireless 360 Controller" ],
     "displayname": "Xbox 360 controller for OSX",
     "OSXTriggerCompensationRequired": true,
     "analogDpad": false,
     "invertedRightStick": true,
     "platform": "OSX",
     "table": {
-        //digital
         "Buttons.A": "joystick {0} button 16",
         "Buttons.B": "joystick {0} button 17",
         "Buttons.X": "joystick {0} button 18",
@@ -22,7 +21,6 @@
         "DPad.Down": "joystick {0} button 6",
         "DPad.Right": "joystick {0} button 8",
         "DPad.Left": "joystick {0} button 7",
-        //analog
         "ThumbSticks.Left.X": "joystick {0} axis X",
         "ThumbSticks.Left.Y": "joystick {0} axis Y",
         "ThumbSticks.Right.X": "joystick {0} axis 3",

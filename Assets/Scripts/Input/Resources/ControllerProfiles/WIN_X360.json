@@ -6,7 +6,6 @@
     "invertedRightStick": true,
     "platform": "WIN",
     "table": {
-        //digital
         "Buttons.A": "joystick {0} button 0",
         "Buttons.B": "joystick {0} button 1",
         "Buttons.X": "joystick {0} button 2",
@@ -17,7 +16,6 @@
         "Buttons.Start": "joystick {0} button 7",
         "Buttons.LeftStick": "joystick {0} button 8",
         "Buttons.RightStick": "joystick {0} button 9",
-        //analog
         "ThumbSticks.Left.X": "joystick {0} axis X",
         "ThumbSticks.Left.Y": "joystick {0} axis Y",
         "ThumbSticks.Right.X": "joystick {0} axis 4",
