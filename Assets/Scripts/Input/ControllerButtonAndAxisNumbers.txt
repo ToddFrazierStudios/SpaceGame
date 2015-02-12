@@ -59,3 +59,8 @@ LB = 4
 RB = 5
 BACK = 6
 START = 7
+
+OSX Controller names:
+Wired: \u00a9Microsoft Corporation Xbox 360 Wired Controller
+Wireless: Microsoft Wireless 360 Controller
+XBone: Microsoft X360Controller
