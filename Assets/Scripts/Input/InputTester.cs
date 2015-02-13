@@ -22,7 +22,7 @@ public class InputTester : MonoBehaviour {
 	}
 
 	private void init(){
-		GlobalControllerManager.AssignControllerToPlayer(playerNumber,controllerType,controllerNumber);
+		PlayerInput.AssignControllerToPlayer(playerNumber,controllerType,controllerNumber);
 		prevType = controllerType;
 		prevControllerNumber = controllerNumber;
 		prevPlayerNumber = playerNumber;
@@ -32,18 +32,17 @@ public class InputTester : MonoBehaviour {
 	void Update () {
 //		DebugHUD.setValue("Frame",Time.frameCount);
 		if(!readOnly && (prevType!=controllerType || prevControllerNumber!=controllerNumber || prevPlayerNumber!=playerNumber))init();
-		PlayerPref controller = GlobalControllerManager.GetPlayer(playerNumber);
-		DebugHUD.setValue("Controller Type",controller.GetControllerDescription());
-		DebugHUD.setValue("Controller Number", controller.GetControllerNumber());
+		DebugHUD.setValue("Controller Type",PlayerInput.GetControllerDescription(playerNumber));
+		DebugHUD.setValue("Controller Number", PlayerInput.GetControllerNumber(playerNumber));
 		for(int i = 0; i<(int)Controls.NUMBER_OF_CONTROLS; i++){
             if (InputUtils.IsADigitalControl((Controls)i))
             {
-				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetDigitalControl((Controls)i));
+				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),PlayerInput.PollDigitalControl(playerNumber,(Controls)i));
 			}else{
-				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),controller.GetAnalogControl((Controls)i));
+				DebugHUD.setValue(Enum.GetName(typeof(Controls),i),PlayerInput.PollAnalogControl(playerNumber,(Controls)i));
 			}
 		}
-		if(!readOnly)controller.SetVibration(leftMotor,rightMotor);
+		if(!readOnly)PlayerInput.SetVibration(playerNumber, leftMotor,rightMotor);
 		DebugHUD.setValue("Joysticks",String.Join(", ",Input.GetJoystickNames()));
 	}
 }

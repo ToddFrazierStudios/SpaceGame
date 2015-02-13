@@ -3,15 +3,21 @@
 /// </summary>
 public interface Controller {
 	///returns the current value of the given analog control
-	float GetAnalogControl(Controls c);
+	//float GetAnalogControl(Controls c);
+
+    float PollAnalog(string identifier);
 
 	///returns the current value of the given digital control
-	bool GetDigitalControl(Controls c);
+	//bool GetDigitalControl(Controls c);
+
+    bool PollDigital(string identifier);
 
 	///returns wether or not the given control was pressed this frame...
 	///returns the same as GetDigitalControl for analog controls being treated as digital
 	///(except on XInput; on XInput it works as expected)
-	bool GetDigitalControlPressed(Controls c);
+	//bool GetDigitalControlPressed(Controls c);
+
+    bool PollDigitalPressed(string identifier);
 
 	///Returns a string identifing the general type of the controller
 	string GetControllerDescription();
@@ -21,13 +27,6 @@ public interface Controller {
 	///NOTE: you MUST set both values back to zero when you're done!
 	void SetVibration(float left, float right);
 
-	///Sets the binding for the given control
-	void SetBindingForControl(Controls control, string newBinding);
-
-	/// <summary>
-	/// Resets the bindings to default.
-	/// </summary>
-	void ResetBindingsToDefault();
 
 	/// <summary>
 	/// Gets the controller number.
@@ -39,5 +38,9 @@ public interface Controller {
 	InputUtils.ControllerType GetControllerType();
 
 	InputUtils.Implementations GetControllerImplementation();
+
+    string ConvertBindString(string bindString);
+
+    void ResetAllAxes();
 	
 }

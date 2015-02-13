@@ -54,7 +54,7 @@ public class OurRadar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (networkView.isMine) {
-			if (minimap && GlobalControllerManager.GetPlayer(0).GetDigitalControlPressed(Controls.RADAR_BUTTON)) {
+			if (minimap && PlayerInput.PollDigitalControlPressed(0, Controls.RADAR_BUTTON)) {
 				radarCamera.enabled = !radarCamera.enabled;
 				miniMapCamera.enabled = !miniMapCamera.enabled;
 			}

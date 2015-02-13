@@ -7,6 +7,9 @@ public class Binding {
 	public bool IsATrigger;
 	public Binding AlternateBinding;
 
+    public bool previousValue = false;
+    public int previousFrame = 0;
+
 	private Binding(string bindString, BindType bindType, Binding next = null, bool isInverted = false, bool isTrigger = false){
 		AlternateBinding = next;
 		this.Type = bindType;
@@ -20,14 +23,12 @@ public class Binding {
     /// <param name="fullBindStringWithMetaChar"></param>
     /// <param name="next">(optional) the next binding in the chain, or null if not specified</param>
     /// <returns></returns>
-    public static Binding BuildBinding(string fullBindStringWithMetaChar, Binding next = null) {
+    public static Binding BuildBinding(string fullBindStringWithMetaChar, Binding next = null, bool isATrigger = false) {
         if (fullBindStringWithMetaChar == "NOBIND" || fullBindStringWithMetaChar.Substring(1) == "NOBIND") return null;
-        int meta = System.Int32.Parse(fullBindStringWithMetaChar.Substring(0, 1), System.Globalization.NumberStyles.AllowHexSpecifier);
-        bool inverted = (meta & 8) != 0;//isolate the inversion
-        meta = meta & 7;//strip out the inversion bit
+        int meta = GetMetaFromString(fullBindStringWithMetaChar);
+        bool inverted = GetIsInvertedFromMeta(meta);
+        BindType type = GetBindTypeFromMeta(meta);
         string bindString = fullBindStringWithMetaChar.Substring(1);
-        bool isATrigger = bindString.Contains("Trigger");
-        BindType type = (BindType)meta;
         return new Binding(bindString, type, next, inverted, isATrigger);
     }
     /// <summary>
@@ -37,15 +38,50 @@ public class Binding {
     /// </summary>
     /// <param name="fullBindList">the ';'-seperated list of bindings</param>
     /// <returns>The head of the list of linked Bindings, or null</returns>
+    /// 
     public static Binding BuildBindingChain(string fullBindList) {
+        return BuildBindingChain(fullBindList, DefaultBindingConverter);
+    }
+
+    public static Binding BuildBindingChain(string fullBindList, InputUtils.ConvertBindString converter) {
         if (fullBindList == "NOBIND") return null;
         string[] split = fullBindList.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
         Binding next = null;
         foreach (string bind in split) {
-            next = BuildBinding(bind, next);
+            next = BuildBinding(converter(bind), next, bind.Contains("Trigger"));
         }
         return next;
     }
+
+    public static BindType GetBindTypeFromMetaChar(string metaChar){
+        return GetBindTypeFromMeta(GetMetaFromString(metaChar));
+    }
+    private static BindType GetBindTypeFromMeta(int meta) {
+        return (BindType)(meta & 7);
+    }
+    private static int GetMetaFromString(string metaChar) {
+        return System.Int32.Parse(metaChar.Substring(0, 1), System.Globalization.NumberStyles.AllowHexSpecifier);
+    }
+
+    public static string BuildMetaChar(BindType type, bool isInverted) {
+        int meta = (int)type;
+        if (isInverted) {
+            if (isInverted) {
+                meta = meta | 8;
+            } else {
+                meta = meta & 7;
+            }
+        }
+        return meta.ToString("X1");
+    }
+    public static bool GetIsInvertedFromMetaChar(string metaChar) {
+        return GetIsInvertedFromMeta(GetMetaFromString(metaChar));
+    }
+    private static bool GetIsInvertedFromMeta(int meta) {
+        return (meta & 8) != 0;
+    }
+
+    public static string DefaultBindingConverter(string str) { return str; }
 
 	public enum BindType{
 		DIRECT_DIGIAL,

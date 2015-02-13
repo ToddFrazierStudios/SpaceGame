@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Text;
 public class PlayerPref
 {
-	private string[] bindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
+	private string[] originalBindings = new string[(int)Controls.NUMBER_OF_CONTROLS];
+    private Binding[] bindings = new Binding[(int)Controls.NUMBER_OF_CONTROLS];
 
 	private Controller controller;
 	private int playerNumber;
@@ -27,34 +30,128 @@ public class PlayerPref
 			saveToPrefs();
 		}
 		controller = newController;
-		if(controller!=null)
-			loadFromPrefs();
-			writeBindingsToController();
+        if (controller != null) {
+            Debug.Log("A new controller was set!");
+            loadFromPrefs();
+        }
 	}
 
 	public void RebindControl(Controls c, string newBind){
-		if(controller==null)return;
-		bindings[(int)c] = newBind;
-		controller.SetBindingForControl(c,newBind);
+        Debug.Log(String.Format("Rebinding from {0} to {1}", originalBindings[(int)c], newBind));
+		originalBindings[(int)c] = newBind;
+        bindings[(int)c] = Binding.BuildBindingChain(newBind, controller.ConvertBindString);
 		saveToPrefs();
 	}
 
 	public string GetBindingsForControl(Controls c){
-		return bindings[(int)c];
+		return originalBindings[(int)c];
 	}
 
 	public float GetAnalogControl(Controls c){
 		if(controller==null)return 0.0f;
-		return controller.GetAnalogControl(c);
+        Binding bind = bindings[(int)c];
+        float val = 0.0f;
+        while (bind != null) {
+            val += Mathf.Clamp(pollControllerForSingleAnalogBind(bind), -1.0f, 1.0f);
+            bind = bind.AlternateBinding;
+        }
+        return Mathf.Clamp(val, -1.0f, 1.0f);
 	}
 
+    public void ResetAllAxes() {
+        if (controller != null) {
+            controller.ResetAllAxes();
+        }
+        foreach (Binding b in bindings) {
+            Binding cur = b;
+            while (cur != null) {
+                cur.previousFrame = 0;
+                cur.previousValue = false;
+                cur = b.AlternateBinding;
+            }
+        }
+    }
+
+    private float pollControllerForSingleAnalogBind(Binding bind) {
+        if (bind == null || controller == null) return 0.0f;
+        float value = 0.0f;
+        switch (bind.Type) {
+            case Binding.BindType.DIRECT_ANALOG:
+                value = controller.PollAnalog(bind.BindString);
+                break;
+            case Binding.BindType.DIGITAL_TO_ANALOG_NEGATIVE:
+                if (controller.PollDigital(bind.BindString))
+                    value = -1.0f;
+                else
+                    value = 0.0f;
+                break;
+            case Binding.BindType.DIGITAL_TO_ANALOG_POSITIVE:
+                if (controller.PollDigital(bind.BindString))
+                    value = 1.0f;
+                else
+                    value = 0.0f;
+                break;
+            default:
+                Debug.LogError("Invalid Binding! Bind " + bind.BindString + " was polled as an analog bind, but it is type " + bind.Type);
+                return 0.0f;
+        }
+        if (bind.IsATrigger && bind.IsInverted) return 1.0f - value;
+        if (bind.IsInverted) return -value;
+        return value;
+    }
+
 	public bool GetDigitalControl(Controls c){
-		if(controller==null)return false;
-		return controller.GetDigitalControl(c);
+        return getDigitalControlFromBinds(c, false);
 	}
+
+    private bool getDigitalControlFromBinds(Controls c, bool down) {
+        if (controller == null) return false;
+        Binding bind = bindings[(int)c];
+        while (bind != null) {
+            if (pollControllerForSingleDigitalBind(bind, down)) return true;
+            bind = bind.AlternateBinding;
+        }
+        return false;
+    }
+
+    private bool pollControllerForSingleDigitalBind(Binding bind, bool down) {
+        bool value = false;
+        switch (bind.Type) {
+            case Binding.BindType.DIRECT_DIGIAL:
+                if (down)
+                    value = controller.PollDigitalPressed(bind.BindString);
+                else
+                    value = controller.PollDigital(bind.BindString);
+                break;
+            case Binding.BindType.ANALOG_TO_DIGITAL_NEGATIVE:
+                bool thisFrame = controller.PollAnalog(bind.BindString) <= -InputUtils.ANALOG_DIGITAL_THRESHOLD;
+                if (down) {
+                    value = thisFrame && !bind.previousValue;
+                } else {
+                    value = thisFrame;
+                }
+                break;
+            case Binding.BindType.ANALOG_TO_DIGITAL_POSITIVE:
+                bool thisFrame2 = controller.PollAnalog(bind.BindString) >= InputUtils.ANALOG_DIGITAL_THRESHOLD;
+                if (down) {
+                    value = thisFrame2 && !bind.previousValue;
+                } else {
+                    value = thisFrame2;
+                }
+                break;
+            default:
+                Debug.LogError("Invalid Binding! Bind " + bind.BindString + " was polled as a digital bind, but it is type " + bind.Type);
+                return false;
+        }
+        if (bind.IsInverted) return !value;
+        if (Time.frameCount>bind.previousFrame) {
+            bind.previousValue = value;
+            bind.previousFrame = Time.frameCount;
+        }
+        return value;
+    }
 	public bool GetDigitalControlPressed(Controls c){
-		if(controller==null)return false;
-		return controller.GetDigitalControlPressed(c);
+        return getDigitalControlFromBinds(c, true);
 	}
 	public string GetControllerDescription(){
 		if(controller==null)return "None";
@@ -69,40 +166,50 @@ public class PlayerPref
 		controller.SetVibration(left,right);
 	}
 
-	private void writeBindingsToController(){
-		if(controller==null)return;
-		for(int i = 0; i<(int)Controls.NUMBER_OF_CONTROLS; i++){
-			controller.SetBindingForControl((Controls)i,bindings[i]);
-		}
-	}
-
 	private void saveToPrefs(){
-		string controllerType = "controller";
-		if(controller.GetControllerType()==InputUtils.ControllerType.KEYBOARD) controllerType = "keyboard";
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
-			PlayerPrefs.SetString("InputBindings.player"+playerNumber+"."+controllerType+":"+Enum.GetName(typeof(Controls),(Controls)i),bindings[i]);
+			PlayerPrefs.SetString(generatePrefString((Controls)i),originalBindings[i]);
 		}
 		PlayerPrefs.Save();
 	}
 
 	private void loadFromPrefs(){
+        Debug.Log("Loading from prefs!");
         bool isKeyboard = controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD;
+        string[] defaultTable = defaultControllerBindings;
+        if (isKeyboard) {
+            defaultTable = defaultKeyboardBindings;
+        }
+
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
-			if(isKeyboard){
-				bindings[i] = PlayerPrefs.GetString("InputBindings.player"+playerNumber+".keyboard:"+Enum.GetName(typeof(Controls),(Controls)i),defaultKeyboardBindings[i]);
-			}else{
-				bindings[i] = PlayerPrefs.GetString("InputBindings.player"+playerNumber+".controller:"+Enum.GetName(typeof(Controls),(Controls)i),defaultControllerBindings[i]);
-			}
+            Debug.Log(String.Format("Loading using default {0}", defaultTable[i]));
+            string loaded = PlayerPrefs.GetString(generatePrefString((Controls)i), defaultTable[i]);
+            Debug.Log("Loaded value: " + loaded);
+            if (loaded == "") loaded = defaultTable[i];
+			RebindControl((Controls)i, loaded);
 		}
 	}
 
-	public void ResetBindingsToDefault(){
+    private string generatePrefString(Controls c) {
+        StringBuilder sb = new StringBuilder("InputBindings.");
         if (controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD) {
-			Array.Copy(defaultKeyboardBindings,bindings,(long)Controls.NUMBER_OF_CONTROLS);
-		}else{
-			Array.Copy(defaultControllerBindings,bindings,(long)Controls.NUMBER_OF_CONTROLS);
+            sb.Append("keyboard:");
+        } else {
+            sb.Append(string.Format(".player{0}.controller:", playerNumber));
+        }
+        sb.Append(Enum.GetName(typeof(Controls), c));
+        return sb.ToString();
+    }
+
+	public void ResetBindingsToDefault(){
+        string[] defaults = defaultControllerBindings;
+        if (controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD) {
+            defaults = defaultKeyboardBindings;
 		}
-		writeBindingsToController();
+        for (int i = 0; i < (int)Controls.NUMBER_OF_CONTROLS; i++) {
+            RebindControl((Controls)i, defaults[i]);
+        }
+        saveToPrefs();
 	}
 
 	private static string[] defaultControllerBindings,defaultKeyboardBindings;
@@ -151,5 +258,16 @@ public class PlayerPref
 		defaultKeyboardBindings[(int)Controls.SELECT_WEAPON_3] = "03";
 		defaultKeyboardBindings[(int)Controls.SELECT_WEAPON_4] = "04";
 	}
+
+    public bool ProfilesSupportedByController() {
+        return controller is ProfiledController;
+    }
+
+    public string GetProfileName() {
+        ProfiledController pc = controller as ProfiledController;
+        if (pc == null) return null;
+        if (!pc.HasProfile()) return "No Profile";
+        return pc.GetProfileName();
+    }
 }
 

@@ -27,11 +27,18 @@ public static class InputUtils {
 	}
 	
 	public enum Implementations {
-		NONE,
-		KEYBOARD_CONTROLLER,
-		UNITY_CONTROLLER
+        KEYBOARD_CONTROLLER = -1,
+		NONE = 0,
+		UNITY_CONTROLLER = 1
 		#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-		,XINPUT_CONTROLLER
+		,XINPUT_CONTROLLER = 2
 		#endif
 	};
+
+    public delegate string ConvertBindString(string bindString);
+
+    public static float AbsMax(float a, float b) {
+        if (Mathf.Abs(a) > Mathf.Abs(b)) return a;
+        return b;
+    }
 }

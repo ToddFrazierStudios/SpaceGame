@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class TempInputSetupScreen : MonoBehaviour {
 	public InputTester tester;
 
+    private int setupMode = 0;
 	private int selectedPlayer = 0;
 	private Vector2 scrollPosition = Vector2.zero;
 	private const int LINE_HEIGHT = 25;
@@ -24,8 +25,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 	void Start(){
 		tester.readOnly = true;
 		tester.gameObject.SetActive(false);
-		selectedControllerType = GlobalControllerManager.GetControllerImplementationForPlayer(selectedPlayer);
-		controllerNumber = GlobalControllerManager.GetPlayer(selectedPlayer).GetControllerNumber();
+		selectedControllerType = PlayerInput.GetControllerImplementationForPlayer(selectedPlayer);
+        controllerNumber = PlayerInput.GetControllerNumber(selectedPlayer);
 	}
 
 	void OnGUI(){
@@ -39,30 +40,55 @@ public class TempInputSetupScreen : MonoBehaviour {
 		scrollPosition = GUI.BeginScrollView(new Rect(0,0,Screen.width,Screen.height),scrollPosition,new Rect(0,0,Screen.width,lastDrawHeight));
 		GUI.Box (new Rect(10,10,Screen.width-20,lastDrawHeight-15),"Input Setup");
 		int currentLineHeight = LINE_HEIGHT*2;
-		//Player tabs at the top
-		int newSelectedPlayer = GUI.SelectionGrid(new Rect(20,currentLineHeight,Screen.width-40,LINE_HEIGHT),selectedPlayer,playerTabs,playerTabs.Length);
-		currentLineHeight+=LINE_HEIGHT+5;
-		if(newSelectedPlayer!=selectedPlayer){
-			selectedPlayer = newSelectedPlayer;
-			controllerNumber = GlobalControllerManager.GetPlayer(selectedPlayer).GetControllerNumber();
-			if(controllerNumber<0)controllerNumber = 0;
-			selectedControllerType = GlobalControllerManager.GetControllerImplementationForPlayer(selectedPlayer);
-			tester.playerNumber = selectedPlayer;
-		}
 
-		//now for the controller type...
-		float contTypeWidth = GUI.skin.label.CalcSize(new GUIContent(SELECT_CONTROLLER_TYPE_STRING)).x;
-		GUI.Label(new Rect(20,currentLineHeight,contTypeWidth,LINE_HEIGHT),SELECT_CONTROLLER_TYPE_STRING);
-		Rect contrTypeGridRect = new Rect(20+contTypeWidth,currentLineHeight,Screen.width-40-contTypeWidth,LINE_HEIGHT);
-        InputUtils.Implementations newSelectedControllerType =
-            (InputUtils.Implementations)GUI.SelectionGrid(contrTypeGridRect, (int)selectedControllerType, controllerTypeTabs, controllerTypeTabs.Length);
-		currentLineHeight+=LINE_HEIGHT+5;
-		if(newSelectedControllerType != selectedControllerType){
-			GlobalControllerManager.AssignControllerToPlayer(selectedPlayer,newSelectedControllerType,controllerNumber);
-			selectedControllerType = newSelectedControllerType;
-			controllerNumber = GlobalControllerManager.GetPlayer(selectedPlayer).GetControllerNumber();
-			if(controllerNumber<0)controllerNumber = 0;
-		}
+        //Mode tabs at the top
+        int newMode = GUI.SelectionGrid(new Rect(20, currentLineHeight, Screen.width - 40, LINE_HEIGHT), setupMode, keyboardControllerTabs, keyboardControllerTabs.Length);
+        currentLineHeight += LINE_HEIGHT + 5;
+        if (newMode != setupMode) {
+            setupMode = newMode;
+            if (setupMode == 0) {
+                controllerNumber = -1;
+                selectedPlayer = 0;
+                selectedControllerType = InputUtils.Implementations.KEYBOARD_CONTROLLER;
+                tester.playerNumber = selectedPlayer;
+            } else {
+                selectedPlayer = 0;
+                controllerNumber = PlayerInput.GetControllerNumber(selectedPlayer);
+                selectedControllerType = PlayerInput.GetControllerImplementationForPlayer(selectedPlayer);
+                tester.playerNumber = selectedPlayer;
+            }
+        }
+
+        if (setupMode != 0) {
+            //Player tabs, if needed
+            int newSelectedPlayer = GUI.SelectionGrid(new Rect(20, currentLineHeight, Screen.width - 40, LINE_HEIGHT), selectedPlayer, playerTabs, playerTabs.Length);
+            currentLineHeight += LINE_HEIGHT + 5;
+            if (newSelectedPlayer != selectedPlayer) {
+                selectedPlayer = newSelectedPlayer;
+                controllerNumber = PlayerInput.GetControllerNumber(selectedPlayer);
+                if (controllerNumber < 0) controllerNumber = 0;
+                selectedControllerType = PlayerInput.GetControllerImplementationForPlayer(selectedPlayer);
+                tester.playerNumber = selectedPlayer;
+            }
+
+            //now for the controller type...
+            float contTypeWidth = GUI.skin.label.CalcSize(new GUIContent(SELECT_CONTROLLER_TYPE_STRING)).x;
+            GUI.Label(new Rect(20, currentLineHeight, contTypeWidth, LINE_HEIGHT), SELECT_CONTROLLER_TYPE_STRING);
+            Rect contrTypeGridRect = new Rect(20 + contTypeWidth, currentLineHeight, Screen.width - 40 - contTypeWidth, LINE_HEIGHT);
+            InputUtils.Implementations newSelectedControllerType =
+                (InputUtils.Implementations)GUI.SelectionGrid(contrTypeGridRect, (int)selectedControllerType, controllerTypeTabs, controllerTypeTabs.Length);
+            currentLineHeight += LINE_HEIGHT + 5;
+            if (newSelectedControllerType != selectedControllerType) {
+                selectedControllerType = newSelectedControllerType;
+                controllerNumber = PlayerInput.GetControllerNumber(selectedPlayer);
+                if (controllerNumber < 0) controllerNumber = 0;
+                PlayerInput.AssignControllerToPlayer(selectedPlayer, selectedControllerType, controllerNumber);
+            }
+        } else {
+            selectedControllerType = InputUtils.Implementations.KEYBOARD_CONTROLLER;
+            selectedPlayer = -1;
+            controllerNumber = 0;
+        }
 
 		//now that we know what kind of controller we are dealing with, we can move on
         if (selectedControllerType != InputUtils.Implementations.NONE) {
@@ -74,7 +100,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 				int newControllerNumber = GUI.SelectionGrid(contrNumGridRect,controllerNumber,controllerNumTabs,controllerNumTabs.Length);
 				if(newControllerNumber != controllerNumber){
 					controllerNumber = newControllerNumber;
-					GlobalControllerManager.AssignControllerToPlayer(selectedPlayer,selectedControllerType,controllerNumber);
+					PlayerInput.AssignControllerToPlayer(selectedPlayer,selectedControllerType,controllerNumber);
 				}
 				currentLineHeight+=LINE_HEIGHT+5;
 
@@ -87,6 +113,11 @@ public class TempInputSetupScreen : MonoBehaviour {
 					float conStrWidth = GUI.skin.label.CalcSize(new GUIContent(connectedControllerString)).x;
 					GUI.Label (new Rect(20,currentLineHeight,conStrWidth,LINE_HEIGHT),connectedControllerString);
 					currentLineHeight+=LINE_HEIGHT+5;
+
+                    string profileString = CURRENT_PROFILE_STRING + PlayerInput.GetProfileName(selectedPlayer);
+                    float profStrWidth = GUI.skin.label.CalcSize(new GUIContent(profileString)).x;
+                    GUI.Label(new Rect(20, currentLineHeight, profStrWidth, LINE_HEIGHT), profileString);
+                    currentLineHeight += LINE_HEIGHT + 5;
 				}
 			}
 
@@ -97,7 +128,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 			//Add a reset button
 			float resetStringWidth = GUI.skin.label.CalcSize(new GUIContent(RESET_BINDINGS_STRING)).x;
 			if(GUI.Button (new Rect(20,currentLineHeight,resetStringWidth+10,LINE_HEIGHT),RESET_BINDINGS_STRING)){
-				GlobalControllerManager.GetPlayer(selectedPlayer).ResetBindingsToDefault();
+				PlayerInput.ResetBindingsToDefault(selectedPlayer);
 			}
 			currentLineHeight+=LINE_HEIGHT+5;
 
@@ -138,7 +169,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 
 		float currentX = 20+nameSize+10;
 		float maxWidthUsed = currentX;
-		string fullBindString = GlobalControllerManager.GetPlayer(selectedPlayer).GetBindingsForControl(control);
+		string fullBindString = PlayerInput.GetBindingsForControl(selectedPlayer, control);
 		if(fullBindString!="NOBIND"){
             string[] binds = fullBindString.Split(InputUtils.BIND_SEPERATOR, System.StringSplitOptions.RemoveEmptyEntries);
 			string[] outBinds = binds.Clone() as string[];
@@ -177,7 +208,7 @@ public class TempInputSetupScreen : MonoBehaviour {
 				}
 				string newBinds = "NOBIND";
                 if (stringStack.Count != 0) newBinds = string.Join(new string(InputUtils.BIND_SEPERATOR), stringStack.ToArray());
-				GlobalControllerManager.GetPlayer(selectedPlayer).RebindControl(control,newBinds);
+				PlayerInput.RebindControl(selectedPlayer, control,newBinds);
 				Debug.Log("Binds updated!");
 			}
 		}
@@ -325,7 +356,7 @@ public class TempInputSetupScreen : MonoBehaviour {
         string output = string.Join(new string(InputUtils.BIND_SEPERATOR), stringEditorBindsToUpdate);
 		if(!found)output = output+";"+stringToWrite;
 		if(output==";"||string.IsNullOrEmpty(output))output = "NOBIND";
-		GlobalControllerManager.GetPlayer(selectedPlayer).RebindControl(stringEditorControlBeingEdited,output);
+		PlayerInput.RebindControl(selectedPlayer, stringEditorControlBeingEdited,output);
 	}
 
 	private static bool isAnAnalogBind(string bindString){
@@ -360,11 +391,12 @@ public class TempInputSetupScreen : MonoBehaviour {
 	private const string EDIT_BUTTON_STRING = "Edit Binding";
 	private const string DELETE_BUTTON_STRING = "Remove Binding";
 	private const string ADD_BUTTON_STRING = "Add Binding";
+    private const string CURRENT_PROFILE_STRING = "Profile: ";
+    private static string[] keyboardControllerTabs = new string[] { "Keyboard Setup", "Controller Setup" };
 	private static string[] playerTabs = new string[]{"Player 1", "Player 2", "Player 3", "Player 4"};
 	private static string[] controllerNumTabs = new string[]{"Controller 1", "Controller 2", "Controller 3", "Controller 4"};
 	private static string[] controllerTypeTabs = new string[]{
 		"None",
-		"Keyboard/Mouse",
 		"Unity Controller"
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 		,"XInput Controller"

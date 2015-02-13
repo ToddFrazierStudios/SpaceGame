@@ -22,7 +22,7 @@ public class CameraManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Screen.showCursor = false;
-		if (networkView.isMine && GlobalControllerManager.GetPlayer(0).GetDigitalControlPressed(Controls.CAMERA_BUTTON) || Input.GetKeyDown (KeyCode.C)) {
+		if (networkView.isMine && PlayerInput.PollDigitalControlPressed(0, Controls.CAMERA_BUTTON)) {
 			thirdPerson = !thirdPerson;
 			if (thirdPerson) {
 				GetComponent<RadarMount>().enabled = false;

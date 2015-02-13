@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEditor;
 
 //needs to control:
 // Strafe Manager
@@ -26,10 +25,7 @@ public class ShipController : MonoBehaviour {
 	public EngineThruster engineThruster;
 	[System.NonSerialized]
 	public Boost boost;
-	private bool resetNextFrame = false;
-//	private EditorWindow gameView;
 	private bool isMaximized;
-	private PlayerPref controller;
 	// Use this for initialization
 	void Start () {
 		rigidbody.inertiaTensor = new Vector3(55015.5f, 55015.5f, 55015.5f);
@@ -41,14 +37,13 @@ public class ShipController : MonoBehaviour {
 		engineThruster = GetComponent<EngineThruster>();
 		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
-		controller = GlobalControllerManager.GetPlayer(playerNumber);
 	}
 
-//	void OnApplicationFocus(bool focusStatus) {
-//		if (focusStatus = true) {
-//			ParsedInput.controller[0].ResetAllAxes();
-//		}
-//	}
+	void OnApplicationFocus(bool focusStatus) {
+		if (focusStatus) {
+			PlayerInput.ResetAllAxes();
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -62,8 +57,8 @@ public class ShipController : MonoBehaviour {
 
 		// Strafe Manager //
 		if(strafeManager){
-			strafeManager.xInput = controller.GetAnalogControl(Controls.STRAFE_X);
-			strafeManager.yInput = controller.GetAnalogControl(Controls.STRAFE_Y);
+			strafeManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X);
+            strafeManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y);
 			
 			if (strafeManager.xInput == 0f && strafeManager.yInput == 0f) {
 				engineThruster.isStrafing = false;
@@ -74,28 +69,28 @@ public class ShipController : MonoBehaviour {
 
 		// Rotation Manager //
 		if(rotationManager){
-			rotationManager.xInput = controller.GetAnalogControl(Controls.LOOK_X);
-			rotationManager.yInput = controller.GetAnalogControl(Controls.LOOK_Y);
+            rotationManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_X);
+            rotationManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_Y);
 //			rotationManager.xRightInput = ParsedInput.controller [playerNumber].RightStickX;
 //			rotationManager.yRightInput = ParsedInput.controller [playerNumber].RightStickY;
-			rotationManager.rotationInput = controller.GetAnalogControl(Controls.ROLL);
+            rotationManager.rotationInput = PlayerInput.PollAnalogControl(playerNumber, Controls.ROLL);
 		}
 
 		// Weapons Manager //
 		if(weaponsManager){
-			weaponsManager.primaryFire = controller.GetDigitalControl(Controls.FIRE);
-			weaponsManager.secondaryFire = controller.GetDigitalControlPressed(Controls.ALT_FIRE);
+            weaponsManager.primaryFire = PlayerInput.PollDigitalControl(playerNumber, Controls.FIRE);
+            weaponsManager.secondaryFire = PlayerInput.PollDigitalControlPressed(playerNumber, Controls.ALT_FIRE);
 		}
 
 		// Engine Thruster //
 		if(engineThruster){
-			engineThruster.throttle = controller.GetAnalogControl(Controls.THROTTLE);
-			engineThruster.reverse = controller.GetDigitalControl(Controls.DAMPENERS);
+            engineThruster.throttle = PlayerInput.PollAnalogControl(playerNumber, Controls.THROTTLE);
+            engineThruster.reverse = PlayerInput.PollDigitalControl(playerNumber, Controls.DAMPENERS);
 		}
 
 		// Boost //
 		if(boost){
-			boost.activate = controller.GetDigitalControl(Controls.BOOST);
+            boost.activate = PlayerInput.PollDigitalControl(playerNumber, Controls.BOOST);
 		}
 	}
 }
