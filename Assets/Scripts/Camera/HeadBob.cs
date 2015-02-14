@@ -33,7 +33,6 @@ public class HeadBob : MonoBehaviour {
 	private Vector3 previousAngVelocity = Vector3.zero;
 
 	private Vector3 cameraVelocity = Vector3.zero;
-	private Vector3 cameraAngVelocity = Vector3.zero;
 
 	private Transform target;
 

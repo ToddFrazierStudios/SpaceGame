@@ -46,7 +46,6 @@ public class Turret : MonoBehaviour {
 	}
 
 	public void shootMachineGuns() {
-		RaycastHit hit;
 		// Dynamically resize based on distance? Maybe later.
 		if (target != null) {
 			nextGunToFire.LookAt (target); 

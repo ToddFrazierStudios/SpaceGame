@@ -32,13 +32,11 @@ public class OurRadar : MonoBehaviour {
 
 	private List<RadarBlip> contacts;
 	private Transform target;
-	private PriorityQueue<RadarBlip> hostiles;
-	private bool minimap;
+	private bool minimap = false;
 
 
 	// Use this for initialization
 	void Start () {
-		hostiles = new PriorityQueue<RadarBlip>(maxBlips);
 		contacts = new List<RadarBlip>(maxBlips);
 		target = null;
 //		if (networkView.isMine) {

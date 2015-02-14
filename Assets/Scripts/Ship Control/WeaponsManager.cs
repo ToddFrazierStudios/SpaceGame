@@ -77,7 +77,6 @@ public class WeaponsManager : MonoBehaviour {
 	
 	[RPC]
 	public void shootMachineGuns() {
-		RaycastHit hit;
 //		LineRenderer line = created.GetComponent<LineRenderer>();
 		// Dynamically resize based on distance? Maybe later.
 		if (targeting && targeting.getTarget () != null) {
@@ -111,7 +110,6 @@ public class WeaponsManager : MonoBehaviour {
 		GameObject missile = Network.Instantiate(missilePrefab,missileBay.position,transform.rotation, 0) as GameObject;
 		Missile missileComponent = missile.GetComponent<Missile>();
 		missileComponent.colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
-		RaycastHit hit;
 		if (target != null) {
 			missileComponent.target = target;
 		} else if (targeting.getTarget () != null) {

@@ -24,8 +24,8 @@ public class RotationManager : MonoBehaviour {
 		float inputX = 0;
 		float inputY = 0;
 		float inputZ = 0;
-		float inputRightX = 0;
-		float inputRightY = 0;
+//		float inputRightX = 0;
+//		float inputRightY = 0;
 
 		inputX = xInput * force.x;
 		if (inputX > 0) {
@@ -41,8 +41,8 @@ public class RotationManager : MonoBehaviour {
 			inputY = - (inputY - 1) * (inputY - 1);
 		}
 
-		inputRightX = xRightInput * barrelForce.x;
-		inputRightY = yRightInput * barrelForce.y;
+//		inputRightX = xRightInput * barrelForce.x;
+//		inputRightY = yRightInput * barrelForce.y;
 
 		inputZ = force.z*rotationInput;
 

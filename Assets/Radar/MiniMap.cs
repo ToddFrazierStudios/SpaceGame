@@ -35,8 +35,6 @@ public class MiniMap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 projectionPosition;
-		Vector3 markerPosition;
 		RadarBlip toRemove = null;
 		foreach(RadarBlip blip in contacts) {
 			if (blip.realObject != null && blip.marker != null && blip.projection != null) {
