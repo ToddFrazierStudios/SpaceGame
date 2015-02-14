@@ -40,7 +40,7 @@ public class PlayerPref
         Debug.Log(String.Format("Rebinding from {0} to {1}", originalBindings[(int)c], newBind));
 		originalBindings[(int)c] = newBind;
         bindings[(int)c] = Binding.BuildBindingChain(newBind, controller.ConvertBindString);
-		saveToPrefs();
+		saveBindingToPrefs (c, newBind);
 	}
 
 	public string GetBindingsForControl(Controls c){
@@ -168,9 +168,14 @@ public class PlayerPref
 
 	private void saveToPrefs(){
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
-			PlayerPrefs.SetString(generatePrefString((Controls)i),originalBindings[i]);
+			Debug.Log ("saving binding "+originalBindings[i]);
+			saveBindingToPrefs((Controls)i,originalBindings[i]);
 		}
 		PlayerPrefs.Save();
+	}
+
+	private void saveBindingToPrefs(Controls c, string bind){
+		PlayerPrefs.SetString (generatePrefString (c), bind);
 	}
 
 	private void loadFromPrefs(){
@@ -183,7 +188,9 @@ public class PlayerPref
 
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
             Debug.Log(String.Format("Loading using default {0}", defaultTable[i]));
-            string loaded = PlayerPrefs.GetString(generatePrefString((Controls)i), defaultTable[i]);
+			string prefString = generatePrefString((Controls)i);
+			Debug.Log (String.Format ("PlayerPrefs.HasKey({0}) = {1}", prefString, PlayerPrefs.HasKey(prefString)));
+            string loaded = PlayerPrefs.GetString(prefString, defaultTable[i]);
             Debug.Log("Loaded value: " + loaded);
             if (loaded == "") loaded = defaultTable[i];
 			RebindControl((Controls)i, loaded);
@@ -195,7 +202,7 @@ public class PlayerPref
         if (controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD) {
             sb.Append("keyboard:");
         } else {
-            sb.Append(string.Format(".player{0}.controller:", playerNumber));
+            sb.Append(string.Format("player{0}.controller:", playerNumber));
         }
         sb.Append(Enum.GetName(typeof(Controls), c));
         return sb.ToString();

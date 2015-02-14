@@ -36,7 +36,8 @@ public class UnityController : Controller, ProfiledController {
 
         //build trigger table
         if (profile.OSXTriggerCompNeeded && bind.Contains("Trigger")) {
-            triggerTable.Add(bind.Substring(1), false);
+			if(!triggerTable.ContainsKey(bind.Substring(1)))
+            	triggerTable.Add(bind.Substring(1), false);
         }
 
 #if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)
