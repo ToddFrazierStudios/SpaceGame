@@ -15,6 +15,7 @@ public class UnityController : Controller, ProfiledController {
 	public UnityController(int controllerNumber, ControllerProfile profile){
 		this.controllerNumber = controllerNumber;
         this.profile = profile;
+		triggerTable = new Dictionary<string, bool> ();
 	}
 
 	public string GetControllerDescription ()
