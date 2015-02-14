@@ -243,8 +243,8 @@ public class PlayerPref
   		defaultControllerBindings[(int)Controls.TARGET_BUTTON] = "0Buttons.A";
 		defaultControllerBindings[(int)Controls.NEXT_WEAPON] = "0DPad.Up";
 
-		defaultKeyboardBindings[(int)Controls.LOOK_X] = "3MouseAbs X";
-		defaultKeyboardBindings[(int)Controls.LOOK_Y] = "3MouseAbs Y";
+		defaultKeyboardBindings[(int)Controls.LOOK_X] = "3Mouse X";
+		defaultKeyboardBindings[(int)Controls.LOOK_Y] = "3Mouse Y";
 		defaultKeyboardBindings[(int)Controls.STRAFE_X] = "5a;4d";
 		defaultKeyboardBindings[(int)Controls.STRAFE_Y] = "5s;4w";
 		defaultKeyboardBindings[(int)Controls.ROLL] = "5e;4q";
