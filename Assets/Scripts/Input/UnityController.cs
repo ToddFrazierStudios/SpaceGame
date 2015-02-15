@@ -97,7 +97,9 @@ public class UnityController : Controller, ProfiledController {
 
         if (profile != null && profile.OSXTriggerCompNeeded) {
             Dictionary<string,bool>.KeyCollection keys = triggerTable.Keys;
-            foreach (string key in keys) {
+            string[] keyArray = new string[triggerTable.Count];
+            keys.CopyTo(keyArray, 0);
+            foreach (string key in keyArray) {
                 triggerTable[key] = false;
             }
         }
