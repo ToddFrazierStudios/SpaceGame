@@ -178,7 +178,7 @@ public class PlayerPref
 	}
 
 	private void loadFromPrefs(){
-        Debug.Log("Loading from prefs!");
+        //Debug.Log("Loading from prefs!");
         bool isKeyboard = controller.GetControllerType() == InputUtils.ControllerType.KEYBOARD;
         string[] defaultTable = defaultControllerBindings;
         if (isKeyboard) {
