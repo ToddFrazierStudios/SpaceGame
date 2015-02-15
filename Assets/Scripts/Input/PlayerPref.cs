@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 using System.Text;
 public class PlayerPref
 {
@@ -31,13 +30,13 @@ public class PlayerPref
 		}
 		controller = newController;
         if (controller != null) {
-            Debug.Log("A new controller was set!");
+            //Debug.Log("A new controller was set!");
             loadFromPrefs();
         }
 	}
 
 	public void RebindControl(Controls c, string newBind){
-        Debug.Log(String.Format("Rebinding from {0} to {1}", originalBindings[(int)c], newBind));
+        //Debug.Log(String.Format("Rebinding from {0} to {1}", originalBindings[(int)c], newBind));
 		originalBindings[(int)c] = newBind;
         bindings[(int)c] = Binding.BuildBindingChain(newBind, controller.ConvertBindString);
 		saveBindingToPrefs (c, newBind);
@@ -168,7 +167,7 @@ public class PlayerPref
 
 	private void saveToPrefs(){
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
-			Debug.Log ("saving binding "+originalBindings[i]);
+            //Debug.Log ("saving binding "+originalBindings[i]);
 			saveBindingToPrefs((Controls)i,originalBindings[i]);
 		}
 		PlayerPrefs.Save();
@@ -187,11 +186,11 @@ public class PlayerPref
         }
 
 		for(int i = 0; i< (int)Controls.NUMBER_OF_CONTROLS; i++){
-            Debug.Log(String.Format("Loading using default {0}", defaultTable[i]));
+            //Debug.Log(String.Format("Loading using default {0}", defaultTable[i]));
 			string prefString = generatePrefString((Controls)i);
-			Debug.Log (String.Format ("PlayerPrefs.HasKey({0}) = {1}", prefString, PlayerPrefs.HasKey(prefString)));
+            //Debug.Log (String.Format ("PlayerPrefs.HasKey({0}) = {1}", prefString, PlayerPrefs.HasKey(prefString)));
             string loaded = PlayerPrefs.GetString(prefString, defaultTable[i]);
-            Debug.Log("Loaded value: " + loaded);
+            //Debug.Log("Loaded value: " + loaded);
             if (loaded == "") loaded = defaultTable[i];
 			RebindControl((Controls)i, loaded);
 		}
