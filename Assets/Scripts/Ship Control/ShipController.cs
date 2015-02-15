@@ -40,9 +40,7 @@ public class ShipController : MonoBehaviour {
 	}
 
 	void OnApplicationFocus(bool focusStatus) {
-		if (focusStatus) {
-			PlayerInput.ResetAllAxes();
-		}
+		PlayerInput.ResetAllAxes();
 	}
 	
 	// Update is called once per frame
