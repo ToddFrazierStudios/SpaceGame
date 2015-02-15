@@ -32,7 +32,7 @@ public class OurSmoothFollow : MonoBehaviour {
 		float currentHeight = Vector3.Project(transform.position - target.position, target.transform.up).y;
 		currentHeight = Mathf.Lerp (currentHeight, target.transform.localPosition.y + height, heightDamping * Time.deltaTime);
 
-		Vector3 currentPosition = transform.position;
+//		Vector3 currentPosition = transform.position;
 		Vector3 desiredPosition = target.position;
 		desiredPosition = desiredPosition - target.forward * distance;
 		desiredPosition = desiredPosition + target.up * height;

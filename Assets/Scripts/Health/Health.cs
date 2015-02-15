@@ -38,7 +38,7 @@ public class Health : MonoBehaviour {
 	// with the last value being the damage and the first three being the direction
 	public void hurt(Quaternion parameters) {
 		float damage = parameters.w;
-		Vector3 direction = new Vector3(parameters.x, parameters.y, parameters.z);
+//		Vector3 direction = new Vector3(parameters.x, parameters.y, parameters.z);
 		if (shield && shield.shield > 0) {
 			shield.decrementShield (damage);
 		} else if (hull > 0) {

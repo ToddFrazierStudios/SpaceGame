@@ -9,8 +9,8 @@ public class MenuText : MonoBehaviour {
 	public Font titleFont;
 	public int titleFontSize;
 	public Color titleTextColor;
-	private Vector2 titleAnchorMin = new Vector2(0.175f, 0.75f);
-	private Vector2 titleAnchorMax = new Vector2(0.3333f, 0.85f);
+//	private Vector2 titleAnchorMin = new Vector2(0.175f, 0.75f);
+//	private Vector2 titleAnchorMax = new Vector2(0.3333f, 0.85f);
 	[Space(10)]
 	[Header("Options:")]
 	public string[][] options;
@@ -29,26 +29,26 @@ public class MenuText : MonoBehaviour {
 	public int tabFontSize;
 	public Color tabTextColor;
 	public GameObject tab;
-	private Vector2 tabAnchorMin;
-	private Vector2 tabAnchorMax;
-	private Vector2 tabOffset;
+//	private Vector2 tabAnchorMin;
+//	private Vector2 tabAnchorMax;
+//	private Vector2 tabOffset;
 	private float tabObjectOffset;
 	
 	public MenuTab[] menuTabs;
 
 	private GameObject[] tabButtons;
-	private int selectedOption;
+//	private int selectedOption;
 	private int selectedTab;
-	private int max;
+	//private int max;
 	
 	// Use this for initialization
 	void Start () {
-		tabAnchorMin = new Vector2(0.2f, 0.05f);
-		tabAnchorMax = new Vector2(0.25f, 0.079f);
-		tabOffset = new Vector2(0.2f, 0f);
+//		tabAnchorMin = new Vector2(0.2f, 0.05f);
+//		tabAnchorMax = new Vector2(0.25f, 0.079f);
+//		tabOffset = new Vector2(0.2f, 0f);
 		tabObjectOffset = 90.15f;
-		max = options.Length;
-		selectedOption = 0;
+		//max = options.Length;
+//		selectedOption = 0;
 		selectedTab = 0;
 		initMenu();
 		makeTabs();

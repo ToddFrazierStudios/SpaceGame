@@ -6,6 +6,7 @@ public enum Controls{
 	ROLL,
 	THROTTLE,
 
+
 	// any additional analog controls must be added above this line!
 	FIRE,
 	ALT_FIRE,
@@ -21,6 +22,16 @@ public enum Controls{
 	SELECT_WEAPON_2,
 	SELECT_WEAPON_3,
 	SELECT_WEAPON_4,
+	/*MENU_UP,
+	MENU_DOWN,
+	MENU_LEFT,
+	MENU_RIGHT,
+	MENU_CONFIRM,
+	MENU_CANCEL,
+	MENU_NEXTPAGE,
+	MENU_PREVIOUSPAGE,
+	MENU_NEXTTAB,
+	MENU_PREVIOUSTAB,*/
 
 	//any additional digital controls must be added between this line and Controls.FIRE!
 	NUMBER_OF_CONTROLS

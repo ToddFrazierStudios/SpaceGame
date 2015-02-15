@@ -49,7 +49,7 @@ public class Missile : MonoBehaviour {
 
 	void Start () {
 //		Destroy (gameObject, 20.0f);
-		RaycastHit hit;
+//		RaycastHit hit;
 //		GameObject _GameMgr = GameObject.Find("_GameMgr");
 //		if (_GameMgr && _GameMgr.GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0] != null) {
 //			target = GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().SelectedTarget[0].transform;
@@ -78,7 +78,6 @@ public class Missile : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		Debug.Log (target);
 		if (target != null) {
 //			transform.LookAt (target.transform);
 			Vector3 targetDirection = target.transform.position - transform.position;

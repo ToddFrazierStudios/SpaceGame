@@ -26,10 +26,10 @@ public class Bullet : MonoBehaviour {
 		Destroy (gameObject,maxLife);
 	}
 	
-	private void playOneSound(AudioClip[] list){
-		int chosen = Random.Range(0,list.Length-1);
-//		source.PlayOneShot(list[chosen]);
-	}
+//	private void playOneSound(AudioClip[] list){
+//		int chosen = Random.Range(0,list.Length-1);
+////		source.PlayOneShot(list[chosen]);
+//	}
 	
 	// Update is called once per frame
 	void Update () {
