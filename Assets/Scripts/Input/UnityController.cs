@@ -96,7 +96,8 @@ public class UnityController : Controller, ProfiledController {
         Input.ResetInputAxes();
 
         if (profile != null && profile.OSXTriggerCompNeeded) {
-            foreach (string key in triggerTable.Keys) {
+            Dictionary<string,bool>.KeyCollection keys = triggerTable.Keys;
+            foreach (string key in keys) {
                 triggerTable[key] = false;
             }
         }
