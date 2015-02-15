@@ -66,7 +66,7 @@ public class PlayerPref
             while (cur != null) {
                 cur.previousFrame = 0;
                 cur.previousValue = false;
-                cur = b.AlternateBinding;
+                cur = cur.AlternateBinding;
             }
         }
     }
