@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 
 public class Binding {
 	public string BindString;
@@ -79,6 +80,17 @@ public class Binding {
     }
     private static bool GetIsInvertedFromMeta(int meta) {
         return (meta & 8) != 0;
+    }
+
+    public string ConvertBindChainToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(BuildMetaChar(Type, IsInverted));
+        sb.Append(BindString);
+        if (AlternateBinding != null) {
+            sb.Append(";");
+            sb.Append(AlternateBinding.ConvertBindChainToString());
+        }
+        return sb.ToString();
     }
 
     public static string DefaultBindingConverter(string str) { return str; }
