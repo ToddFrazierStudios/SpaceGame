@@ -266,6 +266,10 @@ public class PlayerPref
 	}
 
     public bool ProfilesSupportedByController() {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        if (controller is XInputController) return true;
+#endif
+
         return controller is ProfiledController;
     }
 

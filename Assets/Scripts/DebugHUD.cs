@@ -35,4 +35,10 @@ public class DebugHUD : MonoBehaviour {
 		}
 		guiText.text = s;
 	}
+
+    public static string FullPathToObject(GameObject obj) {
+        if (obj == null) return "";
+        if (obj.transform.parent == null) return obj.name;
+        return FullPathToObject(obj.transform.parent.gameObject) + "/" + obj.name;
+    }
 }
