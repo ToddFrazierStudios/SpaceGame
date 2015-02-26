@@ -54,7 +54,7 @@ public class Menu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		selectedTab = 0;
+		selectedTab = 1;
 		refreshMenu ();
 	}
 	

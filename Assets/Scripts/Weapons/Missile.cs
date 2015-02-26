@@ -98,13 +98,13 @@ public class Missile : MonoBehaviour {
 
 
 		if(timer>lifeTime){
-			networkView.RPC("Explode", RPCMode.All);
+			Explode ();
 		}
 
 		//now we determine if we hit anyone!
 		foreach(Collider col in Physics.OverlapSphere(transform.position, detonationRadius)){
 			if(col!=collider && col!=colliderToIgnore && !col.isTrigger){
-				networkView.RPC("Explode", RPCMode.All);
+				Explode ();
 				return;
 			}
 		}
@@ -112,15 +112,13 @@ public class Missile : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision) {
 		if(collision.collider!=colliderToIgnore && !collision.collider.isTrigger){
-			networkView.RPC("Explode", RPCMode.All);
+			Explode ();
 		}
 	}
 
 	//this function may need some work later if it becomes too laggy
-	[RPC]
 	public void Explode(){
 		Destroy(gameObject);
-		Network.RemoveRPCs (networkView.viewID);
 		Collider[] collidersHit = Physics.OverlapSphere(transform.position,explosionRadius);
 		foreach (Collider col in collidersHit){
 			if(col!=this.collider && !col.isTrigger){
@@ -143,11 +141,9 @@ public class Missile : MonoBehaviour {
 		}
 		if(explosion){
 			explosion.gameObject.transform.parent = null;//detatch the explosion
-			explosion.gameObject.AddComponent<NetworkView>();
 			Destroy (explosion.gameObject, 1f);//destroy it after some time
 			//this is where i'd like to set the system's radius to match the explosionRadius, but oh well
 			explosion.Play();
-			Network.RemoveRPCs (explosion.networkView.viewID);
 		}
 	}
 

@@ -52,8 +52,6 @@ public class ShipController : MonoBehaviour {
 
 		if(isAi)return;
 
-		if(!networkView.isMine)return;
-
 		// Strafe Manager //
 		if(strafeManager){
 			strafeManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X);

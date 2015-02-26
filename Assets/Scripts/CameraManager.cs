@@ -11,18 +11,15 @@ public class CameraManager : MonoBehaviour {
 	public LayerMask thirdPersonLayers;
 
 	void Start () {
-//		Screen.showCursor = false;
+		Screen.showCursor = false;
 		thirdPerson = false;
 		currentCamera = firstPersonCamera;
-		if (networkView.isMine) {
-			firstPersonCamera.camera.enabled = true;
-		}
+		firstPersonCamera.camera.enabled = true;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		Screen.showCursor = false;
-		if (networkView.isMine && PlayerInput.PollDigitalControlPressed(0, Controls.CAMERA_BUTTON)) {
+		if (PlayerInput.PollDigitalControlPressed(0, Controls.CAMERA_BUTTON)) {
 			thirdPerson = !thirdPerson;
 			if (thirdPerson) {
 				GetComponent<RadarMount>().enabled = false;
@@ -39,7 +36,7 @@ public class CameraManager : MonoBehaviour {
 			}
 		}
 
-//		if (networkView.isMine && ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
+//		if (ParsedInput.controller[0].RSDown || ParsedInput.controller[0].RSUp) {
 //			currentCamera.transform.Rotate (Vector3.up, 180f, Space.Self);
 //		}
 	}

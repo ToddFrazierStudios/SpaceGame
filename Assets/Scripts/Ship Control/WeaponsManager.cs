@@ -89,7 +89,7 @@ public class WeaponsManager : MonoBehaviour {
 //			line.SetPosition (1, transform.TransformPoint (Vector3.forward * 20f));
 		}
 		
-		GameObject created = Network.Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation, 0) as GameObject;
+		GameObject created = Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
 		b.playerBullet = (gameObject.layer == 13);
 		b.colliderToIgnore = GetComponent<MeshCollider>();
@@ -107,7 +107,7 @@ public class WeaponsManager : MonoBehaviour {
 
 	[RPC]
 	public void shootMissile() {
-		GameObject missile = Network.Instantiate(missilePrefab,missileBay.position,transform.rotation, 0) as GameObject;
+		GameObject missile = Instantiate(missilePrefab,missileBay.position,transform.rotation) as GameObject;
 		Missile missileComponent = missile.GetComponent<Missile>();
 		missileComponent.colliderToIgnore = this.GetComponentInChildren<MeshCollider>();
 		if (target != null) {

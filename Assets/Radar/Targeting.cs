@@ -31,8 +31,6 @@ public class Targeting : MonoBehaviour {
 			if (Vector3.Angle (transform.forward, hit.point - transform.position) < coneAngle) {
 				target = hit.transform;
 				hitPosition = hit.point;
-				DebugHUD.setValue ("target position", playerCamera.WorldToScreenPoint (hit.transform.position));
-				Debug.Log (target.gameObject.name);
 			}
 		}
 		return target;

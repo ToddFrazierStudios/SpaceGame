@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(NetworkView))]
 public class Health : MonoBehaviour {
 
 	public bool mainHealth;
@@ -10,13 +9,9 @@ public class Health : MonoBehaviour {
 	public SpriteRenderer hullSprite;
 	public Shield shield;
 	public GameObject explosionPrefab;
-	private MultiplayerMgr multiplayer;
 
 	// Use this for initialization
 	void Start () {
-		if (mainHealth) {
-			multiplayer = GameObject.Find ("Menu").GetComponent<MultiplayerMgr>();
-		}
 		hull = maxHull;
 	}
 	
@@ -30,7 +25,7 @@ public class Health : MonoBehaviour {
 			if (hullSprite) {
 				hullSprite.color = new Color(0f, 0f, 0f, 0f);
 			}
-			networkView.RPC ("Explode", RPCMode.All);
+			Explode();
 		}
 	}
 
@@ -46,13 +41,8 @@ public class Health : MonoBehaviour {
 		}
 	}
 
-	[RPC]
 	public void Explode() {
-		if (tag == "Player" && mainHealth) {
-			multiplayer.Respawn();
-		}
-		Network.RemoveRPCs (networkView.viewID);
-		GameObject explosion = Network.Instantiate (explosionPrefab, transform.position, transform.rotation, 0) as GameObject;
+		GameObject explosion = Instantiate (explosionPrefab, transform.position, transform.rotation) as GameObject;
 		Destroy (explosion, 2.0f);
 		if (mainHealth) {
 			Destroy (transform.parent.gameObject);
