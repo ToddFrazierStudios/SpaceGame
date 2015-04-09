@@ -23,8 +23,8 @@ public class OurSmoothFollow : MonoBehaviour {
 //		                                 Mathf.LerpAngle (currentRotation.y, desiredRotation.y, rotationDamping * Time.deltaTime), 
 //		                                 Mathf.LerpAngle (currentRotation.z, desiredRotation.z, rotationDamping * Time.deltaTime),
 //		                                 1);
-
-		currentRotation = Quaternion.Slerp (currentRotation, desiredRotation, rotationDamping * Time.deltaTime);
+        currentRotation = target.rotation;
+        //currentRotation = Quaternion.Slerp (currentRotation, desiredRotation, rotationDamping * Time.deltaTime);
 
 		float currentDistance = transform.position.z;
 		currentDistance = Mathf.Lerp (currentDistance, target.transform.localPosition.z - distance, heightDamping * Time.deltaTime);
@@ -43,7 +43,7 @@ public class OurSmoothFollow : MonoBehaviour {
 		currentPositionY = Mathf.Lerp(currentPositionY, desiredPosition.y, distanceDamping * Time.deltaTime);
 		currentPositionZ = Mathf.Lerp(currentPositionZ, desiredPosition.z, distanceDamping * Time.deltaTime);
 
-		transform.rotation = currentRotation;
-		transform.position = desiredPosition;
+        transform.rotation = currentRotation;
+		transform.position = new Vector3(currentPositionX, currentPositionY, currentPositionZ);
 	}
 }

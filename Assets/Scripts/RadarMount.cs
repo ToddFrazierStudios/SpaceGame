@@ -8,8 +8,8 @@ public class RadarMount : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(animation){
-			if(animation.isPlaying){
+		if(GetComponent<Animation>()){
+			if(GetComponent<Animation>().isPlaying){
 				cameraToPosition.enabled = false;
 				return;
 			}else{

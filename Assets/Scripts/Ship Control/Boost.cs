@@ -26,16 +26,16 @@ public class Boost : MonoBehaviour {
 		meter.SetFloat("_ProgressH",boostRemaining);
 		if(boostRemaining > 0f && activate){
 			float curveMultiplier = thrustCurve.Evaluate(boostRemaining);
-			float angle = Vector3.Angle(transform.forward,rigidbody.velocity)/180f;
+			float angle = Vector3.Angle(transform.forward,GetComponent<Rigidbody>().velocity)/180f;
 			float angleMultiplier = rotationCurve.Evaluate(angle);
 
 			//Booster
-			rigidbody.AddForce(transform.forward*curveMultiplier*maxBoost*angleMultiplier);
+			GetComponent<Rigidbody>().AddForce(transform.forward*curveMultiplier*maxBoost*angleMultiplier);
 
 			//Active stabilizers
-			brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
+			brakeVector = Vector3.Cross (GetComponent<Rigidbody>().velocity, transform.forward);
 			brakeVector = Vector3.Cross (brakeVector, transform.forward);
-			rigidbody.AddForce (brakeVector * brakeThrust * curveMultiplier);
+			GetComponent<Rigidbody>().AddForce (brakeVector * brakeThrust * curveMultiplier);
 //			Debug.DrawRay(transform.position, brakeVector, Color.red);
 //			Debug.DrawRay (transform.position, transform.forward);
 //			Debug.DrawRay (transform.position, rigidbody.velocity, Color.green);

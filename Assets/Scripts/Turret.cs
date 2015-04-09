@@ -36,7 +36,7 @@ public class Turret : MonoBehaviour {
 
 	private void getTarget() {
 		foreach(Collider col in Physics.OverlapSphere(transform.position, detectionRadius)){
-			if(col!=collider && col.tag != tag && !col.isTrigger){
+			if(col!=GetComponent<Collider>() && col.tag != tag && !col.isTrigger){
 				target = col.transform;
 				if (col.tag == "Player") {
 					return;

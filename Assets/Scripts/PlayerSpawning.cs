@@ -12,12 +12,12 @@ public class PlayerSpawning : MonoBehaviour {
 //		radarCamera = GameObject.Find ("RadarCamera").camera;
 		GetComponent<RadarMount>().cameraToPosition = radarCamera;
 		GetComponent<OurRadar>().radarCamera = radarCamera;
-		playerCamera.camera.enabled = false; // Have the camera disabled by default.
+		playerCamera.GetComponent<Camera>().enabled = false; // Have the camera disabled by default.
 		playerCamera.GetComponent<AudioListener>().enabled = false;
 	}
 
 	void OnNetworkInstantiate(NetworkMessageInfo info) {
-		if (networkView.owner != Network.player) {
+		if (GetComponent<NetworkView>().owner != Network.player) {
 			gameObject.layer = 15; // If the ship spawned is not the player, put it on the enemy layer.
 			gameObject.tag = "Hostile";
 		} else {
@@ -29,7 +29,7 @@ public class PlayerSpawning : MonoBehaviour {
 //			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Cameras[0] = radarCamera.camera;
 //			GameObject.Find("_GameMgr").GetComponent<FX_3DRadar_Mgr>().Transforms[2] = playerCamera.transform;
 
-			playerCamera.camera.enabled = true; // Turn on the player camera. This fixes a lot of problems.
+			playerCamera.GetComponent<Camera>().enabled = true; // Turn on the player camera. This fixes a lot of problems.
 			playerCamera.GetComponent<AudioListener>().enabled = true;
 		}
 	}

@@ -118,8 +118,8 @@ public class WeaponsManager : MonoBehaviour {
 		} else {
 			missileComponent.target = null;
 		}
-		float forwardVelocity = transform.InverseTransformVector (rigidbody.velocity).z;
-		missile.rigidbody.velocity = missile.transform.forward * forwardVelocity;
+		float forwardVelocity = transform.InverseTransformVector (GetComponent<Rigidbody>().velocity).z;
+		missile.GetComponent<Rigidbody>().velocity = missile.transform.forward * forwardVelocity;
 		timeUntilFireMissile = missileDelay;
 		if (tag != "Player") missile.tag = tag;
 		missile.layer = gameObject.layer;

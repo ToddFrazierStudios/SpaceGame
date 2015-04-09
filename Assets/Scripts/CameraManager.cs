@@ -10,11 +10,18 @@ public class CameraManager : MonoBehaviour {
 	public LayerMask firstPersonLayers;
 	public LayerMask thirdPersonLayers;
 
+    public RadarMount radarMount;
+    public OurSmoothFollow sFollow;
+    public HeadBob hBob;
+
 	void Start () {
-		Screen.showCursor = false;
+		Cursor.visible = false;
 		thirdPerson = false;
-		currentCamera = firstPersonCamera;
-		firstPersonCamera.camera.enabled = true;
+        currentCamera = firstPersonCamera;
+        radarMount = currentCamera.GetComponent<RadarMount>();
+        sFollow = currentCamera.GetComponent<OurSmoothFollow>();
+        hBob = currentCamera.GetComponent<HeadBob>();
+		firstPersonCamera.GetComponent<Camera>().enabled = true;
 	}
 
 	// Update is called once per frame
@@ -24,15 +31,17 @@ public class CameraManager : MonoBehaviour {
 			if (thirdPerson) {
 				GetComponent<RadarMount>().enabled = false;
 				currentCamera.transform.parent = null;
-				currentCamera.GetComponent<OurSmoothFollow>().enabled = true;
-				currentCamera.camera.cullingMask = thirdPersonLayers;
+				sFollow.enabled = true;
+                hBob.enabled = false;
+				currentCamera.GetComponent<Camera>().cullingMask = thirdPersonLayers;
 			} else {
 				GetComponent<RadarMount>().enabled = true;
 				currentCamera.transform.parent = gameObject.transform;
-				currentCamera.GetComponent<OurSmoothFollow>().enabled = false;
+				sFollow.enabled = false;
+                hBob.enabled = true;
 				currentCamera.transform.localPosition = firstPersonPosition;
 				currentCamera.transform.localRotation = Quaternion.identity;
-				currentCamera.camera.cullingMask = firstPersonLayers;
+				currentCamera.GetComponent<Camera>().cullingMask = firstPersonLayers;
 			}
 		}
 

@@ -105,10 +105,10 @@ public class AI : MonoBehaviour {
 		Vector3 desiredVelocity = calculateDesiredVelocity();
 //		transform.LookAt(transform.position+desiredVelocity);
 		Debug.DrawRay(transform.position,desiredVelocity,Color.green);
-		Vector3 currentVelocity = rigidbody.velocity;
+		Vector3 currentVelocity = GetComponent<Rigidbody>().velocity;
 		Vector3 desiredDeltaV = desiredVelocity-currentVelocity;
 		Vector3 desiredDeltaVRelative = transform.InverseTransformDirection(desiredDeltaV);
-		float mass = rigidbody.mass;
+		float mass = GetComponent<Rigidbody>().mass;
 
 		//Thrust and stabilization
 		float dDeltaVRz = desiredDeltaVRelative.z;

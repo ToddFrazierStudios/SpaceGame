@@ -21,19 +21,19 @@ public class Pause : MonoBehaviour {
 	}
 
 	public void loadPauseMenu() {
-		Screen.showCursor = true;
+		Cursor.visible = true;
 		player.isAi = true;
 		canvas.enabled = true;
 	}
 
 	public void OnResume() {
-		Screen.showCursor = false;
+		Cursor.visible = false;
 		player.isAi = false;
 		canvas.enabled = false;
 	}
 
 	public void OnLeave() {
-		Screen.showCursor = false;
+		Cursor.visible = false;
 		Application.LoadLevel ("testMenu");
 	}
 }

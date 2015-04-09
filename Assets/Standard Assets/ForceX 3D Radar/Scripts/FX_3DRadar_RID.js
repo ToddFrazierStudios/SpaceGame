@@ -158,15 +158,15 @@ var Distance : float = ((FX_3DRadar_Mgr.PlayerPos - ThisPos).sqrMagnitude);
 
 	if(Distance < FX3DRM.RadarRange[1] && FX3DRM.HUDElements[1]){
 		if(CurStatus[7]){
-			ThisID[2].renderer.enabled = true;
-			ThisID[3].renderer.enabled = true;
+			ThisID[2].GetComponent.<Renderer>().enabled = true;
+			ThisID[3].GetComponent.<Renderer>().enabled = true;
 			CurStatus[7] = false;
 		}
 		RID();
 	}else{
 		if(!CurStatus[7]){
-			ThisID[2].renderer.enabled = false;
-			ThisID[3].renderer.enabled = false;
+			ThisID[2].GetComponent.<Renderer>().enabled = false;
+			ThisID[3].GetComponent.<Renderer>().enabled = false;
 			CurStatus[7] = true;
 		}
 		RenderPOI();
@@ -505,7 +505,7 @@ function DrawBounds(x : int){
 		var ThisBounds : Vector3;
 				
 		if(FX3DRM.BoundsSize == 0){
-			ThisBounds = renderer.bounds.extents * FX3DRM.BoundsPadding;
+			ThisBounds = GetComponent.<Renderer>().bounds.extents * FX3DRM.BoundsPadding;
 		}else{
 			ThisBounds = Vector3(1,1,1) * FX3DRM.BoundsPadding;
 		}
@@ -603,8 +603,8 @@ Destroy(gameObject);
 
 function EnableRID(){
 	if(!FX3DRM.SetStatus[7]){
-		ThisID[2].renderer.enabled = true;
-		ThisID[3].renderer.enabled = true;
+		ThisID[2].GetComponent.<Renderer>().enabled = true;
+		ThisID[3].GetComponent.<Renderer>().enabled = true;
 	}
 
 ThisID[1].gameObject.SetActive(true);
@@ -630,8 +630,8 @@ CurStatus[12] = false;
 			UpdatePlayerContacts();
 		}
 		
-		ThisID[2].renderer.enabled = false;
-		ThisID[3].renderer.enabled = false;
+		ThisID[2].GetComponent.<Renderer>().enabled = false;
+		ThisID[3].GetComponent.<Renderer>().enabled = false;
 	}else{
 		if(IsPlayerTarget && IFF != 3){
 			FX3DRM.ClearTarget();
@@ -641,8 +641,8 @@ CurStatus[12] = false;
 		UpdatePlayerContacts();
 		
 		ThisID[1].gameObject.SetActive(false);
-		ThisID[2].renderer.enabled = false;
-		ThisID[3].renderer.enabled = false;
+		ThisID[2].GetComponent.<Renderer>().enabled = false;
+		ThisID[3].GetComponent.<Renderer>().enabled = false;
 	}
 	SetLayer();
 }
@@ -650,8 +650,8 @@ CurStatus[12] = false;
 function SetPOIRender(){
 CurStatus[0] = false;
 ThisID[1].gameObject.SetActive(true);
-ThisID[2].renderer.enabled = false;
-ThisID[3].renderer.enabled = false;
+ThisID[2].GetComponent.<Renderer>().enabled = false;
+ThisID[3].GetComponent.<Renderer>().enabled = false;
 CurStatus[12] = true;
 SetLayer();
 }
@@ -695,14 +695,14 @@ ThisID[1] = FX3DRM.MakeQuad("ID_Tag", FX3DRM.RIDSizeOverride[0], FX3DRM.RIDSizeO
 ThisID[2] = FX3DRM.MakeQuad("ID_Base", FX3DRM.RIDSizeOverride[0], FX3DRM.RIDSizeOverride[0], true, Vector3(FX3DRM.Cameras[1].transform.eulerAngles.x,0,0), Parent, FX3DRM.Layers[1]);
 ThisID[3] = FX3DRM.MakeQuad("VDI", 1, 1, true, Vector3.zero, Parent, FX3DRM.Layers[1]);
 
-ThisID[1].renderer.enabled = true;
+ThisID[1].GetComponent.<Renderer>().enabled = true;
 ThisID[1].gameObject.SetActive(false);
 
 	if(FX3DRM.SetStatus[17]){
 		ThisID[1].gameObject.AddComponent(FX_3DRadar_Info).ThisParent = ThisID[0];
 		ThisID[1].gameObject.AddComponent(BoxCollider);
 		ThisID[1].gameObject.AddComponent(Rigidbody);
-		ThisID[1].rigidbody.isKinematic = true;
+		ThisID[1].GetComponent.<Rigidbody>().isKinematic = true;
 	}
 
 	if(!FX3DRM.SetStatus[14]){
@@ -717,26 +717,26 @@ ThisID[1].gameObject.SetActive(false);
 		}
 	}
 	if(FX3DRM.SetStatus[13]){
-		ThisID[4].renderer.enabled = true;
+		ThisID[4].GetComponent.<Renderer>().enabled = true;
 		if(FX3DRM.SetStatus[1]){
-			ThisID[5].renderer.enabled = true;
+			ThisID[5].GetComponent.<Renderer>().enabled = true;
 		}
 	}else{
-		ThisID[4].renderer.enabled = false;
+		ThisID[4].GetComponent.<Renderer>().enabled = false;
 		if(FX3DRM.SetStatus[1]){
-			ThisID[5].renderer.enabled = true;
+			ThisID[5].GetComponent.<Renderer>().enabled = true;
 		}
 	}
 
 	if(FX3DRM.SetStatus[16]){	
 		ThisID[4].gameObject.AddComponent(BoxCollider);
 		ThisID[4].gameObject.AddComponent(Rigidbody);
-		ThisID[4].rigidbody.isKinematic = true;
+		ThisID[4].GetComponent.<Rigidbody>().isKinematic = true;
 		ThisID[4].gameObject.AddComponent(FX_3DRadar_Info).ThisParent = ThisID[0];
 		if(FX3DRM.SetStatus[1]){
 		ThisID[5].gameObject.AddComponent(BoxCollider);
 		ThisID[5].gameObject.AddComponent(Rigidbody);
-		ThisID[5].rigidbody.isKinematic = true;
+		ThisID[5].GetComponent.<Rigidbody>().isKinematic = true;
 		ThisID[5].gameObject.AddComponent(FX_3DRadar_Info).ThisParent = ThisID[0];		
 		}
 	}
@@ -770,10 +770,10 @@ function CreateBounds(){
 				IndicatorCorners[6] = FX3DRM.MakeQuad("BL", 32, 32, false, Vector3(0, 0, 0), BoundsCorners.transform, FX3DRM.Layers[3]);
 				IndicatorCorners[7] = FX3DRM.MakeQuad("BR", 32, 32, false, Vector3(0, 0, 90), BoundsCorners.transform, FX3DRM.Layers[3]);
 		
-				IndicatorCorners[4].renderer.enabled = true;
-				IndicatorCorners[5].renderer.enabled = true;
-				IndicatorCorners[6].renderer.enabled = true;
-				IndicatorCorners[7].renderer.enabled = true;
+				IndicatorCorners[4].GetComponent.<Renderer>().enabled = true;
+				IndicatorCorners[5].GetComponent.<Renderer>().enabled = true;
+				IndicatorCorners[6].GetComponent.<Renderer>().enabled = true;
+				IndicatorCorners[7].GetComponent.<Renderer>().enabled = true;
 			}
 				
 		IndicatorCorners[0] = FX3DRM.MakeQuad("TL", 32, 32, false,  Vector3(0, 0, 270), BoundsCorners.transform, FX3DRM.Layers[2]);
@@ -781,10 +781,10 @@ function CreateBounds(){
 		IndicatorCorners[2] = FX3DRM.MakeQuad("BL", 32, 32, false, Vector3(0, 0, 0), BoundsCorners.transform, FX3DRM.Layers[2]);
 		IndicatorCorners[3] = FX3DRM.MakeQuad("BR", 32, 32, false, Vector3(0, 0, 90), BoundsCorners.transform, FX3DRM.Layers[2]);
 		
-		IndicatorCorners[0].renderer.enabled = true;
-		IndicatorCorners[1].renderer.enabled = true;
-		IndicatorCorners[2].renderer.enabled = true;
-		IndicatorCorners[3].renderer.enabled = true;
+		IndicatorCorners[0].GetComponent.<Renderer>().enabled = true;
+		IndicatorCorners[1].GetComponent.<Renderer>().enabled = true;
+		IndicatorCorners[2].GetComponent.<Renderer>().enabled = true;
+		IndicatorCorners[3].GetComponent.<Renderer>().enabled = true;
 	}
 }
 
@@ -1022,12 +1022,12 @@ function SetLayer(){
 
 function Set2DMode(){
 	if(FX3DRM.SetStatus[7] && !CurStatus[9]){
-		ThisID[2].renderer.enabled = false;
-		ThisID[3].renderer.enabled = false;
+		ThisID[2].GetComponent.<Renderer>().enabled = false;
+		ThisID[3].GetComponent.<Renderer>().enabled = false;
 		CurStatus[9] = true;	
 	}else if(!FX3DRM.SetStatus[7] && CurStatus[9]){
-		ThisID[2].renderer.enabled = true;
-		ThisID[3].renderer.enabled = true;
+		ThisID[2].GetComponent.<Renderer>().enabled = true;
+		ThisID[3].GetComponent.<Renderer>().enabled = true;
 		CurStatus[9] = false;		
 	}
 }

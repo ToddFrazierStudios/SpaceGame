@@ -67,7 +67,7 @@ public class Missile : MonoBehaviour {
 //		}
 //		rigidbody.AddRelativeForce(Vector3.down * 500000);
 		timer = 0;
-		collider.enabled = false;
+		GetComponent<Collider>().enabled = false;
 		gameObject.AddComponent<NetworkView>();
 		EngineThruster et = GetComponent<EngineThruster>();
 		if(et){
@@ -82,16 +82,16 @@ public class Missile : MonoBehaviour {
 //			transform.LookAt (target.transform);
 			Vector3 targetDirection = target.transform.position - transform.position;
 			transform.forward = Vector3.RotateTowards(transform.forward,targetDirection,maxDeltaAngleRadians,0.0f);
-			brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
+			brakeVector = Vector3.Cross (GetComponent<Rigidbody>().velocity, transform.forward);
 			brakeVector = Vector3.Cross (brakeVector, transform.forward);
-			rigidbody.AddForce (brakeVector * brakeThrust);
+			GetComponent<Rigidbody>().AddForce (brakeVector * brakeThrust);
 			Debug.DrawRay(transform.position, brakeVector, Color.red);
 			Debug.DrawRay (transform.position, transform.forward);
 		}
 
 		timer += Time.fixedDeltaTime;
 		if (timer > clearTime) {
-			collider.enabled = true;
+			GetComponent<Collider>().enabled = true;
 		}else{
 			return;
 		}
@@ -103,7 +103,7 @@ public class Missile : MonoBehaviour {
 
 		//now we determine if we hit anyone!
 		foreach(Collider col in Physics.OverlapSphere(transform.position, detonationRadius)){
-			if(col!=collider && col!=colliderToIgnore && !col.isTrigger){
+			if(col!=GetComponent<Collider>() && col!=colliderToIgnore && !col.isTrigger){
 				Explode ();
 				return;
 			}
@@ -121,7 +121,7 @@ public class Missile : MonoBehaviour {
 		Destroy(gameObject);
 		Collider[] collidersHit = Physics.OverlapSphere(transform.position,explosionRadius);
 		foreach (Collider col in collidersHit){
-			if(col!=this.collider && !col.isTrigger){
+			if(col!=this.GetComponent<Collider>() && !col.isTrigger){
 				//might wanna check if they have a Health component first...
 				Vector3 closestPoint = col.ClosestPointOnBounds(transform.position);
 				Vector3 impactVector = col.transform.position-closestPoint;
@@ -129,12 +129,12 @@ public class Missile : MonoBehaviour {
 				float distance = Vector3.Distance(closestPoint,transform.position);
 				float damage = damageCurve.Evaluate(distance/explosionRadius)*maxDamage;
 				col.SendMessage("hurt", new Quaternion(impactVector.x, impactVector.y, impactVector.z, damage), SendMessageOptions.DontRequireReceiver);
-				if(col.rigidbody){
-					col.rigidbody.AddExplosionForce(explosionForce,transform.position,explosionRadius);
+				if(col.GetComponent<Rigidbody>()){
+					col.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,transform.position,explosionRadius);
 				}
 				if(col.transform.parent){
-					if(col.transform.parent.rigidbody){
-						col.transform.parent.rigidbody.AddExplosionForce(explosionForce,transform.position,explosionRadius);
+					if(col.transform.parent.GetComponent<Rigidbody>()){
+						col.transform.parent.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,transform.position,explosionRadius);
 					}
 				}
 			}

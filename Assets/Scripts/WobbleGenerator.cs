@@ -11,7 +11,7 @@ public class WobbleGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		body = rigidbody;
+		body = GetComponent<Rigidbody>();
 //		bodyInfo = GetComponent<RigidbodyInfo>();
 	}
 	

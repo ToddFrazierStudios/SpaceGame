@@ -34,7 +34,7 @@ public class StabilizedEngineThruster : MonoBehaviour {
 	}
 
 	void Start(){
-		rgb = rigidbody;
+		rgb = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -53,9 +53,9 @@ public class StabilizedEngineThruster : MonoBehaviour {
 		}
 
 		if (useStabilizers && !isStrafing) {
-			brakeVector = Vector3.Cross (rigidbody.velocity, transform.forward);
+			brakeVector = Vector3.Cross (GetComponent<Rigidbody>().velocity, transform.forward);
 			brakeVector = Vector3.Cross (brakeVector, transform.forward);
-			rigidbody.AddForce (brakeVector * brakeThrust * throttle);
+			GetComponent<Rigidbody>().AddForce (brakeVector * brakeThrust * throttle);
 		}
 
 		DebugHUD.setValue("LocalMaxThrust",localMaxThrust);

@@ -179,13 +179,13 @@ Layers[4] = LayerMask.NameToLayer ("Radar_Contact");
 		
 		Transforms[0] = GameObject.Find("_Player").transform;
 		Transforms[1] = GameObject.Find("_Radar2013").transform;
-		Cameras[0] = GameObject.Find("_RadarCamera").camera;
+		Cameras[0] = GameObject.Find("_RadarCamera").GetComponent.<Camera>();
 		
 		if(!SetStatus[1]){
-			Cameras[4] = GameObject.Find("_PlayerCamera").camera;
+			Cameras[4] = GameObject.Find("_PlayerCamera").GetComponent.<Camera>();
 		}else{
-			Cameras[4] = GameObject.Find("CameraRight").camera;
-			Cameras[5] = GameObject.Find("CameraLeft").camera;
+			Cameras[4] = GameObject.Find("CameraRight").GetComponent.<Camera>();
+			Cameras[5] = GameObject.Find("CameraLeft").GetComponent.<Camera>();
 		}
 	}
 	//if(!SetStatus[19]){
@@ -209,7 +209,7 @@ var BC : Transform = new GameObject("BoundsCorners").transform;
 BC.transform.parent = transform;
 
 	if(SetStatus[9]){
-		RigidBodys[0] = Transforms[0].rigidbody;
+		RigidBodys[0] = Transforms[0].GetComponent.<Rigidbody>();
 	}
 
 	if(RadarPos != 5){
@@ -238,9 +238,9 @@ Cameras[0].renderingPath = RenderingPath.Forward;
 Cameras[0].cullingMask = 1 << Layers[0];
 Cameras[0].depth = Cameras[4].depth + 1;
 Cameras[0].gameObject.layer = Layers[1];
-Cameras[1] = new GameObject("RadarCameraO").AddComponent(Camera).camera;
+Cameras[1] = new GameObject("RadarCameraO").AddComponent(Camera).GetComponent.<Camera>();
 Cameras[1].rect = Cameras[0].rect;
-Cameras[1].isOrthoGraphic = true;
+Cameras[1].orthographic = true;
 Cameras[1].orthographicSize = 0.5;
 Cameras[1].depth = Cameras[0].depth + 1;
 Cameras[1].transform.position = Cameras[0].transform.position;
@@ -254,7 +254,7 @@ Camera3DPos[1] = Cameras[0].transform.localEulerAngles;
 
 	if(SetStatus[3]){
 		Cameras[1].cullingMask = 1 << Layers[1];
-		Cameras[0].isOrthoGraphic = false;
+		Cameras[0].orthographic = false;
 	}else{
 		Cameras[0].enabled = false;
 		Cameras[1].cullingMask = 1 << Layers[1] | 1 << Layers[0];
@@ -333,9 +333,9 @@ NavList = new Transform[MyNAV.Length];
 	}
 CurNav = 0;
 NavList[CurNav].gameObject.AddComponent(FX_3DRadar_RID).IsNAV = true;
-HUD_NAV[0].renderer.enabled = true;
+HUD_NAV[0].GetComponent.<Renderer>().enabled = true;
 	if(SetStatus[1]){
-		HUD_NAV[1].renderer.enabled = true;
+		HUD_NAV[1].GetComponent.<Renderer>().enabled = true;
 	}
 }
 
@@ -357,9 +357,9 @@ function UpdateNAV(){
 			
 			if(CurNav == (NavList.Length - 1)){
 			 	NavList = new Transform[0];
-			 	HUD_NAV[0].renderer.enabled = false;
+			 	HUD_NAV[0].GetComponent.<Renderer>().enabled = false;
 			 	if(SetStatus[1]){
-			 		HUD_NAV[1].renderer.enabled = false;
+			 		HUD_NAV[1].GetComponent.<Renderer>().enabled = false;
 			 	}
 			}else{
 				CurNav++;
@@ -376,22 +376,22 @@ function RIDS(){//Targeting
 			
 if(ThisDistance < RadarRange[2] || SelectedTargetRID.IsPOI){
 	if(!HUDEnabled[0]){
-		HUD_TSB[0].renderer.enabled = true;
-		HUD_TSB_ID[0].renderer.enabled = true;
-		Radar_TSB.renderer.enabled = true;
+		HUD_TSB[0].GetComponent.<Renderer>().enabled = true;
+		HUD_TSB_ID[0].GetComponent.<Renderer>().enabled = true;
+		Radar_TSB.GetComponent.<Renderer>().enabled = true;
 		
 		for(var b : int = 0; b < StatusBar.Length; b++){
 			if(IsTargetBar[b]){
-				StatusBar[b].renderer.enabled = true;
+				StatusBar[b].GetComponent.<Renderer>().enabled = true;
 				if(SetStatus[1] && SBRift[b] == 2){
-					StatusBar2[b].renderer.enabled = true;
+					StatusBar2[b].GetComponent.<Renderer>().enabled = true;
 				}
 			}
 		}
 		
 		if(SetStatus[1]){
-			HUD_TSB[1].renderer.enabled = true;
-			HUD_TSB_ID[1].renderer.enabled = true;	
+			HUD_TSB[1].GetComponent.<Renderer>().enabled = true;
+			HUD_TSB_ID[1].GetComponent.<Renderer>().enabled = true;	
 		}
 		HUDEnabled[0] = true;
 	}
@@ -448,12 +448,12 @@ HUD_TSB_ID[0].position = newScreenPos + Vector3(25,25,0);
 
 	if(HUDElements[0] && SelectedTarget[0]){
 		if(!HUDEnabled[3]){
-			HUD_DIA[0].renderer.enabled = true;
+			HUD_DIA[0].GetComponent.<Renderer>().enabled = true;
 			HUDEnabled[3] = true;
 		}
 		DirectionIndicator(SelectedTarget[0], HUD_DIA[1]);
 	}else if(HUDEnabled[3]){
-		HUD_DIA[0].renderer.enabled = false;
+		HUD_DIA[0].GetComponent.<Renderer>().enabled = false;
 		HUDEnabled[3] = false;
 	}
 	/*
@@ -473,9 +473,9 @@ HUD_TSB_ID[0].position = newScreenPos + Vector3(25,25,0);
 	if(Vector3.Dot(Transforms[2].TransformDirection(Vector3.forward), RelPos) < 0){
 		if(SelectedTarget[1]){
 			 if(!HUDEnabled[1]){
-				HUD_SC_TSB[0].renderer.enabled = true;
+				HUD_SC_TSB[0].GetComponent.<Renderer>().enabled = true;
 				if(SetStatus[1]){
-					HUD_SC_TSB[1].renderer.enabled = true;
+					HUD_SC_TSB[1].GetComponent.<Renderer>().enabled = true;
 				}
 				HUDEnabled[1] = true;
 			}
@@ -493,9 +493,9 @@ HUD_TSB_ID[0].position = newScreenPos + Vector3(25,25,0);
 /***********************************************************************************/		
 		if(SetStatus[11]){
 			if(!HUDEnabled[2]){
-				HUD_TLI[0].renderer.enabled = true;
+				HUD_TLI[0].GetComponent.<Renderer>().enabled = true;
 				if(SetStatus[1]){
-					HUD_TLI[1].renderer.enabled = true;
+					HUD_TLI[1].GetComponent.<Renderer>().enabled = true;
 				}
 				HUDEnabled[2] = true;
 			}
@@ -510,18 +510,18 @@ HUD_TSB_ID[0].position = newScreenPos + Vector3(25,25,0);
 			previousPos[1] = PlayerPos;
 			previousPos[0] = TargetPos;
 		}else if(HUDEnabled[2]){
-			HUD_TLI[0].renderer.enabled = false;
+			HUD_TLI[0].GetComponent.<Renderer>().enabled = false;
 			HUDEnabled[2] = false;
 		}
 /***********************************************************************************/
 										//Disable HUD GUI if the target is not in front of us
 /***********************************************************************************/		
 	}else if(HUDEnabled[2]){
-		HUD_TLI[0].renderer.enabled = false;
-		HUD_SC_TSB[0].renderer.enabled = false;
+		HUD_TLI[0].GetComponent.<Renderer>().enabled = false;
+		HUD_SC_TSB[0].GetComponent.<Renderer>().enabled = false;
 		if(SetStatus[1]){
-			HUD_TLI[1].renderer.enabled = false;
-			HUD_SC_TSB[1].renderer.enabled = false;		
+			HUD_TLI[1].GetComponent.<Renderer>().enabled = false;
+			HUD_SC_TSB[1].GetComponent.<Renderer>().enabled = false;		
 		}
 		HUDEnabled[1] = false;
 		HUDEnabled[2] = false;
@@ -677,15 +677,15 @@ var ScreenY : float = (ScreenSize.y - EdgePadding[1]);
 		
 		if(SetStatus[6]){
 			if(SetStatus[12]){
-				HUD_TSB[0].renderer.enabled = false;
-				HUD_TSB_ID[0].renderer.enabled = false;
+				HUD_TSB[0].GetComponent.<Renderer>().enabled = false;
+				HUD_TSB_ID[0].GetComponent.<Renderer>().enabled = false;
 			}else{
 				SetTextureOffset(1, 0, HUD_TSB[0].gameObject, 64);
 			}
 			if(SetStatus[1]){
 				if(SetStatus[12]){
-					HUD_TSB[1].renderer.enabled = false;
-					HUD_TSB_ID[1].renderer.enabled = false;
+					HUD_TSB[1].GetComponent.<Renderer>().enabled = false;
+					HUD_TSB_ID[1].GetComponent.<Renderer>().enabled = false;
 				}else{
 					SetTextureOffset(1, 0, HUD_TSB[1].gameObject, 64);
 				}
@@ -695,14 +695,14 @@ var ScreenY : float = (ScreenSize.y - EdgePadding[1]);
 	}else{
 		if(!SetStatus[6] && x == 2){
 			if(SetStatus[12]){
-				HUD_TSB[0].renderer.enabled = true;
-				HUD_TSB_ID[0].renderer.enabled = true;		
+				HUD_TSB[0].GetComponent.<Renderer>().enabled = true;
+				HUD_TSB_ID[0].GetComponent.<Renderer>().enabled = true;		
 			}
 			SetTextureOffset(0, 0, HUD_TSB[0].gameObject, 64);
 			if(SetStatus[1]){
 				if(SetStatus[12]){
-					HUD_TSB[1].renderer.enabled = true;
-					HUD_TSB_ID[1].renderer.enabled = true;		
+					HUD_TSB[1].GetComponent.<Renderer>().enabled = true;
+					HUD_TSB_ID[1].GetComponent.<Renderer>().enabled = true;		
 				}
 				SetTextureOffset(0, 0, HUD_TSB[1].gameObject, 64);
 			}
@@ -740,11 +740,11 @@ ThisIndicator.rotation = Quaternion.LookRotation(Vector3(RelPos1.x, RelPos1.y, 0
 	
 	if(angle >= 0 && angle <= DIAdisableAngle){
 		if(HUDEnabled[3]){
-			HUD_DIA[0].renderer.enabled = false;
+			HUD_DIA[0].GetComponent.<Renderer>().enabled = false;
 			HUDEnabled[3] = false;
 		}
 	}else if(!HUDEnabled[3]){
-		HUD_DIA[0].renderer.enabled = true;
+		HUD_DIA[0].GetComponent.<Renderer>().enabled = true;
 		HUDEnabled[3] = true;
 	}
 }
@@ -1051,8 +1051,8 @@ SetRadarScaleZoom();
 					TT.antiAliasing = TextureQuality[1];
 					Cameras[1].targetTexture = TT;
 					Cameras[1].rect = Rect(0, 0, 1, 1);
-					Transforms[4].renderer.material = Resources.Load("Materials/Radar_Render_T") as Material;
-					Transforms[4].renderer.material.SetTexture("_MainTex", TT);
+					Transforms[4].GetComponent.<Renderer>().material = Resources.Load("Materials/Radar_Render_T") as Material;
+					Transforms[4].GetComponent.<Renderer>().material.SetTexture("_MainTex", TT);
 					Cameras[1].clearFlags = CameraClearFlags.SolidColor;
 					Cameras[1].backgroundColor = RenderSolidColor;
 				}else{
@@ -1095,29 +1095,29 @@ CurrentZoom = RadarZoom;
 }
 
 function DisableHUD(){
-Radar_TSB.renderer.enabled = false;
-HUD_TSB[0].renderer.enabled = false;
-HUD_TSB_ID[0].renderer.enabled = false;
-HUD_TLI[0].renderer.enabled = false;
-HUD_SC_TSB[0].renderer.enabled = false;
+Radar_TSB.GetComponent.<Renderer>().enabled = false;
+HUD_TSB[0].GetComponent.<Renderer>().enabled = false;
+HUD_TSB_ID[0].GetComponent.<Renderer>().enabled = false;
+HUD_TLI[0].GetComponent.<Renderer>().enabled = false;
+HUD_SC_TSB[0].GetComponent.<Renderer>().enabled = false;
 	
 	for(var b : int = 0; b < StatusBar.Length; b++){
 		if(IsTargetBar[b]){
-			StatusBar[b].renderer.enabled = false;
+			StatusBar[b].GetComponent.<Renderer>().enabled = false;
 			if(SetStatus[1] && SBRift[b] == 2){
-				StatusBar2[b].renderer.enabled = false;
+				StatusBar2[b].GetComponent.<Renderer>().enabled = false;
 			}
 		}
 	}
 
 	if(SetStatus[1]){
-		HUD_TSB[1].renderer.enabled = false;
-		HUD_TSB_ID[1].renderer.enabled = false;
-		HUD_TLI[1].renderer.enabled = false;
-		HUD_SC_TSB[1].renderer.enabled = false;
+		HUD_TSB[1].GetComponent.<Renderer>().enabled = false;
+		HUD_TSB_ID[1].GetComponent.<Renderer>().enabled = false;
+		HUD_TLI[1].GetComponent.<Renderer>().enabled = false;
+		HUD_SC_TSB[1].GetComponent.<Renderer>().enabled = false;
 	}
 	
-HUD_DIA[0].renderer.enabled = false;
+HUD_DIA[0].GetComponent.<Renderer>().enabled = false;
 ClearSubC();
 ClearTarget();
 
@@ -1450,7 +1450,7 @@ function SetTarget(){//Targeting Function
 		SetTextureOffset(SelectedTargetRID.ThisClass[0], SelectedTargetRID.ThisClass[1] + 9, HUD_TSB_ID[0].gameObject, 32);
 		
 		if(SetStatus[9]){
-			RigidBodys[1] = SelectedTarget[0].rigidbody;
+			RigidBodys[1] = SelectedTarget[0].GetComponent.<Rigidbody>();
 		}
 			
 		if(SetStatus[1]){
@@ -1551,9 +1551,9 @@ function ClearSubC(){//Targeting Input Command
 /***********************************************************************************/
 	if(SelectedTarget[1]){
 		if(HUDEnabled[1]){
-			HUD_SC_TSB[0].renderer.enabled = false;
+			HUD_SC_TSB[0].GetComponent.<Renderer>().enabled = false;
 			if(SetStatus[1]){
-				HUD_SC_TSB[1].renderer.enabled = false;
+				HUD_SC_TSB[1].GetComponent.<Renderer>().enabled = false;
 			}
 			HUDEnabled[1] = false;
 		}
@@ -1597,31 +1597,31 @@ SetTarget();
 
 function PlaySelectSound(){
 	if(RadarSounds[0] && SelectedTarget[0]){
-		audio.PlayOneShot(RadarSounds[0]);
+		GetComponent.<AudioSource>().PlayOneShot(RadarSounds[0]);
 	}
 }
 
 function PlayClearSound(){
 	if(RadarSounds[1] && SelectedTarget[0]){
-		audio.PlayOneShot(RadarSounds[1]);
+		GetComponent.<AudioSource>().PlayOneShot(RadarSounds[1]);
 	}
 }
 
 function PlaySelectSCSound(){
 	if(RadarSounds[0] && SelectedTarget[1]){
-		audio.PlayOneShot(RadarSounds[0]);
+		GetComponent.<AudioSource>().PlayOneShot(RadarSounds[0]);
 	}
 }
 
 function PlayClearSCSound(){
 	if(RadarSounds[1] && SelectedTarget[1]){
-		audio.PlayOneShot(RadarSounds[1]);
+		GetComponent.<AudioSource>().PlayOneShot(RadarSounds[1]);
 	}
 }
 
 function PlayWarningSound(){
 	if(RadarSounds[2]){
-		audio.PlayOneShot(RadarSounds[2]);
+		GetComponent.<AudioSource>().PlayOneShot(RadarSounds[2]);
 	}
 }
 
@@ -1782,12 +1782,12 @@ mesh.uv = uv;
 mesh.triangles = triangles;
 
 ThisMesh.gameObject.AddComponent(MeshRenderer);
-ThisMesh.renderer.receiveShadows = false;
-ThisMesh.renderer.castShadows = false;
-ThisMesh.renderer.enabled = false;
+ThisMesh.GetComponent.<Renderer>().receiveShadows = false;
+ThisMesh.GetComponent.<Renderer>().castShadows = false;
+ThisMesh.GetComponent.<Renderer>().enabled = false;
 ThisMesh.parent = ThisParent;
 ThisMesh.gameObject.layer = ThisLayer;
-ThisMesh.renderer.material = RadarAtlasMaterial;
+ThisMesh.GetComponent.<Renderer>().material = RadarAtlasMaterial;
 return ThisMesh;
 }
 
@@ -1885,23 +1885,23 @@ var Rotation : float;
 	}
 		
 	if(!BarCustom[Bar]){
-		StatusBar[Bar].renderer.material = Resources.Load("Materials/Status_Bar_Lte") as Material;
-		BarMaterial[Bar] = StatusBar[Bar].renderer.material;
+		StatusBar[Bar].GetComponent.<Renderer>().material = Resources.Load("Materials/Status_Bar_Lte") as Material;
+		BarMaterial[Bar] = StatusBar[Bar].GetComponent.<Renderer>().material;
 		BarMaterial[Bar].SetColor("_BarColor", BarColor[Bar]);
 		BarMaterial[Bar].SetColor("_BarBGColor", BarBGColor);
 	}else{
-		StatusBar[Bar].renderer.material = BarMatTemp[Bar];
-		BarMaterial[Bar] = StatusBar[Bar].renderer.material;
+		StatusBar[Bar].GetComponent.<Renderer>().material = BarMatTemp[Bar];
+		BarMaterial[Bar] = StatusBar[Bar].GetComponent.<Renderer>().material;
 	}
 	
 	if(SetStatus[1] && SBRift[Bar] == 2){
-		StatusBar2[Bar].renderer.sharedMaterial = BarMaterial[Bar];
+		StatusBar2[Bar].GetComponent.<Renderer>().sharedMaterial = BarMaterial[Bar];
 	}
 	
 	if(!IsTargetBar[Bar]){
-		StatusBar[Bar].renderer.enabled = true;
+		StatusBar[Bar].GetComponent.<Renderer>().enabled = true;
 		if(SetStatus[1] && SBRift[Bar] == 2){
-			StatusBar2[Bar].renderer.enabled = true;
+			StatusBar2[Bar].GetComponent.<Renderer>().enabled = true;
 		}
 	}
 }
@@ -1945,17 +1945,17 @@ mesh.uv = uv;
 mesh.triangles = triangles;
 
 ThisMesh.gameObject.AddComponent(MeshRenderer);
-ThisMesh.renderer.receiveShadows = false;
-ThisMesh.renderer.castShadows = false;
+ThisMesh.GetComponent.<Renderer>().receiveShadows = false;
+ThisMesh.GetComponent.<Renderer>().castShadows = false;
 
 	if(!SelectedTarget[0]){
-		ThisMesh.renderer.enabled = false;
+		ThisMesh.GetComponent.<Renderer>().enabled = false;
 	}
 	
 ThisMesh.eulerAngles = ThisRotation;
 ThisMesh.parent = ThisParent;
 ThisMesh.gameObject.layer = ThisLayer;
-ThisMesh.renderer.sharedMaterial = RadarAtlasMaterial;
+ThisMesh.GetComponent.<Renderer>().sharedMaterial = RadarAtlasMaterial;
 
 return ThisMesh;
 }
@@ -2089,7 +2089,7 @@ Cameras[2].depth = Cameras[1].depth + 1;
 Cameras[2].fieldOfView = Cameras[4].fieldOfView;
 Cameras[2].renderingPath = RenderingPath.Forward;
 Cameras[2].cullingMask = 1 << Layers[2];
-Cameras[2].isOrthoGraphic = true;
+Cameras[2].orthographic = true;
 Cameras[2].orthographicSize = Screen.height * .5;
 
 	if(SetStatus[1]){
@@ -2104,7 +2104,7 @@ Cameras[2].orthographicSize = Screen.height * .5;
 		Cameras[3].fieldOfView = Cameras[4].fieldOfView;
 		Cameras[3].renderingPath = RenderingPath.Forward;
 		Cameras[3].cullingMask = 1 << Layers[3];
-		Cameras[3].isOrthoGraphic = true;
+		Cameras[3].orthographic = true;
 		Cameras[3].orthographicSize = Screen.height * .5;
 		
 		Cameras[3].rect.width = .5;
@@ -2219,7 +2219,7 @@ SetTextureOffset(0, 8, Radar_TSB.gameObject, 32);
 				if(StatusBarType[b] == 0){
 					BarSetup(b, BarAnchor[b],BarName[b], BarSize[b].x, BarSize[b].y, HUDGUI);
 				}else{
-					BarMaterial[b] = StatusBar[b].gameObject.renderer.material;
+					BarMaterial[b] = StatusBar[b].gameObject.GetComponent.<Renderer>().material;
 				}
 			}
 
@@ -2261,9 +2261,9 @@ CreateHUD();
 	}
 	
 	if(NavList.Length > 0){
-		HUD_NAV[0].renderer.enabled = true;
+		HUD_NAV[0].GetComponent.<Renderer>().enabled = true;
 		if(SetStatus[1]){
-			HUD_NAV[1].renderer.enabled = true;
+			HUD_NAV[1].GetComponent.<Renderer>().enabled = true;
 		}
 	}
 }

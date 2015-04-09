@@ -73,8 +73,8 @@ public class HeadBob : MonoBehaviour {
 			Vector3 targetPosition = target.position+positionOffset;//where the camera wants to be
 			transform.position = Vector3.SmoothDamp(transform.position,targetPosition,ref cameraVelocity,smoothTime,maxSpeed,Time.fixedDeltaTime);
 
-			Vector3 targetRotation = target.eulerAngles + angleOffset;//how the camera wants to be pointed
-			transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(targetRotation),Time.fixedDeltaTime);
+			Quaternion targetRotation = target.rotation * Quaternion.Euler(angleOffset);//how the camera wants to be pointed
+			transform.rotation = Quaternion.Lerp(transform.rotation,targetRotation,Time.fixedDeltaTime);
 
 			previousVelocity = currentVelocity;
 			previousAngVelocity = currentAngVelocity;

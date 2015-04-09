@@ -38,7 +38,7 @@ public class MiniMap : MonoBehaviour {
 		RadarBlip toRemove = null;
 		foreach(RadarBlip blip in contacts) {
 			if (blip.realObject != null && blip.marker != null && blip.projection != null) {
-				blip.marker.renderer.enabled = false;
+				blip.marker.GetComponent<Renderer>().enabled = false;
 				blip.projection.name = blip.realObject.name;
 				blip.marker.name = blip.realObject.name;
 				blip.projection.transform.position = blip.realObject.transform.position;

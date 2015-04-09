@@ -12,10 +12,10 @@ public class Monitor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.O)){
-			animation.Play ("Open",PlayMode.StopAll);
+			GetComponent<Animation>().Play ("Open",PlayMode.StopAll);
 		}
 		if(Input.GetKeyDown(KeyCode.P)){
-			animation.Play("Close",PlayMode.StopAll);
+			GetComponent<Animation>().Play("Close",PlayMode.StopAll);
 		}
 	}
 }
