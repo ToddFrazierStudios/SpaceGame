@@ -9,6 +9,7 @@ public class OurSmoothFollow : MonoBehaviour {
 	public float heightDamping = 3.0f;
 	public float rotationDamping = 3.0f;
 	public float distanceDamping = 3.0f;
+    public float scale;
 	
 	// Update is called once per frame
 	void LateUpdate () {
@@ -23,27 +24,30 @@ public class OurSmoothFollow : MonoBehaviour {
 //		                                 Mathf.LerpAngle (currentRotation.y, desiredRotation.y, rotationDamping * Time.deltaTime), 
 //		                                 Mathf.LerpAngle (currentRotation.z, desiredRotation.z, rotationDamping * Time.deltaTime),
 //		                                 1);
-        currentRotation = target.rotation;
-        //currentRotation = Quaternion.Slerp (currentRotation, desiredRotation, rotationDamping * Time.deltaTime);
+        //currentRotation = target.rotation;
+        currentRotation = Quaternion.Slerp (currentRotation, desiredRotation, rotationDamping * Time.deltaTime);
 
-		float currentDistance = transform.position.z;
-		currentDistance = Mathf.Lerp (currentDistance, target.transform.localPosition.z - distance, heightDamping * Time.deltaTime);
+        //float currentDistance = transform.position.z;
+        //currentDistance = Mathf.Lerp (currentDistance, target.transform.localPosition.z - distance, heightDamping * Time.deltaTime);
 
-		float currentHeight = Vector3.Project(transform.position - target.position, target.transform.up).y;
-		currentHeight = Mathf.Lerp (currentHeight, target.transform.localPosition.y + height, heightDamping * Time.deltaTime);
+        //float currentHeight = Vector3.Project(transform.position - target.position, target.transform.up).y;
+        //currentHeight = Mathf.Lerp (currentHeight, target.transform.localPosition.y + height, heightDamping * Time.deltaTime);
 
 //		Vector3 currentPosition = transform.position;
 		Vector3 desiredPosition = target.position;
-		desiredPosition = desiredPosition - target.forward * distance;
+        desiredPosition = desiredPosition - target.forward * distance;
 		desiredPosition = desiredPosition + target.up * height;
-		float currentPositionX = transform.position.x;
-		float currentPositionY = transform.position.y;
-		float currentPositionZ = transform.position.z;
-		currentPositionX = Mathf.Lerp(currentPositionX, desiredPosition.x, distanceDamping * Time.deltaTime);
-		currentPositionY = Mathf.Lerp(currentPositionY, desiredPosition.y, distanceDamping * Time.deltaTime);
-		currentPositionZ = Mathf.Lerp(currentPositionZ, desiredPosition.z, distanceDamping * Time.deltaTime);
+        Vector3 currentPosition = transform.position;
+        //float currentPositionX = transform.position.x;
+        //float currentPositionY = transform.position.y;
+        //float currentPositionZ = transform.position.z;
+        //currentPositionX = Mathf.Lerp(currentPositionX, desiredPosition.x, distanceDamping * scale);
+        //currentPositionY = Mathf.Lerp(currentPositionY, desiredPosition.y, distanceDamping * scale);
+        //currentPositionZ = Mathf.Lerp(currentPositionZ, desiredPosition.z, distanceDamping * scale);
 
         transform.rotation = currentRotation;
-		transform.position = new Vector3(currentPositionX, currentPositionY, currentPositionZ);
+        //transform.position = desiredPosition;
+        //transform.position = new Vector3(currentPositionX, currentPositionY, currentPositionZ);
+        //transform.position = Vector3.Slerp(currentPosition, desiredPosition, distanceDamping * Time.deltaTime);
 	}
 }
