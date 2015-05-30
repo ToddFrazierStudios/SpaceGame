@@ -44,7 +44,7 @@ public class ShipController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		DebugHUD.setValue ("left trigger", PlayerInput.PollAnalogControl (playerNumber, Controls.THROTTLE));
 //		if (EditorApplication.isPaused) {
 //			ParsedInput.controller[0].ResetAllAxes();

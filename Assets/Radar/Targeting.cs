@@ -5,6 +5,7 @@ public class Targeting : MonoBehaviour {
 
 	public Camera playerCamera;
 	public float range;
+    public float radius = 5;
 	public float coneAngle;
 	public int layerMask;
 	public GameObject targetObject;
@@ -27,7 +28,7 @@ public class Targeting : MonoBehaviour {
 	public Transform getTarget() {
 		RaycastHit hit;
 		target = null;
-		if (Physics.SphereCast (transform.position, 7f, transform.forward, out hit, range, layerMask)) {
+		if (Physics.SphereCast (transform.position, radius, transform.forward, out hit, range, layerMask)) {
 			if (Vector3.Angle (transform.forward, hit.point - transform.position) < coneAngle) {
 				target = hit.transform;
 				hitPosition = hit.point;

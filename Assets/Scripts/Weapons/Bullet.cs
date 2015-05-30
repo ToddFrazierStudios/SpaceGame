@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 				}else{
 	//				playOneSound(hitWallSounds);
 				}
-				Network.Destroy(gameObject);
+				Destroy(gameObject);
 			}
 		}
 		//next...

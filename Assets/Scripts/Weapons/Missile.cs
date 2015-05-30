@@ -80,7 +80,8 @@ public class Missile : MonoBehaviour {
 	void FixedUpdate () {
 		if (target != null) {
 //			transform.LookAt (target.transform);
-			Vector3 targetDirection = target.transform.position - transform.position;
+            // I'm assuming if it doesn't have a Rigidbody it's not moving. This could be bad.
+			Vector3 targetDirection = (!target.GetComponent<Rigidbody>() || target.GetComponent<Rigidbody>().velocity == Vector3.zero ? targeting.hitPosition - transform.position : target.transform.position - transform.position);
 			transform.forward = Vector3.RotateTowards(transform.forward,targetDirection,maxDeltaAngleRadians,0.0f);
 			brakeVector = Vector3.Cross (GetComponent<Rigidbody>().velocity, transform.forward);
 			brakeVector = Vector3.Cross (brakeVector, transform.forward);

@@ -61,7 +61,7 @@ public class OurRadar : MonoBehaviour {
 		foreach(RadarBlip blip in contacts) {
 			if (blip != null && blip.realObject != null && blip.marker != null && blip.projection != null) {
 				if (blip.realObject.tag != "Player") {
-					Vector3 vector = (blip.realObject.transform.position - transform.position) / range * .5f;
+					Vector3 vector = (blip.realObject.transform.position - transform.position) / range * 10f;
 					float x = Vector3.Dot (vector, transform.right);
 					float y = Vector3.Dot (vector, transform.up);
 					float z = Vector3.Dot (vector, transform.forward);
@@ -69,9 +69,9 @@ public class OurRadar : MonoBehaviour {
 					markerPosition = new Vector3(x, y, z);
 					projectionPosition = Vector3.ClampMagnitude (projectionPosition, 10f);
 					markerPosition  = Vector3.ClampMagnitude (markerPosition, 10f);
-					blip.marker.transform.localPosition = Vector3.ProjectOnPlane (projectionPosition, new Vector3(0f, 0.914f, -0.407f));
-					markerPosition = new Vector3(blip.marker.transform.localPosition.x, blip.marker.transform.localPosition.y + markerPosition.y, blip.marker.transform.localPosition.z);
-					blip.projection.transform.localPosition = markerPosition;
+					blip.projection.transform.localPosition = Vector3.ProjectOnPlane (projectionPosition, new Vector3(0f, 0.914f, -0.407f));
+					markerPosition = new Vector3(blip.projection.transform.localPosition.x, blip.projection.transform.localPosition.y + markerPosition.y, blip.projection.transform.localPosition.z);
+					blip.marker.transform.localPosition = markerPosition;
 					blip.distance = Mathf.Abs(Vector3.Distance (transform.position, blip.realObject.transform.position));
 //						blip.marker.transform.localRotation = Quaternion.identity;
 //						blip.projection.transform.localRotation = Quaternion.identity;
@@ -150,20 +150,6 @@ public class OurRadar : MonoBehaviour {
 				blip.factionNumber = NEUTRAL;
 				break;
 			}
-			blip.projection.transform.parent = radarTransform;
-			blip.marker.transform.parent = radarTransform;
-			blip.marker.transform.localScale = new Vector3(.005f, .005f, .005f);
-			blip.projection.transform.localScale = new Vector3(0.03f, 0.03f, 0.1f);
-			blip.marker.transform.localPosition = Vector3.zero;
-			blip.projection.transform.localPosition = Vector3.zero;
-//				blip.projection.transform.LookAt (cameraTransform);
-//				blip.marker.transform.LookAt (cameraTransform);
-			blip.projection.transform.localRotation = Quaternion.identity;
-			blip.marker.transform.localRotation = Quaternion.identity;
-			blip.projection.layer = 16;
-			blip.marker.layer = 16;
-			blip.projection.name = blip.realObject.name;
-			blip.marker.name = blip.realObject.name;
 			contacts.Add (blip);
 			}
 	}
