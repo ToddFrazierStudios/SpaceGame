@@ -15,7 +15,7 @@ public class Turret : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		delay = Random.Range (0.1f, 0.3f);
+		delay = Random.Range (0.02f, 0.1f);
 		nextGunToFire = rightGun;
 	}
 	
