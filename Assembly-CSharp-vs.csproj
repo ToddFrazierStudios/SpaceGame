@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\Scripts\BackgroundShips.cs" />
      <Compile Include="Assets\Scripts\Camera\HeadBob.cs" />
+     <Compile Include="Assets\Scripts\Camera\HeadTurn.cs" />
      <Compile Include="Assets\Scripts\Camera\OurSmoothFollow.cs" />
      <Compile Include="Assets\Scripts\CameraManager.cs" />
      <Compile Include="Assets\Scripts\ChangeColor.cs" />

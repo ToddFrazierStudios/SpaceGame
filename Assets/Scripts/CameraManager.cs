@@ -9,13 +9,26 @@ public class CameraManager : MonoBehaviour {
 	public Vector3 firstPersonPosition;
 	public LayerMask firstPersonLayers;
 	public LayerMask thirdPersonLayers;
+    public Transform cameraParent;
+
+    public Transform radar;
+    private Vector3 radarPosition;
+    private Quaternion radarRotation;
+    public Transform health;
+    private Vector3 healthPosition;
+    private Quaternion healthRotation;
 
     public RadarMount radarMount;
     public OurSmoothFollow sFollow;
     public HeadBob hBob;
 
 	void Start () {
+        
 		Cursor.visible = false;
+        radarPosition = radar.localPosition;
+        radarRotation = radar.localRotation;
+        healthPosition = health.localPosition;
+        healthRotation = health.localRotation;
 		thirdPerson = false;
         currentCamera = firstPersonCamera;
         radarMount = currentCamera.GetComponent<RadarMount>();
@@ -28,18 +41,26 @@ public class CameraManager : MonoBehaviour {
 	void Update () {
 		if (PlayerInput.PollDigitalControlPressed(0, Controls.CAMERA_BUTTON)) {
 			thirdPerson = !thirdPerson;
-			if (thirdPerson) {
+            if (thirdPerson) {
+                currentCamera.transform.parent = null;
+                radar.parent = currentCamera.transform;
+                health.parent = currentCamera.transform;
 				GetComponent<RadarMount>().enabled = false;
-				currentCamera.transform.parent = null;
 				sFollow.enabled = true;
                 hBob.enabled = false;
 				currentCamera.GetComponent<Camera>().cullingMask = thirdPersonLayers;
 			} else {
-				GetComponent<RadarMount>().enabled = true;
-				currentCamera.transform.parent = gameObject.transform;
+                GetComponent<RadarMount>().enabled = true;
+                radar.parent = transform;
+                radar.localPosition = radarPosition;
+                radar.localRotation = radarRotation;
+                health.parent = transform;
+                health.localPosition = healthPosition;
+                health.localRotation = healthRotation;
+                currentCamera.transform.parent = cameraParent;
 				sFollow.enabled = false;
                 hBob.enabled = true;
-				currentCamera.transform.localPosition = firstPersonPosition;
+				currentCamera.transform.localPosition = Vector3.zero;
 				currentCamera.transform.localRotation = Quaternion.identity;
 				currentCamera.GetComponent<Camera>().cullingMask = firstPersonLayers;
 			}
