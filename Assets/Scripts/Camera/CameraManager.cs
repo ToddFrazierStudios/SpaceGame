@@ -4,6 +4,8 @@ using System.Collections;
 public class CameraManager : MonoBehaviour {
 
 	private bool thirdPerson;
+	[System.NonSerialized]
+	public bool headControl;
 	private GameObject currentCamera;
 	public GameObject firstPersonCamera;
 	public Vector3 firstPersonPosition;
@@ -21,6 +23,8 @@ public class CameraManager : MonoBehaviour {
     public RadarMount radarMount;
     public OurSmoothFollow sFollow;
     public HeadBob hBob;
+	public AutoHeadTurn autoHeadTurn;
+	public HeadTurn headTurn;
 
 	void Start () {
         
@@ -34,6 +38,8 @@ public class CameraManager : MonoBehaviour {
         radarMount = currentCamera.GetComponent<RadarMount>();
         sFollow = currentCamera.GetComponent<OurSmoothFollow>();
         hBob = currentCamera.GetComponent<HeadBob>();
+		autoHeadTurn = currentCamera.GetComponentInParent<AutoHeadTurn>();
+		headTurn = currentCamera.GetComponentInParent<HeadTurn>();
 		firstPersonCamera.GetComponent<Camera>().enabled = true;
 	}
 
@@ -48,6 +54,7 @@ public class CameraManager : MonoBehaviour {
 				GetComponent<RadarMount>().enabled = false;
 				sFollow.enabled = true;
                 hBob.enabled = false;
+				headTurn.enabled = false;
 				currentCamera.GetComponent<Camera>().cullingMask = thirdPersonLayers;
 			} else {
                 GetComponent<RadarMount>().enabled = true;
@@ -63,6 +70,17 @@ public class CameraManager : MonoBehaviour {
 				currentCamera.transform.localPosition = Vector3.zero;
 				currentCamera.transform.localRotation = Quaternion.identity;
 				currentCamera.GetComponent<Camera>().cullingMask = firstPersonLayers;
+			}
+		}
+
+		if (PlayerInput.PollDigitalControlPressed(0, Controls.HEADTURN) && !thirdPerson) {
+			headControl = !headControl;
+			if (headControl) {
+				autoHeadTurn.enabled = false;
+				headTurn.enabled = true;
+			} else {
+				headTurn.enabled = false;
+				autoHeadTurn.enabled = true;
 			}
 		}
 

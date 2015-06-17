@@ -231,6 +231,8 @@ public class PlayerPref
 		defaultControllerBindings[(int)Controls.LOOK_Y] = "3ThumbSticks.Left.Y";
 		defaultControllerBindings[(int)Controls.STRAFE_X] = "3ThumbSticks.Right.X";
 		defaultControllerBindings[(int)Controls.STRAFE_Y] = "3ThumbSticks.Right.Y";
+		defaultControllerBindings[(int)Controls.HEADTURN_X] = "3ThumbSticks.Right.X";
+		defaultControllerBindings[(int)Controls.HEADTURN_Y] = "3ThumbSticks.Right.Y";
 		defaultControllerBindings[(int)Controls.ROLL] = "5Buttons.Y;4Buttons.X;5Buttons.RightShoulder;4Buttons.LeftShoulder";
 		defaultControllerBindings[(int)Controls.THROTTLE] = "3Triggers.Left";
 		defaultControllerBindings[(int)Controls.FIRE] = "1Triggers.Right";
@@ -242,6 +244,7 @@ public class PlayerPref
 		defaultControllerBindings[(int)Controls.PAUSE_BUTTON] = "0Buttons.Start";
   		defaultControllerBindings[(int)Controls.TARGET_BUTTON] = "0Buttons.A";
 		defaultControllerBindings[(int)Controls.NEXT_WEAPON] = "0DPad.Up";
+		defaultControllerBindings[(int)Controls.HEADTURN] = "0Buttons.RightStick";
 
 		defaultKeyboardBindings[(int)Controls.LOOK_X] = "3Mouse X";
 		defaultKeyboardBindings[(int)Controls.LOOK_Y] = "3Mouse Y";

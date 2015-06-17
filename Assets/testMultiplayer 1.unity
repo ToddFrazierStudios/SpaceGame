@@ -293,7 +293,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
 --- !u!114 &107728276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,7 +714,7 @@ Transform:
   - {fileID: 26334206}
   - {fileID: 400694141}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 2
 --- !u!1 &260122152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,7 +2671,7 @@ Transform:
   - {fileID: 1014407316}
   - {fileID: 666571910}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 3
 --- !u!1 &851685052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,7 +3497,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 1
 --- !u!114 &1180999079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4611,7 +4611,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
 --- !u!1001 &1624343699
 Prefab:
   m_ObjectHideFlags: 0
@@ -4655,9 +4655,33 @@ Prefab:
       propertyPath: miniMapCamera
       value: 
       objectReference: {fileID: 1476000224}
+    - target: {fileID: 11422854, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400048, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
+      propertyPath: multiplier
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1624343700 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 101018, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
+  m_PrefabInternal: {fileID: 1624343699}
+--- !u!114 &1624343701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1624343700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7582e081a35224555b1cb8f511795e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 1, y: 1}
 --- !u!1 &1685623315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4867,7 +4891,7 @@ Transform:
   m_LocalScale: {x: 10.0476999, y: 6.47518682, z: .669846892}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
 --- !u!1001 &1801852971
 Prefab:
   m_ObjectHideFlags: 0

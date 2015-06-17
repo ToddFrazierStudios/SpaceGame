@@ -5,6 +5,8 @@ public enum Controls{
 	STRAFE_Y,
 	ROLL,
 	THROTTLE,
+	HEADTURN_X,
+	HEADTURN_Y,
 
 
 	// any additional analog controls must be added above this line!
@@ -22,6 +24,7 @@ public enum Controls{
 	SELECT_WEAPON_2,
 	SELECT_WEAPON_3,
 	SELECT_WEAPON_4,
+	HEADTURN,
 	/*MENU_UP,
 	MENU_DOWN,
 	MENU_LEFT,

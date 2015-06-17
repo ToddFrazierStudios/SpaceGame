@@ -409,6 +409,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 		"Strafe Y",
 		"Roll",
 		"Throttle",
+		"Head Turn X",
+		"Head Turn Y",
 		"Primary Fire",
 		"Alternate Fire",
 		"Dampeners",
@@ -422,7 +424,8 @@ public class TempInputSetupScreen : MonoBehaviour {
 		"Select Weapon 1",
 		"Select Weapon 2",
 		"Select Weapon 3",
-		"Select Weapon 4"
+		"Select Weapon 4",
+		"Head Turn"
 	};
 
 	private const int NO_CHANGES = 0;

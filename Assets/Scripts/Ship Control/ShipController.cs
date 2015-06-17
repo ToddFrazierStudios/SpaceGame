@@ -24,6 +24,10 @@ public class ShipController : MonoBehaviour {
 	[System.NonSerialized]
 	public EngineThruster engineThruster;
 	[System.NonSerialized]
+	public CameraManager cameraManager;
+	[System.NonSerialized]
+	public HeadTurn headTurn;
+	[System.NonSerialized]
 	public Boost boost;
 	private bool isMaximized;
 	// Use this for initialization
@@ -35,6 +39,8 @@ public class ShipController : MonoBehaviour {
 		rotationManager = GetComponent<RotationManager>();
 		weaponsManager = GetComponent<WeaponsManager>();
 		engineThruster = GetComponent<EngineThruster>();
+		cameraManager = GetComponent<CameraManager>();
+		headTurn = GetComponentInChildren<HeadTurn>();
 		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
 	}
@@ -53,15 +59,20 @@ public class ShipController : MonoBehaviour {
 		if(isAi)return;
 
 		// Strafe Manager //
-		if(strafeManager){
+		if(strafeManager && cameraManager && !cameraManager.headControl) {
 			strafeManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X);
-            strafeManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y);
-			
+			strafeManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y);
+
 			if (strafeManager.xInput == 0f && strafeManager.yInput == 0f) {
 				engineThruster.isStrafing = false;
 			} else {
 				engineThruster.isStrafing = true;
 			}
+		}
+
+		if (headTurn && cameraManager && cameraManager.headControl) {
+			headTurn.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.HEADTURN_X);
+			headTurn.yInput = PlayerInput.PollAnalogControl (playerNumber, Controls.HEADTURN_Y);
 		}
 
 		// Rotation Manager //
