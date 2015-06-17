@@ -77,11 +77,19 @@ public class ShipController : MonoBehaviour {
 
 		// Rotation Manager //
 		if(rotationManager){
-            rotationManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_X);
-            rotationManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_Y);
+			float xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_X);
+			float yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_Y);
+			float rotationInput = PlayerInput.PollAnalogControl(playerNumber, Controls.ROLL);
+			if (PlayerInput.PollDigitalControl(playerNumber, Controls.QUICKTURN)) {
+				xInput *= rotationManager.quickMultiplier;
+				yInput *= rotationManager.quickMultiplier;
+				rotationInput *= rotationManager.quickMultiplier;
+			}
+            rotationManager.xInput = xInput;
+            rotationManager.yInput = yInput;
 //			rotationManager.xRightInput = ParsedInput.controller [playerNumber].RightStickX;
 //			rotationManager.yRightInput = ParsedInput.controller [playerNumber].RightStickY;
-            rotationManager.rotationInput = PlayerInput.PollAnalogControl(playerNumber, Controls.ROLL);
+            rotationManager.rotationInput = rotationInput;
 		}
 
 		// Weapons Manager //

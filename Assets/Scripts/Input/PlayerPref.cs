@@ -245,6 +245,7 @@ public class PlayerPref
   		defaultControllerBindings[(int)Controls.TARGET_BUTTON] = "0Buttons.A";
 		defaultControllerBindings[(int)Controls.NEXT_WEAPON] = "0DPad.Up";
 		defaultControllerBindings[(int)Controls.HEADTURN] = "0Buttons.RightStick";
+		defaultControllerBindings[(int)Controls.QUICKTURN] = "0Buttons.LeftStick";
 
 		defaultKeyboardBindings[(int)Controls.LOOK_X] = "3Mouse X";
 		defaultKeyboardBindings[(int)Controls.LOOK_Y] = "3Mouse Y";

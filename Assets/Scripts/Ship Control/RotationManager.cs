@@ -6,7 +6,7 @@ public class RotationManager : MonoBehaviour {
 	
 	public Vector3 force;
 	public Vector3 barrelForce;
-
+	public float quickMultiplier = 2.5f;
 
 	//*** INPUT VARIABLES; see ShipController.cs ***//
 	[System.NonSerialized]
