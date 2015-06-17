@@ -2793,6 +2793,22 @@ Transform:
   - {fileID: 2083076837}
   m_Father: {fileID: 222134554}
   m_RootOrder: 4
+--- !u!1 &944992274 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100556, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
+  m_PrefabInternal: {fileID: 1624343699}
+--- !u!114 &944992277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944992274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7582e081a35224555b1cb8f511795e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 1, y: 1}
 --- !u!1 &1014407315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4649,7 +4665,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400124, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 11400014, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
       propertyPath: miniMapCamera
@@ -4666,22 +4682,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1624343700 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 101018, guid: 65d344fd924424866a03fc3e09c8d75d, type: 2}
-  m_PrefabInternal: {fileID: 1624343699}
---- !u!114 &1624343701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1624343700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7582e081a35224555b1cb8f511795e1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: {x: 1, y: 1}
 --- !u!1 &1685623315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,7 +4747,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 22400110, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.x
