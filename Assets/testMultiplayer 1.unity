@@ -779,6 +779,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!4 &260122157
 Transform:
   m_ObjectHideFlags: 0
@@ -4225,23 +4226,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22400110, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.x
-      value: .879999995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400110, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400102, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMin.x
-      value: .879999995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400102, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.x
-      value: .879999995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400102, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400050, guid: f75f97e0e2fd24f2d83e282b5bbc4663, type: 2}
       propertyPath: m_AnchorMax.x

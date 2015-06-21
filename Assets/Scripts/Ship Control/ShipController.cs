@@ -15,6 +15,7 @@ public class ShipController : MonoBehaviour {
 	public bool useKeyboard = true;
 	public bool useController = true;
 
+	public bool useFuel;
 	public float maxFuel = 10000;
 	private float fuel;
 	public Material fuelMeter;
@@ -64,7 +65,7 @@ public class ShipController : MonoBehaviour {
 		if(isAi)return;
 
 		// Strafe Manager //
-		if(strafeManager && cameraManager && !cameraManager.headControl && fuel > 0) {
+		if(strafeManager && cameraManager && !cameraManager.headControl && (!useFuel || fuel > 0)) {
 			fuel = fuel - Mathf.Abs(PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X) + PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y)) / 2; // I'll probably change this to be more accurate
 			strafeManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X);
 			strafeManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y);
@@ -82,7 +83,7 @@ public class ShipController : MonoBehaviour {
 		}
 
 		// Rotation Manager //
-		if(rotationManager && fuel > 0){
+		if(rotationManager && (!useFuel || fuel > 0)){
 			float xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_X);
 			float yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_Y);
 			float rotationInput = PlayerInput.PollAnalogControl(playerNumber, Controls.ROLL);
@@ -106,7 +107,7 @@ public class ShipController : MonoBehaviour {
 		}
 
 		// Engine Thruster //
-		if(engineThruster && fuel > 0){
+		if(engineThruster && (!useFuel || fuel > 0)){
 			fuel -= PlayerInput.PollAnalogControl(playerNumber, Controls.THROTTLE);
             engineThruster.throttle = PlayerInput.PollAnalogControl(playerNumber, Controls.THROTTLE);
             engineThruster.reverse = PlayerInput.PollDigitalControl(playerNumber, Controls.DAMPENERS);
