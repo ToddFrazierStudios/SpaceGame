@@ -461,6 +461,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400556}
   - 114: {fileID: 11422854}
+  - 114: {fileID: 11443856}
   m_Layer: 13
   m_Name: Player Camera Transform
   m_TagString: Untagged
@@ -2153,6 +2154,8 @@ MonoBehaviour:
   radarMount: {fileID: 0}
   sFollow: {fileID: 0}
   hBob: {fileID: 0}
+  autoHeadTurn: {fileID: 0}
+  headTurn: {fileID: 0}
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2328,6 +2331,7 @@ MonoBehaviour:
   rgb: {fileID: 5400000}
   force: {x: 400, y: 400, z: 200000}
   barrelForce: {x: 100000, y: 100000, z: 100000}
+  quickMultiplier: 2.5
 --- !u!114 &11400028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2474,6 +2478,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 3
+--- !u!114 &11443856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7582e081a35224555b1cb8f511795e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 1, y: 1}
 --- !u!124 &12400002
 Behaviour:
   m_ObjectHideFlags: 1

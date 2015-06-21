@@ -15,6 +15,10 @@ public class ShipController : MonoBehaviour {
 	public bool useKeyboard = true;
 	public bool useController = true;
 
+	public float maxFuel = 10000;
+	private float fuel;
+	public Material fuelMeter;
+
 	[System.NonSerialized]
 	public StrafeManager strafeManager;
 	[System.NonSerialized]
@@ -43,6 +47,7 @@ public class ShipController : MonoBehaviour {
 		headTurn = GetComponentInChildren<HeadTurn>();
 		engineThruster.throttle = 0f;
 		boost = GetComponent<Boost>();
+		fuel = maxFuel;
 	}
 
 	void OnApplicationFocus(bool focusStatus) {
@@ -59,7 +64,8 @@ public class ShipController : MonoBehaviour {
 		if(isAi)return;
 
 		// Strafe Manager //
-		if(strafeManager && cameraManager && !cameraManager.headControl) {
+		if(strafeManager && cameraManager && !cameraManager.headControl && fuel > 0) {
+			fuel = fuel - Mathf.Abs(PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X) + PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y)) / 2; // I'll probably change this to be more accurate
 			strafeManager.xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_X);
 			strafeManager.yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.STRAFE_Y);
 
@@ -76,7 +82,7 @@ public class ShipController : MonoBehaviour {
 		}
 
 		// Rotation Manager //
-		if(rotationManager){
+		if(rotationManager && fuel > 0){
 			float xInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_X);
 			float yInput = PlayerInput.PollAnalogControl(playerNumber, Controls.LOOK_Y);
 			float rotationInput = PlayerInput.PollAnalogControl(playerNumber, Controls.ROLL);
@@ -85,6 +91,7 @@ public class ShipController : MonoBehaviour {
 				yInput *= rotationManager.quickMultiplier;
 				rotationInput *= rotationManager.quickMultiplier;
 			}
+			fuel = fuel - Mathf.Abs(xInput + yInput + rotationInput) / 2;
             rotationManager.xInput = xInput;
             rotationManager.yInput = yInput;
 //			rotationManager.xRightInput = ParsedInput.controller [playerNumber].RightStickX;
@@ -99,9 +106,14 @@ public class ShipController : MonoBehaviour {
 		}
 
 		// Engine Thruster //
-		if(engineThruster){
+		if(engineThruster && fuel > 0){
+			fuel -= PlayerInput.PollAnalogControl(playerNumber, Controls.THROTTLE);
             engineThruster.throttle = PlayerInput.PollAnalogControl(playerNumber, Controls.THROTTLE);
             engineThruster.reverse = PlayerInput.PollDigitalControl(playerNumber, Controls.DAMPENERS);
+		}
+		DebugHUD.setValue("Fuel", fuel);
+		if (fuel >= 0) {
+			fuelMeter.SetFloat ("_ProgressH", fuel / maxFuel);
 		}
 
 		// Boost //

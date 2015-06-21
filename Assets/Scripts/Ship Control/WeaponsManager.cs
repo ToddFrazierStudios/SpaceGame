@@ -9,6 +9,8 @@ public class WeaponsManager : MonoBehaviour {
 	
 	public Transform leftGun, rightGun, missileBay;
 	public float muzzleVelocity;
+	public bool recoil;
+	public Vector3 recoilForce = new Vector3(0, 0, -1000);
 	public GameObject bulletPrefab, missilePrefab;
 	public float delay;
 	public float missileDelay;
@@ -20,6 +22,7 @@ public class WeaponsManager : MonoBehaviour {
 	private float timeUntilFireMissile;
 	private Transform nextGunToFire;
 	private int layerMask = 1 << 13;
+	private Rigidbody rgb;
 	//I plan on using this later
 	public float TimeUntilNextPrimaryShot{
 		get{
@@ -43,7 +46,8 @@ public class WeaponsManager : MonoBehaviour {
 		layerMask = ~layerMask;
 		radar = GetComponent<OurRadar>();
 		missileBay.LookAt (Vector3.zero);
-		nextGunToFire = leftGun;
+		nextGunToFire = leftGun; // woo for arbitrary decisions
+		rgb = gameObject.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -94,6 +98,8 @@ public class WeaponsManager : MonoBehaviour {
 		b.playerBullet = (gameObject.layer == 13);
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
+
+		if (recoil) rgb.AddForceAtPosition(recoilForce, nextGunToFire.position);
 
 		if(nextGunToFire == leftGun){
 			nextGunToFire = rightGun;

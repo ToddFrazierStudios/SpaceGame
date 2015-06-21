@@ -62,6 +62,7 @@
      <Compile Include="Assets\Radar\Targeting.cs" />
      <Compile Include="Assets\Scripts\ActiveStateToggler.cs" />
      <Compile Include="Assets\Scripts\Ai\AI.cs" />
+     <Compile Include="Assets\Scripts\Ai\AI2.cs" />
      <Compile Include="Assets\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\Scripts\BackgroundShips.cs" />
      <Compile Include="Assets\Scripts\Camera\AutoHeadTurn.cs" />

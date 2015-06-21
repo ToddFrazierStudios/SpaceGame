@@ -2,13 +2,14 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Status_Bar_Tex1
   m_Shader: {fileID: 4800000, guid: c5aa6c9c68ef13749b8e2d25ff4b37c6, type: 3}
-  m_ShaderKeywords: []
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
   m_CustomRenderQueue: -1
   m_SavedProperties:
     serializedVersion: 2
@@ -45,7 +46,7 @@ Material:
       data:
         first:
           name: _ProgressH
-        second: 0
+        second: 3.32874652e-06
       data:
         first:
           name: _ProgressV
@@ -74,7 +75,7 @@ Material:
       data:
         first:
           name: _BarColor
-        second: {r: 0, g: .392156869, b: .784313738, a: 1}
+        second: {r: .470588207, g: .470588207, b: .470588207, a: 1}
       data:
         first:
           name: _BorderColor
