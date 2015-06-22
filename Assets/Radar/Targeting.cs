@@ -16,7 +16,7 @@ public class Targeting : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		layerMask = 1 << 13;
+		layerMask = 1 << gameObject.layer;
 		layerMask = ~layerMask;
 	}
 	

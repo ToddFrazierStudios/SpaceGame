@@ -38,7 +38,8 @@ public class Bullet : MonoBehaviour {
 		RaycastHit hit;
 		transform.position+=velocity*Time.deltaTime;
 		if(Physics.Linecast(oldPos,transform.position,out hit)){
-			if (!(hit.collider.gameObject.layer == 13 && playerBullet)) {
+			if ((hit.collider.gameObject.layer != gameObject.layer) /*|| !(hit.collider.gameObject.layer == 13 && playerBullet)*/) {
+				Debug.Log(hit.collider.gameObject.name + ", " + hit.collider.gameObject.layer + ", " + gameObject.layer);
 				Vector3 direction = transform.position - oldPos;
 				Quaternion parameters = new Quaternion(direction.x, direction.y, direction.z, damage);
 				hit.collider.gameObject.SendMessage("hurt", parameters, SendMessageOptions.DontRequireReceiver);

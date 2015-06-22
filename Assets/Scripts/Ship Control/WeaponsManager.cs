@@ -45,6 +45,7 @@ public class WeaponsManager : MonoBehaviour {
 	void Start () {
 		layerMask = ~layerMask;
 		radar = GetComponent<OurRadar>();
+		targeting = GetComponent<Targeting>();
 		missileBay.LookAt (Vector3.zero);
 		nextGunToFire = leftGun; // woo for arbitrary decisions
 		rgb = gameObject.GetComponent<Rigidbody>();
@@ -96,6 +97,7 @@ public class WeaponsManager : MonoBehaviour {
 		GameObject created = Instantiate(bulletPrefab,nextGunToFire.position,nextGunToFire.rotation) as GameObject;
 		Bullet b = created.GetComponent<Bullet>();
 		b.playerBullet = (gameObject.layer == 13);
+		b.gameObject.layer = gameObject.layer;
 		b.colliderToIgnore = GetComponent<MeshCollider>();
 		b.setVelocity(nextGunToFire.forward*muzzleVelocity);
 
