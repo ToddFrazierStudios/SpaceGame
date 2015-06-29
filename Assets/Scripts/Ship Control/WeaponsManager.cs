@@ -15,6 +15,7 @@ public class WeaponsManager : MonoBehaviour {
 	public float delay;
 	public float missileDelay;
 	public float range;
+	public float nearRange = 1000;
 	public Targeting targeting;
 	private OurRadar radar;
 	private Transform target;
@@ -84,7 +85,7 @@ public class WeaponsManager : MonoBehaviour {
 	public void shootMachineGuns() {
 //		LineRenderer line = created.GetComponent<LineRenderer>();
 		// Dynamically resize based on distance? Maybe later.
-		if (targeting && targeting.getTarget () != null) {
+		if (targeting && targeting.getTarget () != null && (targeting.getTarget().position - transform.position).sqrMagnitude > nearRange) {
 			nextGunToFire.LookAt(targeting.hitPosition);
 //			line.SetPosition (0, transform.position);
 //			line.SetPosition (1, hit.point);

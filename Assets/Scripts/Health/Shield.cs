@@ -26,7 +26,7 @@ public class Shield : MonoBehaviour {
 		}
 
 		if (shieldSprite) {
-			shieldSprite.color = new Color(1f, shield/maxShield, shield/maxShield);
+			shieldSprite.color = new Color(1f, shield/maxShield, shield/maxShield, shield > 0 ? 1f : 0f);
 		}
 
 		if (shield < maxShield) {

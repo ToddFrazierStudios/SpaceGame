@@ -85,6 +85,7 @@ public class AI2 : MonoBehaviour {
 				}
 				thruster.throttle = 0;
 			}
+			weaponsManager.primaryFire = false;
 			break;
 		case State.POSITIONING:
 			if (proj.z > 0) {
@@ -104,6 +105,7 @@ public class AI2 : MonoBehaviour {
 				}
 				thruster.throttle = 0;
 			}
+			weaponsManager.primaryFire = false;
 			break;
 		case State.FIRING:
 			if (proj.z > 0) {
